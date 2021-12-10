@@ -129,7 +129,7 @@ export default function UserMaill() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/mail/maillist", {
+      .get(`${process.env.REACT_APP_API_URI}/mail/maillist`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           "Content-Type": "applicaton/json",

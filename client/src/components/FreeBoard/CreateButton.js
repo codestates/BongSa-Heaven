@@ -92,7 +92,7 @@ export default function CreateButton(props) {
 
     axios
       .post(
-        "http://localhost:8080/board/fbregister",
+        `${process.env.REACT_APP_API_URI}/board/fbregister`,
         {
           title: props.title,
           description: props.description,

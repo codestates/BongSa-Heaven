@@ -72,7 +72,7 @@ export default function Footer({isLogin, setIsLogin, setIsUserLogin}) {
   const LogOut = () => {
     axios
       .post(
-        "http://localhost:8080/auth/signout",
+        `${process.env.REACT_APP_API_URI}/auth/signout`,
         {},
         {
           headers: {

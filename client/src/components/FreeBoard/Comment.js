@@ -130,7 +130,7 @@ export default function Comment({currentFBcontent}) {
 
   const getUserInfo = () => {
     axios
-      .get("http://localhost:8080/user/info", {
+      .get(`${process.env.REACT_APP_API_URI}/user/info`, {
         headers: {
           authorization: `Bearer ` + localStorage.getItem("accessToken"),
           "Content-Type": "application/json",
@@ -154,7 +154,7 @@ export default function Comment({currentFBcontent}) {
     if (commentValue.length > 0) {
       axios
         .post(
-          "http://localhost:8080/comment/fbcommentregister",
+          `${process.env.REACT_APP_API_URI}/comment/fbcommentregister`,
           {
             user_id: myId,
             freeboard_id: currentFBcontent.data._id,

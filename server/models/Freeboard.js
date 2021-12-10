@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const freecommentSchema = require('./Freecomment');
+const freecommentSchema = require("./Freecomment");
 
 const freeboardSchema = new Schema(
   {
-    like: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    like: [{type: Schema.Types.ObjectId, ref: "User"}],
     like_count: {
       type: Number,
       default: 0,
     },
     user_id: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     title: String,
     description: String,
-    images: String,
+    images: Array,
     freecomments: [
       {
         type: freecommentSchema,
@@ -31,4 +31,4 @@ const freeboardSchema = new Schema(
 );
 
 // freeboardSchema.plugin(findOrCreate);
-module.exports = mongoose.model('Freeboard', freeboardSchema);
+module.exports = mongoose.model("Freeboard", freeboardSchema);

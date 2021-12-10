@@ -16,7 +16,7 @@ const crewboardSchema = new Schema(
     shorts_description: String,
     title: String,
     description: String,
-    images: String,
+    images: Array,
     crewcomments: {
       type: [crewcommentSchema],
       default: [],

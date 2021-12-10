@@ -173,7 +173,7 @@ export default function CrewBoardEdit({currentCBcontent}) {
 
     axios
       .patch(
-        "http://localhost:8080/board/cbedit",
+        `${process.env.REACT_APP_API_URI}/board/cbedit`,
         {
           crewboard_id: currentCBcontent.data._id,
           title: editedTitle,

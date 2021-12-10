@@ -79,7 +79,7 @@ export default function UserMyPage() {
     setIsChecked(!isChecked);
     axios
       .patch(
-        `http://localhost:8080/user/edit`,
+        `${process.env.REACT_APP_API_URI}/user/edit`,
         {
           email: userInfo.email,
           nickname: userInfo.nickname,
@@ -126,7 +126,7 @@ export default function UserMyPage() {
     //비밀번호, 닉네임, 등등 바꾸는 경우
 
     axios
-      .get(`http://localhost:8080/user/info`, {
+      .get(`${process.env.REACT_APP_API_URI}/user/info`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           "Content-Type": "applicaton/json",

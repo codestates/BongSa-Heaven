@@ -4,7 +4,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Header2 from '../../components/common/Header2';
 import Recruiters from '../../components/Mypages/Recruiters';
-import RecruiterDummy from '../../dummy/RecruiterDummy';
 
 const TopSpace = styled.div`
   height: 43px;
@@ -23,7 +22,7 @@ export default function SeeRecruiter() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/user/list', {
+      .get(`${process.env.REACT_APP_API_URI}/user/list`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           'Content-Type': 'applicaton/json',

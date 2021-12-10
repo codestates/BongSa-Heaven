@@ -130,6 +130,7 @@ export default function App() {
         });
   }, [isUserLogin, currentFBcontent, currentCBcontent]);
 
+
   document.cookie = "refreshToken=; domain=;  path=/;  expires=;";
   return (
     <div id="app_div">
@@ -147,7 +148,13 @@ export default function App() {
 
       <Route exact path="/RecruiterSignUp" component={RecruiterSignUp} />
       <Route exact path="/SignUp" component={SignUp} />
-      <Route exact path="/SignIn" render={() => <SignIn setIsLogin={setIsLogin} setIsUserLogin={setIsUserLogin} />} />
+      <Route
+        exact
+        path="/SignIn"
+        render={() => (
+          <SignIn setIsLogin={setIsLogin} setIsUserLogin={setIsUserLogin} />
+        )}
+      />
       <Route exact path="/UserSignUp" component={UserSignUp} />
       {/* MyPage */}
       <Route exact path="/MaillWrite" component={MaillWrite} />
@@ -155,11 +162,19 @@ export default function App() {
       <Route exact path="/RecruiterDelete" component={RecruiterDelete} />
       <Route exact path="/RecruiterEdit" component={RecruiterEdit} />
       <Route exact path="/RecruiterMyPage" component={RecruiterMyPage} />
-      <Route exact path="/RecruiterPasswordCheck" component={RecruiterPasswordCheck} />
+      <Route
+        exact
+        path="/RecruiterPasswordCheck"
+        component={RecruiterPasswordCheck}
+      />
       <Route exact path="/RecruiterMaill" component={RecruiterMaill} />
       <Route exact path="/SeeRecruiter" component={SeeRecruiter} />
       <Route exact path="/SeeUser" component={SeeUser} />
-      <Route exact path="/UserDelete" render={() => <UserDelete setIsLogin={setIsLogin} />} />
+      <Route
+        exact
+        path="/UserDelete"
+        render={() => <UserDelete setIsLogin={setIsLogin} />}
+      />
       <Route
         exact
         path="/UserEdit"
@@ -170,7 +185,11 @@ export default function App() {
           />
         )}
       />
-      <Route exact path="/UserEditPasswordCheck" component={UserEditPasswordCheck} />
+      <Route
+        exact
+        path="/UserEditPasswordCheck"
+        component={UserEditPasswordCheck}
+      />
       <Route exact path="/UserMaill" component={UserMaill} />
       <Route exact path="/UserMyPage" component={UserMyPage} />
       {/* FreeBoard */}
@@ -178,35 +197,72 @@ export default function App() {
       <Route
         exact
         path="/FreeBoardContents"
-        render={() => <FreeBoardContents currentFBcontent={currentFBcontent} userId={userId} />}
+        render={() => (
+          <FreeBoardContents
+            currentFBcontent={currentFBcontent}
+            userId={userId}
+          />
+        )}
       />
       <Route exact path="/FreeBoardCreate" component={FreeBoardCreate} />
-      <Route exact path="/FreeBoardDelete" render={() => <FreeBoardDelete currentFBcontent={currentFBcontent} />} />
+      <Route
+        exact
+        path="/FreeBoardDelete"
+        render={() => <FreeBoardDelete currentFBcontent={currentFBcontent} />}
+      />
       <Route
         exact
         path="/FreeBoardEdit"
-        render={() => <FreeBoardEdit currentFBcontent={currentFBcontent} GoToFreeBoardContent={GoToFreeBoardContent} />}
+        render={() => (
+          <FreeBoardEdit
+            currentFBcontent={currentFBcontent}
+            GoToFreeBoardContent={GoToFreeBoardContent}
+          />
+        )}
       />
 
       <Route
         exact
         path="/FreeBoardList"
-        render={() => <FreeBoardList GoToFreeBoardContent={GoToFreeBoardContent} isLogin={isLogin} />}
+        render={() => (
+          <FreeBoardList
+            GoToFreeBoardContent={GoToFreeBoardContent}
+            isLogin={isLogin}
+          />
+        )}
       />
 
       {/* CrewBoard */}
       <Route
         exact
         path="/CrewBoardContents"
-        render={() => <CrewBoardContents currentCBcontent={currentCBcontent} userId={userId} />}
+        render={() => (
+          <CrewBoardContents
+            currentCBcontent={currentCBcontent}
+            userId={userId}
+          />
+        )}
       />
       <Route exact path="/CrewBoardCreate" component={CrewBoardCreate} />
-      <Route exact path="/CrewBoardDelete" render={() => <CrewBoardDelete currentCBcontent={currentCBcontent} />} />
-      <Route exact path="/CrewBoardEdit" render={() => <CrewBoardEdit currentCBcontent={currentCBcontent} />} />
+      <Route
+        exact
+        path="/CrewBoardDelete"
+        render={() => <CrewBoardDelete currentCBcontent={currentCBcontent} />}
+      />
+      <Route
+        exact
+        path="/CrewBoardEdit"
+        render={() => <CrewBoardEdit currentCBcontent={currentCBcontent} />}
+      />
       <Route
         exact
         path="/CrewBoardList"
-        render={() => <CrewBoardList GoToCrewBoardContent={GoToCrewBoardContent} isLogin={isLogin} />}
+        render={() => (
+          <CrewBoardList
+            GoToCrewBoardContent={GoToCrewBoardContent}
+            isLogin={isLogin}
+          />
+        )}
       />
 
       <Route exact path="/Map" component={Map} />
@@ -215,7 +271,11 @@ export default function App() {
 
       <DevBtn />
 
-      <Footer isLogin={isLogin} setIsLogin={setIsLogin} setIsUserLogin={setIsUserLogin} />
+      <Footer
+        isLogin={isLogin}
+        setIsLogin={setIsLogin}
+        setIsUserLogin={setIsUserLogin}
+      />
     </div>
   );
 }

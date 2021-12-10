@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import Header3 from "../../components/common/Header3";
-import { useState, useRef, useEffect } from "react";
-import { Route, useHistory } from "react-router-dom";
+import {useState, useRef, useEffect} from "react";
+import {Route, useHistory} from "react-router-dom";
 import axios from "axios";
-import { faLastfmSquare } from "@fortawesome/free-brands-svg-icons";
+import {faLastfmSquare} from "@fortawesome/free-brands-svg-icons";
 const Wrapper = styled.div`
   width: 100%;
   background-color: #ffd4d4;
@@ -246,20 +246,20 @@ export default function UserSignUp() {
 
   //청소년 청년 장년 클릭시 해당 정보를 가져온다.
 
-  const handleEmail = (e) => {
+  const handleEmail = e => {
     console.log(e.target.value);
     setEmail(e.target.value);
   };
-  const handlePassword = (e) => {
+  const handlePassword = e => {
     console.log(e.target.value, "pass");
     setPassword(e.target.value);
   };
-  const handlePasswordCheck = (e) => {
+  const handlePasswordCheck = e => {
     console.log(e.target.value, "확인");
     setPasswordCheck(e.target.value);
   };
 
-  const handleNickname = (e) => {
+  const handleNickname = e => {
     //setName적용된후
     console.log(nickname);
     setNicname(e.target.value);
@@ -267,16 +267,16 @@ export default function UserSignUp() {
     // validateNickname(e.target.vlaue)
   };
 
-  const handleWantReigon = (e) => {
+  const handleWantReigon = e => {
     console.log(e.target.value);
     setWant_region(e.target.value);
   };
-  const handleWantVol = (e) => {
+  const handleWantVol = e => {
     console.log(e.target.value);
     setWant_vol(e.target.value);
   };
   //성별을 다룬다.
-  const handleSex = (key) => (e) => {
+  const handleSex = key => e => {
     console.log(key);
     if (key === "man") {
       setSex("남자");
@@ -286,7 +286,7 @@ export default function UserSignUp() {
   };
 
   // 나이를 다룬다.
-  const handleAge = (key) => (e) => {
+  const handleAge = key => e => {
     console.log(key, age);
 
     if (key === "teen") {
@@ -299,7 +299,7 @@ export default function UserSignUp() {
   };
 
   //이메일 검증
-  const validateEmail = (email) => {
+  const validateEmail = email => {
     //이메일 형식어야한다.
     const regEmail =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -322,14 +322,14 @@ export default function UserSignUp() {
       return true;
     }
   };
-  const validatePassword = (password) => {
+  const validatePassword = password => {
     // 8자이상 16자이하 의 숫자, 문자, 특수문자 조합
 
     const regPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
     if (!regPassword.test(password)) {
       setPassErrorMessage(
-        "비밀번호를 8~16자, 숫자, 특수문자,영어를 혼합해주세요"
+        "비밀번호를 8~16자, 숫자, 특수문자,영어를 혼합해주세요",
       );
       return false;
     } else {
@@ -339,7 +339,7 @@ export default function UserSignUp() {
     }
   };
   //닉네임 검증
-  const validateNickname = (nickname) => {
+  const validateNickname = nickname => {
     //닉네임은 자릿수 제한만 두기로 한다.
     //닉네임 중복 체크
     const max = 8;
@@ -371,7 +371,7 @@ export default function UserSignUp() {
     if (nickname && valideNickname) {
       axios
         .post(
-          "http://localhost:8080/auth/nickcheck",
+          `${process.env.REACT_APP_API_URI}/auth/nickcheck`,
           {
             nickname: nickname,
           },
@@ -379,17 +379,17 @@ export default function UserSignUp() {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         )
-        .then((res) => {
+        .then(res => {
           console.log("통과");
           if (nickname !== res.data.data) {
             setNickCheckErrorMessage("사용 가능한 닉네임 입니다.");
             setIsNick(true);
           }
         })
-        .catch(() => {
-          console.log("일치하는값 들어옴");
+        .catch(err => {
+          console.log("일치하는값 들어옴", err);
           setNickCheckErrorMessage("중복된 닉네임 입니다.");
           setIsNick(false);
         });
@@ -413,7 +413,7 @@ export default function UserSignUp() {
       want_vol,
       want_region,
       age,
-      sex
+      sex,
     );
     // validateEmail(email);
     //모든 유효성 검사 통과가 되었다면 회원가입 가능
@@ -429,7 +429,7 @@ export default function UserSignUp() {
     ) {
       axios
         .post(
-          `http://localhost:8080/auth/signup`,
+          `${process.env.REACT_APP_API_URI}/auth/signup`,
           {
             email: email,
             password: password,
@@ -439,19 +439,36 @@ export default function UserSignUp() {
             age: age,
             sex: sex,
             iscompany: false,
+            status: false,
           },
-          { headers: { "Content-Type": "application/json" } }
+          {headers: {"Content-Type": "application/json"}},
         )
-        .then((res) => {
+        .then(res => {
           console.log("통과");
           setIsSignUp(true);
           history.push("/SignIn");
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           setIsSignUp(false);
           setEmailErrorMessage("이메일 중복됩니다.");
         });
+      setTimeout(() => {
+        axios
+          .post(
+            `${process.env.REACT_APP_API_URI}/auth/sendemail`,
+            {
+              email: email,
+            },
+            {headers: {"Content-Type": "application/json"}},
+          )
+          .then(data => {
+            console.log(data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }, 100);
     }
   };
 

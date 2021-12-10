@@ -77,7 +77,7 @@ export default function FreeBoardList({GoToFreeBoardContent, isLogin}) {
 
   const getFreeBoardList = () => {
     axios
-      .get("http://localhost:8080/board/fblist")
+      .get(`${process.env.REACT_APP_API_URI}/board/fblist`)
       .then(res => {
         setFreeBoardinfo(res.data.data);
       })

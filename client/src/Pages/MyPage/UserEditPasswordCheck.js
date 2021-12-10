@@ -109,7 +109,7 @@ export default function UserEditPasswordCheck() {
   const passwordChecking = () => {
     axios
       .post(
-        `http://localhost:8080/user/password`,
+        ` ${process.env.REACT_APP_API_URI}/user/password`,
         {password: passwordToCheck},
         {
           headers: {

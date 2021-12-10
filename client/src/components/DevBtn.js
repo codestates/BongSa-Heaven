@@ -5,7 +5,7 @@ export default function DevBtn() {
   const TestRefresh = () => {
     console.log("hi");
     axios
-      .get("http://localhost:8080/auth/refreshtoken", {
+      .get(`${process.env.REACT_APP_API_URI}/auth/refreshtoken`, {
         withCredentials: true,
       })
       .then((res) => {

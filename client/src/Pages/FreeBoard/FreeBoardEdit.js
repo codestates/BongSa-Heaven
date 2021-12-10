@@ -112,7 +112,7 @@ export default function FreeBoardEdit({currentFBcontent, GoToFreeBoardContent}) 
 
     axios
       .patch(
-        "http://localhost:8080/board/fbedit",
+        `${process.env.REACT_APP_API_URI}/board/fbedit`,
         {
           freeboard_id: currentFBcontent.data._id,
           title: editedTitle,

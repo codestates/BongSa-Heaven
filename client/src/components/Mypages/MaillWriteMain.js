@@ -134,7 +134,7 @@ export default function MaillWriteMain(Title) {
     if (value) {
       axios
         .post(
-          "http://localhost:8080/auth/nickcheck",
+          `${process.env.REACT_APP_API_URI}auth/nickcheck`,
           {
             nickname: value,
           },

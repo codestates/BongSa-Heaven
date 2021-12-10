@@ -216,7 +216,15 @@ module.exports = {
   },
 
   googleControl: async (req, res) => {
-    res.send();
+    const tokent = req.query.code
+
+    
+
+
+
+
+
+
   },
 
   kakaoControl: async (req, res) => {
@@ -232,7 +240,7 @@ module.exports = {
         },
       });
     } catch {
-      console.log("err");
+      console.log('err');
     }
     const userNick = userResponse.data.properties.nickname;
     const userKakao = userResponse.data.id;
@@ -326,10 +334,8 @@ module.exports = {
       },
     );
     const transporter = nodemailer.createTransport({
-      service: "Naver",
-      host: "smtp.naver.com",
-      port: 587,
-      secure: false,
+      service: "gmail",
+      host: "smtp.gmail.com",
       auth: {
         user: `${process.env.NODEMAILER_USER}`,
         pass: `${process.env.NODEMAILER_PASS}`,
@@ -338,7 +344,7 @@ module.exports = {
 
     const mailOptions = {
       from: `${process.env.NODEMAILER_USER}`,
-      to: "dpemdnjem23@naver.com",
+      to: email,
       subject: "인증메일 입니다",
       html: authEmailForm,
     };

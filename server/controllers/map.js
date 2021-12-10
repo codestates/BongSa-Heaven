@@ -50,12 +50,15 @@ module.exports = {
     // if (!token) {
     //   res.status(401).send("인증이 필요합니다.");
     // }
-
-    Map.find()
-      .populate("user_id")
-      .exec()
-      .then(data => {
-        res.status(200).send(data);
-      });
+    try {
+      Map.find()
+        .populate("user_id")
+        .exec()
+        .then(data => {
+          res.status(200).send(data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   },
 };

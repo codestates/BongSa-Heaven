@@ -295,7 +295,9 @@ export default function RecruiterEdit() {
     const regPassword = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
     if (!regPassword.test(password)) {
-      setPassErrorMessage("비밀번호를 8~16자, 숫자, 특수문자,영어를 혼합해주세요");
+      setPassErrorMessage(
+        "비밀번호를 8~16자, 숫자, 특수문자,영어를 혼합해주세요",
+      );
       return false;
     } else {
       setPassErrorMessage("");
@@ -338,7 +340,7 @@ export default function RecruiterEdit() {
     if (userInfo.nickname && valideNickname) {
       axios
         .post(
-          "http://localhost:8080/auth/nickcheck",
+          `${process.env.REACT_APP_API_URI}/auth/nickcheck`,
           {
             nickname: userInfo.nickname,
           },
@@ -366,7 +368,10 @@ export default function RecruiterEdit() {
   const userInfoEditHandler = () => {
     const validPassword = validatePassword(newPass.password);
     const validNickname = validateNickname(userInfo.nickname);
-    const validCheckPassword = validateCheckPassword(newPass.password, newPass.passwordCheck);
+    const validCheckPassword = validateCheckPassword(
+      newPass.password,
+      newPass.passwordCheck,
+    );
 
     console.log(validNickname, validPassword, validCheckPassword, isNick);
     //유저정보 변경은 어떻게 이루어지는가?
@@ -383,7 +388,7 @@ export default function RecruiterEdit() {
       console.log("비번 변경");
       axios
         .patch(
-          "http://localhost:8080/user/edit",
+          `${process.env.REACT_APP_API_URI}/user/edit`,
           {
             email: userInfo.email,
             password: newPass.password,
@@ -412,7 +417,7 @@ export default function RecruiterEdit() {
       console.log("닉네임 변경");
       axios
         .patch(
-          "http://localhost:8080/user/edit",
+         `${process.env.REACT_APP_API_URI}/user/edit`,
           {
             email: userInfo.email,
             nickname: userInfo.nickname,
@@ -441,7 +446,7 @@ export default function RecruiterEdit() {
     if (validNickname && isNick && validPassword && validCheckPassword) {
       axios
         .patch(
-          "http://localhost:8080/user/edit",
+          `${process.env.REACT_APP_API_URI}user/edit`,
           {
             email: userInfo.email,
             nickname: userInfo.nickname,
@@ -471,7 +476,7 @@ export default function RecruiterEdit() {
     //비번 제외 닉네임 제외하고 바꾸는 경우
     axios
       .patch(
-        "http://localhost:8080/user/edit",
+        `${process.env.REACT_APP_API_URI}/user/edit`,
         {
           email: userInfo.email,
           nickname: userInfo.nickname,
@@ -508,7 +513,7 @@ export default function RecruiterEdit() {
     //비밀번호, 닉네임, 등등 바꾸는 경우
 
     axios
-      .get("http://localhost:8080/user/info", {
+      .get(`${process.env.REACT_APP_API_URI}/user/info`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           "Content-Type": "applicaton/json",
@@ -556,7 +561,9 @@ export default function RecruiterEdit() {
           </SignUpWhiteBox>
           <CheckingPossibleOrNotBox>
             <PossibleOrNot>사용 가능</PossibleOrNot>
-            <CheckingPossibleOrNotButton onClick={handleNicknameCheck}>중복 확인</CheckingPossibleOrNotButton>
+            <CheckingPossibleOrNotButton onClick={handleNicknameCheck}>
+              중복 확인
+            </CheckingPossibleOrNotButton>
           </CheckingPossibleOrNotBox>
           <SignUpWhiteBox>
             <SignUpWhiteInput
@@ -594,7 +601,9 @@ export default function RecruiterEdit() {
             ></SignUpWhiteInput>
           </SignUpWhiteBox>
           <CompleteBox>
-            <CompleteButton onClick={userInfoEditHandler}>수정완료 완료</CompleteButton>
+            <CompleteButton onClick={userInfoEditHandler}>
+              수정완료 완료
+            </CompleteButton>
             <DeleteBtn onClick={GoUserDelete}>회원탈퇴</DeleteBtn>
           </CompleteBox>
         </MainContainer>

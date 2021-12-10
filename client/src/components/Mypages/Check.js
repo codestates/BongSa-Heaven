@@ -66,12 +66,12 @@ export default function Check({contents, leftBtn}) {
   const history = useHistory();
   const Delete = url => history.push(url);
   const Cancel = () => history.goBack();
-  const userWithdrawalHandler = () => {
+  const userWithdrawalHandler = props => {
     // 회원탈퇴시 모든 정보 삭제, 쿠키, 토큰 삭제
     console.log("삭제클릭");
     axios
       .delete(
-        "http://localhost:8080/user/withdrawal",
+        `${process.env.REACT_APP_API_URI}/user/withdrawal`,
 
         {
           headers: {
@@ -108,7 +108,6 @@ export default function Check({contents, leftBtn}) {
 
         <span>Name:{name}</span>
         <span>Text:{text}</span>
-
       </SelectBox>
     </>
   );

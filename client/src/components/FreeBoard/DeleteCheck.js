@@ -68,7 +68,7 @@ export default function DeleteCheck(props) {
     console.log(localStorage.getItem("accessToken"));
     // console.log(props.currentFBcontent.data._id)
     axios
-      .delete("http://localhost:8080/board/fbdelete", {
+      .delete(`${process.env.REACT_APP_API_URI}board/fbdelete`, {
         data: {
           freeboard_id: props.currentFBcontent.data._id,
         },
