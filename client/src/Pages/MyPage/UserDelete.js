@@ -19,7 +19,7 @@ const ContentsBox = styled.div`
   }
 `;
 
-export default function FreeBoardDelete() {
+export default function FreeBoardDelete({setIsLogin}) {
   return (
     <>
       <Header2 componentName="회원탈퇴" />
@@ -30,6 +30,7 @@ export default function FreeBoardDelete() {
           delete="/"
           cancel="/UserMyPage"
           leftBtn="회원탈퇴"
+          setIsLogin={setIsLogin}
         />
       </ContentsBox>
     </>

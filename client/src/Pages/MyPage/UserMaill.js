@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {useHistory} from 'react-router';
-import styled from 'styled-components';
-import Header2 from '../../components/common/Header2';
-import MaillList from '../../components/Mypages/MaillList';
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import {useHistory} from "react-router";
+import styled from "styled-components";
+import Header2 from "../../components/common/Header2";
+import MaillList from "../../components/Mypages/MaillList";
 
 const MaillTitleContainer = styled.div`
   margin-top: 27px;
@@ -123,13 +123,16 @@ const WebMaillContainerDiv = styled.div`
 export default function UserMaill() {
   const history = useHistory();
   const [mailList, setMailList] = useState([]);
+  const [checkList, setCheckList] = useState([]);
+  const [isAllChecked, setIsAllChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/mail/maillist', {
+      .get(`${process.env.REACT_APP_API_URI}/mail/maillist`, {
         headers: {
-          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-          'Content-Type': 'applicaton/json',
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "applicaton/json",
         },
       })
       .then(res => {
@@ -138,12 +141,36 @@ export default function UserMaill() {
   }, []);
 
   const GoMaillWrite = () => {
-    history.push('/MaillWrite');
+    history.push("/MaillWrite");
+  };
+
+  const handleAllChecked = () => {
+    setIsAllChecked(!isAllChecked);
+    setIsChecked(!isAllChecked);
+  };
+
+  const handleCheckList = id => {
+    checkId(id);
+  };
+
+  const checkId = id => {};
+
+  // const FilterCheckList = checkList.filter((element, index) => {
+  //   return checkList.indexOf(element) === index;
+  // });
+  const handleUnCheckList = id => {
+    unCheckId(id);
+  };
+
+  const unCheckId = id => {};
+
+  const handleDelete = () => {
+    console.log("check", checkList);
   };
 
   return (
     <>
-      <Header2 componentName={'쪽지'} />
+      <Header2 componentName={"쪽지"} />
       <MaillTitleContainer>
         <MaillTitleContainerDiv>
           <MaillTitleText>받은 쪽지함</MaillTitleText>
@@ -152,14 +179,20 @@ export default function UserMaill() {
       </MaillTitleContainer>
       <MaillDeleteContainer>
         <MaillDeleteContainerDiv>
-          <MaillDeleteInput type="checkbox" />
-          <MaillDeleteBtn>삭제</MaillDeleteBtn>
+          <MaillDeleteInput type="checkbox" checked={isAllChecked} onChange={handleAllChecked} />
+          <MaillDeleteBtn onClick={handleDelete}>삭제</MaillDeleteBtn>
         </MaillDeleteContainerDiv>
       </MaillDeleteContainer>
       <WebMaillContainer>
         <WebMaillContainerDiv>
           {mailList.map((list, idx) => (
-            <MaillList list={list} key={idx} />
+            <MaillList
+              list={list}
+              key={idx}
+              isChecked={isChecked}
+              handleCheckList={handleCheckList}
+              handleUnCheckList={handleUnCheckList}
+            />
           ))}
         </WebMaillContainerDiv>
       </WebMaillContainer>

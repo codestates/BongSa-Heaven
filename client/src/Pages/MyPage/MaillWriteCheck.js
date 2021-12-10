@@ -25,12 +25,7 @@ export default function FreeBoardDelete() {
       <Header2 componentName="쪽지" />
       <DesktopTitle title="쪽지" />
       <ContentsBox>
-        <Check
-          contents="쪽지를 전송하시겠습니까?"
-          delete="/UserMaill"
-          cancel="/MaillWrite"
-          leftBtn="확인"
-        />
+        <Check contents="쪽지를 전송하시겠습니까?" delete="/UserMaill" cancel="/MaillWrite" leftBtn="확인" />
       </ContentsBox>
     </>
   );

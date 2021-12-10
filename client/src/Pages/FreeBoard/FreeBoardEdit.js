@@ -1,6 +1,5 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {useHistory} from "react-router";
 import styled from "styled-components";
 import axios from "axios";
 import Header2 from "../../components/common/Header2";
@@ -84,7 +83,7 @@ const Img = styled.img`
   border-radius: 10px;
 `;
 
-export default function FreeBoardEdit({currentFBcontent}) {
+export default function FreeBoardEdit({currentFBcontent, GoToFreeBoardContent}) {
   let title = "",
     description = "";
   if (currentFBcontent.data !== undefined) {
@@ -113,12 +112,12 @@ export default function FreeBoardEdit({currentFBcontent}) {
 
     axios
       .patch(
-        "http://localhost:8080/board/fbedit",
+        `${process.env.REACT_APP_API_URI}/board/fbedit`,
         {
           freeboard_id: currentFBcontent.data._id,
           title: editedTitle,
           description: editedDescription,
-          image: fileImage,
+          images: fileImage,
         },
         {
           headers: {
@@ -129,12 +128,14 @@ export default function FreeBoardEdit({currentFBcontent}) {
       )
       .then(res => {
         console.log(res.data.message);
+        GoToFreeBoardContent(currentFBcontent.data._id);
       })
       .catch(err => console.log(err));
   };
 
   useEffect(() => {
     if (currentFBcontent.data !== undefined) setFileImage(currentFBcontent.data.image);
+    console.log(currentFBcontent.data._id, editedTitle, editedDescription, fileImage);
   }, []);
 
   // console.log(currentFBcontent.data);

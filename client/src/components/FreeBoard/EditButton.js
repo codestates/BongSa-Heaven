@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {useHistory} from "react-router";
+import createBrowserHistory from "history/createBrowserHistory";
 
 const ImgUploadBox = styled.div`
   display: flex;
@@ -79,7 +79,7 @@ export default function EditButton(props) {
     props.setFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const history = useHistory();
+  const history = createBrowserHistory({forceRefresh: true});
   const Edit = url => history.push(url);
   const Cancel = url => history.push(url);
 
@@ -94,8 +94,8 @@ export default function EditButton(props) {
         <CancelButton onClick={() => Cancel(props.cancel)}>취소</CancelButton>
         <CompleteButton
           onClick={() => {
-            Edit(props.edit);
             props.editFreeBoard();
+            Edit(props.edit);
           }}
         >
           수정 완료

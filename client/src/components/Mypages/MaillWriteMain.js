@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
+import {useDispatch} from "react-redux";
+import {changeName, changeText} from "../../modules/maillWriteRedux";
 
 const MaillNickCheckContainer = styled.div`
   margin-left: 39px;
@@ -113,20 +115,26 @@ const MaillWriteInputContainer = styled.div`
   }
 `;
 export default function MaillWriteMain(Title) {
+  const dispath = useDispatch();
+
   const [value, setValue] = useState("");
+  const [text, setText] = useState("");
   const [checkName, setCheckName] = useState(false);
 
   useEffect(() => {
     setValue(Title.Title);
   }, []);
-  const valueChange = (e) => {
+  const valueChange = e => {
     setValue(e.target.value);
+  };
+  const textChange = e => {
+    setText(e.target.value);
   };
   const handleNicknameCheck = () => {
     if (value) {
       axios
         .post(
-          "http://localhost:8080/auth/nickcheck",
+          `${process.env.REACT_APP_API_URI}auth/nickcheck`,
           {
             nickname: value,
           },
@@ -134,15 +142,26 @@ export default function MaillWriteMain(Title) {
             headers: {
               "Content-Type": "application/json",
             },
-          }
+          },
         )
-        .then((res) => {
+        .then(res => {
+          if (res.status === 200) return setCheckName(false);
+          if (res.status === 201) return setCheckName(true);
+
           setCheckName(false);
         })
-        .catch((err) => {
-          setCheckName(true);
+        .catch(err => {
+          console.log("fail");
         });
     }
+  };
+
+  const onChangeName = value => {
+    dispath(changeName(value));
+  };
+
+  const onChangeText = text => {
+    dispath(changeText(text));
   };
   return (
     <>
@@ -151,31 +170,23 @@ export default function MaillWriteMain(Title) {
           <MaillNickCheckTop>
             <MaillNickCheckTopDiv>
               <MaillNickCheckTopWho>받는 사람</MaillNickCheckTopWho>
-              <MaillNickCheckTopNameInput
-                type="text"
-                value={value}
-                onChange={valueChange}
-              />
-              <MaillNickCheckTopNameCheckBtn onClick={handleNicknameCheck}>
-                닉네임 확인
-              </MaillNickCheckTopNameCheckBtn>
+              <MaillNickCheckTopNameInput type="text" value={value} onChange={valueChange} />
+              <MaillNickCheckTopNameCheckBtn onClick={handleNicknameCheck}>닉네임 확인</MaillNickCheckTopNameCheckBtn>
             </MaillNickCheckTopDiv>
           </MaillNickCheckTop>
           <MaillNickCheckBottom>
             {checkName ? (
-              <MaillNickCheckBottomText>
-                닉네임이 확인 되었습니다.
-              </MaillNickCheckBottomText>
+              <MaillNickCheckBottomText>닉네임이 확인 되었습니다.</MaillNickCheckBottomText>
             ) : (
-              <MaillNickCheckBottomText>
-                닉네임을 확인해 주세요.
-              </MaillNickCheckBottomText>
+              <MaillNickCheckBottomText>닉네임을 확인해 주세요.</MaillNickCheckBottomText>
             )}
           </MaillNickCheckBottom>
         </MaillNickCheckContainerDiv>
       </MaillNickCheckContainer>
       <MaillWriteInputContainer>
-        <MaillWriteInput type="text" />
+        <MaillWriteInput type="text" value={text} onChange={textChange} />
+        <button onClick={() => onChangeName(value)}>Name</button>
+        <button onClick={() => onChangeText(text)}>Text</button>
       </MaillWriteInputContainer>
     </>
   );

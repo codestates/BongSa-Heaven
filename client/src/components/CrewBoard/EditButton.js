@@ -95,7 +95,7 @@ export default function EditButton(props) {
         <CompleteButton
           onClick={() => {
             Edit(props.edit);
-            props.editFreeBoard();
+            props.editCrewBoard();
           }}
         >
           수정 완료

@@ -10,33 +10,36 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const ContentsBox = styled.div`
-
-@media screen and (min-width: 37.5rem) {
-  margin: auto;
-  background-color: white;
-  width: 1080px;
-  display:flex;
-  flex-direction: column;
-  padding: 20px 0px 20px 0px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-`
-
+  @media screen and (min-width: 37.5rem) {
+    margin: auto;
+    background-color: white;
+    width: 1080px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px 20px 0px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+`;
 
 export default function FreeBoardDelete({currentFBcontent}) {
   return (
     <>
       <Wrapper>
-        <Header2 componentName="삭제"/>
-        <DesktopTitle title="삭제"/>
+        <Header2 componentName="삭제" />
+        <DesktopTitle title="삭제" />
         <ContentsBox>
-          <DeleteCheck contents="게시글" delete="/FreeBoardList" cancel="/FreeBoardContents" currentFBcontent={currentFBcontent}/>
+          <DeleteCheck
+            contents="게시글"
+            delete="/FreeBoardList"
+            cancel="/FreeBoardContents"
+            currentFBcontent={currentFBcontent}
+          />
         </ContentsBox>
       </Wrapper>
     </>

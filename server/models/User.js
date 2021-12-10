@@ -43,8 +43,15 @@ const userSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    status: {
+      type: Boolean,
+      default: false,
+    },
+    authcode: {
+      type: String,
+    },
   },
-  { timestamps: true }
+  {timestamps: true},
 );
 
 // userSchema.plugin(findOrCreate);

@@ -1,6 +1,6 @@
 node_modules
 .env
 localhost*
-
+.prettierrc
 *package-lock.json
 *.pemg

@@ -8,8 +8,7 @@ const PaginationBox = styled.ul`
   padding: 20px;
 `;
 
-const PageNumber = styled.li`
-`;
+const PageNumber = styled.li``;
 
 const PageButton = styled.button`
   cursor: pointer;
@@ -18,9 +17,7 @@ const PageButton = styled.button`
   background: none;
 `;
 
-export default function Pagination(
-  { postPerPage, totalPosts, paginate }
-) {
+export default function Pagination({postPerPage, totalPosts, paginate}) {
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); i++) {
@@ -32,7 +29,9 @@ export default function Pagination(
       <PaginationBox>
         {pageNumbers.map(pageNumber => (
           <PageNumber key={pageNumber}>
-            <PageButton onClick={() => paginate(pageNumber)}>{pageNumber}</PageButton>
+            <PageButton onClick={() => paginate(pageNumber)}>
+              {pageNumber}
+            </PageButton>
           </PageNumber>
         ))}
       </PaginationBox>

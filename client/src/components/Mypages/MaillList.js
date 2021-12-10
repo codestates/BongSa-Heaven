@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, {useEffect, useState} from "react";
+import styled from "styled-components";
 
 const MaillContentsComponent = styled.div`
   margin-top: 21px;
@@ -74,17 +74,35 @@ const MaillCOntentsMainText = styled.div`
     color: #000000;
   }
 `;
-export default function MaillList(list) {
-  console.log(list.list.writer_nickname);
-  console.log(list.list.text);
+export default function MaillList({list, handleCheckList, handleUnCheckList, isChecked}) {
+  const [checked, setChecked] = useState(false);
+  useEffect(() => {
+    setChecked(isChecked);
+    const id = list._id;
+    // if (checked) {
+    //   handleCheckList(id);
+    // } else {
+    //   handleUnCheckList(id);
+    // }
+  }, [isChecked]);
+
+  const handleCheckd = () => {
+    setChecked(!checked);
+    const id = list._id;
+    if (!checked) {
+      handleCheckList(id);
+    } else {
+      handleUnCheckList(id);
+    }
+  };
 
   return (
     <>
       <MaillContentsComponent>
-        <MaillContentsUserName>{list.list.writer_nickname}</MaillContentsUserName>
+        <MaillContentsUserName>{list.writer_nickname}</MaillContentsUserName>
         <MaillContentsMain>
-          <MaillContentsMainInput type="checkbox" />
-          <MaillCOntentsMainText>{list.list.text}</MaillCOntentsMainText>
+          <MaillContentsMainInput type="checkbox" checked={checked} onChange={handleCheckd} />
+          <MaillCOntentsMainText>{list.text}</MaillCOntentsMainText>
         </MaillContentsMain>
       </MaillContentsComponent>
     </>

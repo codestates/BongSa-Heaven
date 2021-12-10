@@ -1,11 +1,11 @@
 const Map = require("../models/Map");
 const User = require("../models/User");
-const { isAuthorized } = require("../middlewares/token");
+const {isAuthorized} = require("../middlewares/token");
 
 module.exports = {
   //맵좌표를 등록하면 자연 적으로 유저 정보가 나온다.
   mapRegisterControl: async (req, res) => {
-    const { Ma, La } = req.body;
+    const {Ma, La} = req.body;
 
     const token = req.headers["authorization"] || req.headers["Authorization"];
     if (!token) {
@@ -46,17 +46,19 @@ module.exports = {
     }
   },
   mapInfoControl: (req, res) => {
-
     // const token = req.headers["authorization"] || req.headers["Authorization"];
     // if (!token) {
     //   res.status(401).send("인증이 필요합니다.");
     // }
-
-    Map.find()
-      .populate("user_id")
-      .exec()
-      .then((data) => {
-        res.status(200).send(data);
-      });
+    try {
+      Map.find()
+        .populate("user_id")
+        .exec()
+        .then(data => {
+          res.status(200).send(data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   },
 };

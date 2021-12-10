@@ -23,7 +23,6 @@ export default function DesktopTitle(props) {
 
   const GoToURL = () => {
     history.push(props.url);
-    console.log("click!");
   };
   return (
     <>

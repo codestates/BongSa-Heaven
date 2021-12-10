@@ -2,13 +2,13 @@ import React from "react";
 import {useState} from "react";
 import {useEffect} from "react";
 import styled from "styled-components";
+import axios from "axios";
 import Header2 from "../../components/common/Header2";
 import Loading from "../../components/common/Loading";
 import CreateLink from "../../components/CrewBoard/CreateLink";
 import CreateLink2 from "../../components/CrewBoard/CreateLink2";
 import Card from "../../components/CrewBoard/Card";
 import Pagination from "../../components/common/Pagination";
-import CrewBoardListDummy from "../../dummy/CrewBoardListDummy";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -72,7 +72,7 @@ const LeftCards = styled.div`
   }
 `;
 
-export default function CrewBoardList() {
+export default function CrewBoardList({GoToCrewBoardContent, isLogin}) {
   const [isLoading, CheckLoading] = useState(true);
 
   const [crewBoardinfo, setcrewBoardinfo] = useState([]);
@@ -91,25 +91,27 @@ export default function CrewBoardList() {
     CheckLoading(false);
   };
 
-  // const getCrewBoardList = () => {
-  //   axios.get("http://localhost:8080/board/info")
-  //   .then((res) => setcrewBoardinfo(res.data))
-  //   .catch((err) => console.log(err))
-  // }
+  const getCrewBoardList = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/board/cblist`)
+      .then(res => {
+        setcrewBoardinfo(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch(err => console.log(err));
+  };
 
   useEffect(() => {
     setTimeout(() => loadingHandler(), 1000);
-    // 임시 더미 파일 적용
-    setcrewBoardinfo(CrewBoardListDummy);
-    // 임시 더미 파일 적용
-  });
+    getCrewBoardList();
+  }, []);
 
   return (
     <>
       <Wrapper>
         <Header2 componentName="봉사단 게시판" />
         <LinkBox>
-          <CreateLink2 create="/CrewBoardCreate" />
+          <CreateLink2 create="/CrewBoardCreate" isLogin={isLogin} />
         </LinkBox>
         {isLoading ? (
           <>
@@ -119,7 +121,7 @@ export default function CrewBoardList() {
           <>
             <TitleBox>
               <Title>봉사단 게시판</Title>
-              <CreateLink create="/CrewBoardCreate" />
+              <CreateLink create="/CrewBoardCreate" isLogin={isLogin} />
             </TitleBox>
             <Cards>
               {currentPosts && currentPosts.length > 0 && (
@@ -127,37 +129,45 @@ export default function CrewBoardList() {
                   <BigCard>
                     <Card
                       key={0}
-                      img={currentPosts[0].img}
-                      helloMessage={currentPosts[0].helloMessage}
-                      writer={currentPosts[0].writer}
-                      date={currentPosts[0].date}
+                      crewboard_id={currentPosts[0]._id}
+                      img={currentPosts[0].images}
+                      helloMessage={currentPosts[0].shorts_description}
+                      writer={currentPosts[0].title}
+                      date={currentPosts[0].createdAt}
+                      GoToCrewBoardContent={GoToCrewBoardContent}
                     />
                   </BigCard>
                   <LeftCards>
                     {currentPosts.length === 2 ? (
                       <Card
                         key={1}
-                        img={currentPosts[1].img}
-                        helloMessage={currentPosts[1].helloMessage}
-                        writer={currentPosts[1].writer}
-                        date={currentPosts[1].date}
+                        crewboard_id={currentPosts[1]._id}
+                        img={currentPosts[1].images}
+                        helloMessage={currentPosts[1].shorts_description}
+                        writer={currentPosts[1].title}
+                        date={currentPosts[1].createdAt}
+                        GoToCrewBoardContent={GoToCrewBoardContent}
                       />
                     ) : null}
                     {currentPosts.length === 3 ? (
                       <>
                         <Card
                           key={1}
-                          img={currentPosts[1].img}
-                          helloMessage={currentPosts[1].helloMessage}
-                          writer={currentPosts[1].writer}
-                          date={currentPosts[1].date}
+                          crewboard_id={currentPosts[1]._id}
+                          img={currentPosts[1].images}
+                          helloMessage={currentPosts[1].shorts_description}
+                          writer={currentPosts[1].title}
+                          date={currentPosts[1].createdAt}
+                          GoToCrewBoardContent={GoToCrewBoardContent}
                         />
                         <Card
                           key={2}
-                          img={currentPosts[2].img}
-                          helloMessage={currentPosts[2].helloMessage}
-                          writer={currentPosts[2].writer}
-                          date={currentPosts[2].date}
+                          crewboard_id={currentPosts[2]._id}
+                          img={currentPosts[2].images}
+                          helloMessage={currentPosts[2].shorts_description}
+                          writer={currentPosts[2].title}
+                          date={currentPosts[2].createdAt}
+                          GoToCrewBoardContent={GoToCrewBoardContent}
                         />
                       </>
                     ) : null}

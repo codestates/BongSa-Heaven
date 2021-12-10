@@ -1,7 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import {useState} from "react";
 import axios from "axios";
-import { useHistory } from "react-router";
+import {useHistory} from "react-router";
 import styled from "styled-components";
 import Header4 from "../../components/common/Header4";
 
@@ -46,7 +46,6 @@ const PassCheckText = styled.div`
   }
 `;
 
-
 const PassCheckIsNotRight = styled.div`
   display: flex;
   justify-content: center;
@@ -87,6 +86,8 @@ const CheckBtn = styled.button`
   background: #f7f7f7;
   border-radius: 4px;
   border: 0;
+  cursor: pointer;
+
   @media screen and (min-width: 37.5rem) {
     margin-left: 0px;
   }
@@ -102,7 +103,7 @@ export default function RecruiterEditPasswordCheck() {
   const [passwordToCheck, setPasswordToCheck] = useState("");
   const [passwordIsNotRight, setPasswordIsNotRight] = useState("");
 
-  const handlePassword = (e) => {
+  const handlePassword = e => {
     console.log(e.target.value);
     setPasswordToCheck(e.target.value);
   };
@@ -110,28 +111,26 @@ export default function RecruiterEditPasswordCheck() {
   const passwordChecking = () => {
     axios
       .post(
-        "http://localhost:8080/user/password",
-        { password: passwordToCheck },
+        `${process.env.REACT_APP_API_URI}/user/password`,
+        {password: passwordToCheck},
         {
           headers: {
             authorization: `Bearer ` + localStorage.getItem("accessToken"),
             "Content-Type": "application/json",
           },
-        }
+        },
       )
-      .then((res) => {
+      .then(res => {
         GoRecruiterEdit();
         console.log(res.data.message);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err.response.status);
 
         if (err.response.status === 404) {
           setPasswordIsNotRight("비밀번호가 일치하지 않습니다.");
         } else if (err.response.status === 401) {
-          setPasswordIsNotRight(
-            "회원정보가 등록되어 있지 않습니다. 먼저 등록부터 해주세요."
-          );
+          setPasswordIsNotRight("회원정보가 등록되어 있지 않습니다. 먼저 등록부터 해주세요.");
         }
       });
   };
@@ -146,14 +145,8 @@ export default function RecruiterEditPasswordCheck() {
           회원의 정보를 안전하게 보호하기 위해,
           <br /> 비밀번호를 다시 한번 입력해 주시기 바랍니다.
         </PassCheckText>
-        <PasswordCheckInput 
-        type="password"
-        placeholder="password" 
-        onChange={handlePassword}
-        />
-        <PassCheckIsNotRight>
-          {passwordIsNotRight}
-        </PassCheckIsNotRight>
+        <PasswordCheckInput type="password" placeholder="password" onChange={handlePassword} />
+        <PassCheckIsNotRight>{passwordIsNotRight}</PassCheckIsNotRight>
         <CheckBtn onClick={passwordChecking}>확인</CheckBtn>
         {/* </PasswordCheckContainerDiv> */}
       </PasswordCheckContainer>

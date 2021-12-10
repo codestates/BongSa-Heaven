@@ -1,6 +1,7 @@
 node_modules
 .env
 localhost*
-
+.key.pem
+config/sendEmail.json
 *package-lock.json
 *.pemg

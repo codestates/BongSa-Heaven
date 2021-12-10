@@ -156,7 +156,7 @@ const ContentsBoxDeleteButton = styled.div`
   }
 `;
 
-export default function Writing({currentFBcontent}) {
+export default function Writing({currentFBcontent, userId}) {
   const history = useHistory();
 
   const Gotoedit = () => history.push("/FreeBoardEdit");
@@ -179,7 +179,9 @@ export default function Writing({currentFBcontent}) {
                 <FontAwesomeIcon icon={faPaperPlane} onClick={GotoMailWrite} />
               </IconBox>
               <ContentsBoxAdjustBox>
-                <ContentsBoxAdjust onClick={Gotoedit}>수정하기</ContentsBoxAdjust>
+                {userId === currentFBcontent.data.user_id._id ? (
+                  <ContentsBoxAdjust onClick={Gotoedit}>수정하기</ContentsBoxAdjust>
+                ) : null}
               </ContentsBoxAdjustBox>
             </ContentsBoxWriterBox>
             <ContentsBoxContents>{currentFBcontent.data.description}</ContentsBoxContents>
@@ -187,8 +189,12 @@ export default function Writing({currentFBcontent}) {
               {currentFBcontent.data.images === undefined ? <></> : <Img src={currentFBcontent.data.images} />}
             </ContentsBoxImgBox>
             <ContentsBoxDeleteBox>
-              <ContentsBoxAdjust2 onClick={Gotoedit}>수정</ContentsBoxAdjust2>
-              <ContentsBoxDeleteButton onClick={Gotodelete}>삭제</ContentsBoxDeleteButton>
+              {userId === currentFBcontent.data.user_id._id ? (
+                <>
+                  <ContentsBoxAdjust2 onClick={Gotoedit}>수정</ContentsBoxAdjust2>
+                  <ContentsBoxDeleteButton onClick={Gotodelete}>삭제</ContentsBoxDeleteButton>
+                </>
+              ) : null}
             </ContentsBoxDeleteBox>
           </ContentsBox>
         </>

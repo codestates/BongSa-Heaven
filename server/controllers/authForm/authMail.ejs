@@ -1,0 +1,28 @@
+<html>
+<body style="padding: 0; margin: 0; box-sizing: border-box; width: 920px;">
+  <div style="font-size: 50px; font-weight: bold; margin: 10px 10px;">BongSa-Heaven</div>
+  <div style="width: 920px;">
+    <% if(display !== 'none') {%>
+      <div style="width:800px; height:400px; padding:10px; border: 1px solid black; border-radius: 10px; margin: 10px 10px;">
+        환영합니다!
+        <br>
+        <br>
+       우리 봉사 천국에 가입해 주셔서 감사합니다. 아래 링크를 통해 인증을 완료하시면 계속해서 저희 서비스를 이용 하실수 있습니다.
+        <br>
+    
+        <br>
+        <a href="<%= clientAddr %>/Signin?authCode=<%= authCode %>"" style="margin: 5px 10px; font-size: 16px;">이곳을 눌러 회원가입 을 완료해주세요</a>
+        <br>
+        <div style="margin: 5px 10px; font-size: 20px; font-weight: bold;"> 위 링크는 1시간 후에 만료됩니다</div>
+        <br>
+        
+        
+        .<br>
+      </div>
+    
+    <% } %>
+    
+    <p style="color:gray; margin: 5px 10px">.</p>
+  </div>
+</body>
+</html>

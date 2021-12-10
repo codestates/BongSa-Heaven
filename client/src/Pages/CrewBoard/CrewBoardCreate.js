@@ -3,7 +3,8 @@ import {useState} from "react";
 import styled from "styled-components";
 import Header2 from "../../components/common/Header2";
 import DesktopTitle from "../../components/common/DesktopTitle";
-import Input from "../../components/common/Input";
+import Input from "../../components/CrewBoard/Input";
+import Input2 from "../../components/CrewBoard/Input2";
 import CreateButton from "../../components/CrewBoard/CreateButton";
 import CreateButton2 from "../../components/CrewBoard/CreateButton2";
 
@@ -74,25 +75,46 @@ const Img = styled.img`
 `;
 
 export default function CrewBoardCreate() {
+  const [title, setTitle] = useState("");
+  const [hello, setHello] = useState("");
+  const [description, setDescription] = useState("");
+  const [previewFileImage, setpreviewFileImage] = useState("");
   const [fileImage, setFileImage] = useState("");
+
+  const inputHandler = e => {
+    setDescription(e.target.value);
+    console.log(description);
+  };
 
   return (
     <>
       <Wrapper>
         <Header2 componentName="글 작성하기" />
         <DesktopTitle title="글 작성하기" />
-        <CreateButton2 create="/CrewBoardList" cancel="/CrewBoardList" setFileImage={setFileImage} />
-        <Input text="봉사단 이름" />
-        <Input text="봉사단 한줄 소개글" />
+        <CreateButton2
+          create="/CrewBoardList"
+          cancel="/CrewBoardList"
+          setFileImage={setFileImage}
+          setpreviewFileImage={setpreviewFileImage}
+        />
+        <Input text="봉사단 이름" setTitle={setTitle} title={title} />
+        <Input2 text="봉사단 한줄 소개글" setHello={setHello} hello={hello} />
         <CreateBox>
           <CreateBoxContentsBox>
-            <CreateBoxContents placeholder="내용을 입력해주세요."></CreateBoxContents>
+            <CreateBoxContents placeholder="내용을 입력해주세요." onChange={inputHandler} />
           </CreateBoxContentsBox>
           <ContentsBoxImgBox>
-            <Img src={fileImage} alt="수정할 이미지 자리" />
+            <Img src={previewFileImage} alt="수정할 이미지 자리" />
           </ContentsBoxImgBox>
         </CreateBox>
-        <CreateButton create="/CrewBoardList" cancel="/CrewBoardList" setFileImage={setFileImage} />
+        <CreateButton
+          title={title}
+          hello={hello}
+          description={description}
+          fileImage={fileImage}
+          setFileImage={setFileImage}
+          setpreviewFileImage={setpreviewFileImage}
+        />
       </Wrapper>
     </>
   );

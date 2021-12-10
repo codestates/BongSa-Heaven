@@ -3,7 +3,7 @@ import {useState} from "react";
 import styled from "styled-components";
 import Header2 from "../../components/common/Header2";
 import DesktopTitle from "../../components/common/DesktopTitle";
-import Input from "../../components/common/Input";
+import Input from "../../components/FreeBoard/Input";
 import CreateButton from "../../components/FreeBoard/CreateButton";
 import CreateButton2 from "../../components/FreeBoard/CreateButton2";
 
@@ -92,20 +92,13 @@ export default function FreeBoardCreate() {
         <Input text="제목" setTitle={setTitle} title={title} />
         <CreateBox>
           <CreateBoxContentsBox>
-            <CreateBoxContents placeholder="내용을 입력하세요." onChange={inputHandler}></CreateBoxContents>
+            <CreateBoxContents placeholder="내용을 입력하세요." onChange={inputHandler} />
           </CreateBoxContentsBox>
           <ContentsBoxImgBox>
             <Img src={fileImage} alt="수정할 이미지 자리" />
           </ContentsBoxImgBox>
         </CreateBox>
-        <CreateButton
-          create="/FreeBoardList"
-          cancel="/FreeBoardList"
-          setFileImage={setFileImage}
-          fileImage={fileImage}
-          title={title}
-          description={description}
-        />
+        <CreateButton setFileImage={setFileImage} fileImage={fileImage} title={title} description={description} />
       </Wrapper>
     </>
   );

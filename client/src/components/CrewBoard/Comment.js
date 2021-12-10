@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
 const CommentList = styled.div`
   flex-direction: column;
@@ -116,7 +116,7 @@ const CommentInputButton = styled.div`
   }
 `;
 
-export default function Comment({ currentFBcontent }) {
+export default function Comment({currentCBcontent}) {
   const [commentValue, setCommentValue] = useState("");
   const [myId, setMyId] = useState("");
   const [refresh, SetRefresh] = useState(true);
@@ -136,65 +136,66 @@ export default function Comment({ currentFBcontent }) {
           "Content-Type": "application/json",
         },
       })
-      .then((res) => {
+      .then(res => {
         // console.log("res.data.data.nickname",res.data.data.nickname)
         setMyId(res.data.data._id);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log("응 안돼~", err);
       });
   };
 
-  const makeComment = (e) => {
+  const makeComment = e => {
     setCommentValue(e.target.value);
     console.log(commentValue);
   };
 
   const saveComment = () => {
-    if(commentValue.length > 0) {
-    axios
-      .post(
-        "http://localhost:8080/comment/fbcommentregister",
-        {
-          user_id: myId,
-          freeboard_id: currentFBcontent.data._id,
-          comment: commentValue,
-        },
-        {
-          headers: {
-            authorization: `Bearer ` + localStorage.getItem("accessToken"),
-            "Content-Type": "application/json",
+    if (commentValue.length > 0) {
+      axios
+        .post(
+          "http://localhost:8080/comment/cbcommentregister",
+          {
+            user_id: myId,
+            crewboard_id: currentCBcontent.data._id,
+            comment: commentValue,
           },
-        }
-      )
-      .then((res) => {
-        console.log(res.data.message);
-        setCommentValue("");
-        SetRefresh(!refresh);
-        console.log(refresh);
-      })
-      // .then((res) => window.location.replace("/FreeBoardContents"))
-      .catch((err) => console.log(err));
+          {
+            headers: {
+              authorization: `Bearer ` + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then(res => {
+          console.log(res.data.message);
+          setCommentValue("");
+          SetRefresh(!refresh);
+          console.log(refresh);
+        })
+        // .then((res) => window.location.replace("/CrewBoardContents"))
+        .catch(err => console.log(err));
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       getUserInfo();
-      console.log("change change change~~");
+      // console.log("change change change~~");
     }
+    // console.log(currentCBcontent.data);
   }, [refresh]);
 
   return (
     <>
       <CommentList>
-        {currentFBcontent.data === undefined
+        {currentCBcontent.data === undefined
           ? null
-          : currentFBcontent.data.freecomments.map((comment, idx) => (
+          : currentCBcontent.data.crewcomments.map((comment, idx) => (
               <CommentBox key={idx}>
                 <CommentWriter>
                   {comment.user_id.nickname}
-                  <CommentDate>{comment.createdAt.slice(0,10)}</CommentDate>
+                  <CommentDate>{comment.createdAt.slice(0, 10)}</CommentDate>
                 </CommentWriter>
                 <CommentContents>{comment.comment}</CommentContents>
               </CommentBox>

@@ -4,7 +4,7 @@ import Header2 from "../../components/common/Header2";
 import DesktopTitle from "../../components/common/DesktopTitle";
 import Writing from "../../components/FreeBoard/Writing";
 import List from "../../components/common/List";
-import Comment from "../../components/common/Comment";
+import Comment from "../../components/FreeBoard/Comment";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -14,13 +14,13 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-export default function FreeBoardContents({currentFBcontent}) {
+export default function FreeBoardContents({currentFBcontent, userId}) {
   return (
     <>
       <Wrapper>
         <Header2 componentName="게시글 보기" />
         <DesktopTitle title="게시글 보기" url="/FreeBoardList" />
-        <Writing currentFBcontent={currentFBcontent} />
+        <Writing currentFBcontent={currentFBcontent} userId={userId} />
         <List backtoList="/FreeBoardList" />
         <Comment currentFBcontent={currentFBcontent} />
       </Wrapper>

@@ -78,7 +78,7 @@ import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 
     axios
     .get(
-      "http://localhost:8080/user/info",
+      `${process.env.REACT_APP_API_URI}/user/info`,
       {
         headers: {
           "authorization" : `Bearer ` + localStorage.getItem('accessToken'),

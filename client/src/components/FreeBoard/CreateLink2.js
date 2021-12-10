@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router";
-
+import {useHistory} from "react-router";
 
 const LinkButton = styled.div`
-
   cursor: pointer;
-  background-color : #FF7676;
+  background-color: #ff7676;
   color: white;
   display: flex;
   justify-content: center;
@@ -19,20 +17,11 @@ const LinkButton = styled.div`
   @media screen and (min-width: 37.5rem) {
     display: none;
   }
-
-`
-
+`;
 
 export default function CreateLink(props) {
-
   const history = useHistory();
-  const LinkToCreate = (url) => history.push(url);
+  const LinkToCreate = url => history.push(url);
 
-  return (
-    <>
-      <LinkButton onClick={() => LinkToCreate(props.create)}>
-        글쓰기
-      </LinkButton>
-    </>
-  );
+  return <>{props.isLogin ? <LinkButton onClick={() => LinkToCreate(props.create)}>글쓰기</LinkButton> : <></>}</>;
 }

@@ -57,7 +57,7 @@ const ContentsBox = styled.div`
   }
 `;
 
-export default function FreeBoardList({GoToFreeBoardContent}) {
+export default function FreeBoardList({GoToFreeBoardContent, isLogin}) {
   const [isLoading, CheckLoading] = useState(true);
 
   const [freeBoardinfo, setFreeBoardinfo] = useState([]);
@@ -77,9 +77,8 @@ export default function FreeBoardList({GoToFreeBoardContent}) {
 
   const getFreeBoardList = () => {
     axios
-      .get("http://localhost:8080/board/fblist")
+      .get(`${process.env.REACT_APP_API_URI}/board/fblist`)
       .then(res => {
-        console.log(res);
         setFreeBoardinfo(res.data.data);
       })
       .catch(err => console.log(err));
@@ -87,7 +86,6 @@ export default function FreeBoardList({GoToFreeBoardContent}) {
 
   useEffect(() => {
     setTimeout(() => loadingHandler(), 1000);
-
     getFreeBoardList();
   }, []);
 
@@ -95,7 +93,7 @@ export default function FreeBoardList({GoToFreeBoardContent}) {
     <>
       <Header2 componentName="자유 게시판" />
       <Headerspace>
-        <CreateLink2 create="/FreeBoardCreate" />
+        <CreateLink2 create="/FreeBoardCreate" isLogin={isLogin} />
       </Headerspace>
 
       {isLoading ? (
@@ -106,21 +104,32 @@ export default function FreeBoardList({GoToFreeBoardContent}) {
         <>
           <TitleBox>
             <Title>자유 게시판</Title>
-            <CreateLink create="/FreeBoardCreate" />
+            <CreateLink create="/FreeBoardCreate" isLogin={isLogin} />
           </TitleBox>
           <ContentsBox>
             {currentPosts &&
               currentPosts.length > 0 &&
-              currentPosts.map(board => (
-                <Contents
-                  key={board._id}
-                  freeboard_id={board._id}
-                  title={board.title}
-                  writer={board.user_id.nickname}
-                  date={board.createdAt.slice(0, 10) + "  " + board.createdAt.slice(11, 19)}
-                  GoToFreeBoardContent={GoToFreeBoardContent}
-                />
-              ))}
+              currentPosts.map(board =>
+                board.user_id.nickname == null ? (
+                  <Contents
+                    key={board._id}
+                    freeboard_id={board._id}
+                    title={board.title}
+                    writer="탈퇴자"
+                    date={board.createdAt.slice(0, 10) + "  " + board.createdAt.slice(11, 19)}
+                    GoToFreeBoardContent={GoToFreeBoardContent}
+                  />
+                ) : (
+                  <Contents
+                    key={board._id}
+                    freeboard_id={board._id}
+                    title={board.title}
+                    writer={board.user_id.nickname}
+                    date={board.createdAt.slice(0, 10) + "  " + board.createdAt.slice(11, 19)}
+                    GoToFreeBoardContent={GoToFreeBoardContent}
+                  />
+                ),
+              )}
           </ContentsBox>
         </>
       )}

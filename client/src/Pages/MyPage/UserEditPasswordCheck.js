@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import axios from 'axios';
-import {useHistory} from 'react-router';
-import styled from 'styled-components';
-import Header4 from '../../components/common/Header4';
+import React, {useState} from "react";
+import axios from "axios";
+import {useHistory} from "react-router";
+import styled from "styled-components";
+import Header4 from "../../components/common/Header4";
 
 const PasswordCheckContainer = styled.div`
   @media screen and (min-width: 37.5rem) {
@@ -86,7 +86,6 @@ const CheckBtn = styled.button`
   background: #f7f7f7;
   border-radius: 4px;
   border: 0;
-
   cursor: pointer;
   @media screen and (min-width: 37.5rem) {
     margin-left: 0px;
@@ -96,11 +95,11 @@ const CheckBtn = styled.button`
 export default function UserEditPasswordCheck() {
   const history = useHistory();
   const GoUserEdit = () => {
-    history.push('/UserEdit');
+    history.push("/UserEdit");
   };
 
-  const [passwordToCheck, setPasswordToCheck] = useState('');
-  const [passwordIsNotRight, setPasswordIsNotRight] = useState('');
+  const [passwordToCheck, setPasswordToCheck] = useState("");
+  const [passwordIsNotRight, setPasswordIsNotRight] = useState("");
 
   const handlePassword = e => {
     console.log(e.target.value);
@@ -110,12 +109,12 @@ export default function UserEditPasswordCheck() {
   const passwordChecking = () => {
     axios
       .post(
-        `http://localhost:8080/user/password`,
+        ` ${process.env.REACT_APP_API_URI}/user/password`,
         {password: passwordToCheck},
         {
           headers: {
-            authorization: `Bearer ` + localStorage.getItem('accessToken'),
-            'Content-Type': 'application/json',
+            authorization: `Bearer ` + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json",
           },
         },
       )
@@ -127,9 +126,9 @@ export default function UserEditPasswordCheck() {
         console.log(err.response.status);
 
         if (err.response.status === 404) {
-          setPasswordIsNotRight('비밀번호가 일치하지 않습니다.');
+          setPasswordIsNotRight("비밀번호가 일치하지 않습니다.");
         } else if (err.response.status === 401) {
-          setPasswordIsNotRight('회원정보가 등록되어 있지 않습니다. 먼저 등록부터 해주세요.');
+          setPasswordIsNotRight("회원정보가 등록되어 있지 않습니다. 먼저 등록부터 해주세요.");
         }
       });
   };

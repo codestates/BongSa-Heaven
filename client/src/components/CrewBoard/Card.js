@@ -1,45 +1,44 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import {useHistory} from "react-router";
 
-  const Cardbox = styled.div`
+const Cardbox = styled.div`
   cursor: pointer;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 80%;
   margin: auto;
   margin-top: 3vh;
-`
+`;
 
 const ImageBox = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-
-`
+`;
 const Img = styled.img`
   width: 100%;
   border-radius: 10px 10px 0px 0px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   object-fit: cover;
-`
+`;
 
 const Describe = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   width: 100%;
   height: 50px;
   background-color: white;
   border-radius: 0px 0px 10px 10px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-  
+
   @media screen and (min-width: 37.5rem) {
     height: 80px;
   }
-`
+`;
 
 const SayHello = styled.div`
   height: 30%;
@@ -51,19 +50,19 @@ const SayHello = styled.div`
   @media screen and (min-width: 37.5rem) {
     font-size: 14px;
   }
-`
+`;
 const VolunteersName = styled.div`
   height: 40%;
   display: flex;
   font-size: 12px;
   align-items: center;
-  color: #448B76;
+  color: #448b76;
   margin-left: 2vw;
 
   @media screen and (min-width: 37.5rem) {
     font-size: 16px;
   }
-`
+`;
 const PublishedDate = styled.div`
   height: 30%;
   display: flex;
@@ -75,33 +74,21 @@ const PublishedDate = styled.div`
   @media screen and (min-width: 37.5rem) {
     font-size: 12px;
   }
-`
+`;
 
-export default function Card( {img, helloMessage, writer, date} ) {
-
-
-  const history = useHistory();
-
-  const GotoCard = () => history.push("/CrewBoardContents");
-
+export default function Card({crewboard_id, img, helloMessage, writer, date, GoToCrewBoardContent}) {
   return (
     <>
-      <Cardbox onClick={GotoCard}> 
+      <Cardbox onClick={() => GoToCrewBoardContent(crewboard_id)}>
         <ImageBox>
-          <Img src={img}/>
+          <Img src={img} />
         </ImageBox>
         <Describe>
-          <SayHello>
-          {helloMessage}
-          </SayHello>
-          <VolunteersName>
-          {writer}
-          </VolunteersName>
-          <PublishedDate>
-          {date}
-          </PublishedDate>
+          <SayHello>{helloMessage}</SayHello>
+          <VolunteersName>{writer}</VolunteersName>
+          <PublishedDate>{date}</PublishedDate>
         </Describe>
       </Cardbox>
     </>
-  )
+  );
 }

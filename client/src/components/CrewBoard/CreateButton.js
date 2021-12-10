@@ -76,7 +76,8 @@ const CompleteButton = styled.div`
 
 export default function CreateButton(props) {
   const saveFileImage = e => {
-    props.setFileImage(URL.createObjectURL(e.target.files[0]));
+    props.setFileImage(e.target.files[0]);
+    props.setpreviewFileImage(URL.createObjectURL(e.target.files[0]));
   };
 
   const history = useHistory();
@@ -84,15 +85,26 @@ export default function CreateButton(props) {
   const Cancel = url => history.push(url);
 
   const createFreeBoard = () => {
-    if (props.description === "" || props.title === "") {
-      alert("제목이나 내용이 아무것도 없으면, 작성되지 않습니다.");
+    console.log("images", props.fileImage);
+    const formData = new FormData();
+
+    formData.append("img", props.fileImage);
+    console.log("img", props.fileImage);
+
+    if (props.description === "" || props.title === "" || props.hello === "") {
+      alert("제목이나 인사말, 내용이 아무것도 없으면, 작성되지 않습니다.");
+      return;
+    }
+    if (props.fileImage === "") {
+      alert("봉사단 글 작성시, 대표하는 이미지 파일은 필수입니다!");
       return;
     }
     axios
       .post(
-        "http://localhost:8080/board/fbregister",
+        "http://localhost:8080/board/cbregister",
         {
           title: props.title,
+          shorts_description: props.hello,
           description: props.description,
           images: props.fileImage,
         },
@@ -103,7 +115,10 @@ export default function CreateButton(props) {
           },
         },
       )
-      .then(res => console.log(res.data.message, "성공!"))
+      .then(res => {
+        console.log(res.data.message, "성공!");
+        Create("/CrewBoardList");
+      })
       .catch(err => console.log(err, "응안가"));
   };
 
@@ -115,11 +130,10 @@ export default function CreateButton(props) {
         </label>
       </ImgUploadBox>
       <SelectBox>
-        <CancelButton onClick={() => Cancel(props.cancel)}>취소</CancelButton>
+        <CancelButton onClick={() => Cancel("/CrewBoardList")}>취소</CancelButton>
         <CompleteButton
           onClick={() => {
             createFreeBoard();
-            Create(props.create);
           }}
         >
           작성 완료

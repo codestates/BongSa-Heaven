@@ -84,6 +84,7 @@ export default function CreateButton(props) {
   const Cancel = url => history.push(url);
 
   const createFreeBoard = () => {
+    console.log("fileImage:", props.fileImage);
     if (props.description === "" || props.title === "") {
       alert("제목이나 내용이 아무것도 없으면, 작성되지 않습니다.");
       return;
@@ -91,7 +92,7 @@ export default function CreateButton(props) {
 
     axios
       .post(
-        "http://localhost:8080/board/fbregister",
+        `${process.env.REACT_APP_API_URI}/board/fbregister`,
         {
           title: props.title,
           description: props.description,
@@ -104,7 +105,10 @@ export default function CreateButton(props) {
           },
         },
       )
-      .then(res => console.log(res.data.message, "성공!"))
+      .then(res => {
+        console.log(res.data.message, "성공!");
+        Create("/FreeBoardList");
+      })
       .catch(err => console.log(err, "응안가"));
   };
 
@@ -116,11 +120,10 @@ export default function CreateButton(props) {
         </label>
       </ImgUploadBox>
       <SelectBox>
-        <CancelButton onClick={() => Cancel(props.cancel)}>취소</CancelButton>
+        <CancelButton onClick={() => Cancel("/FreeBoardList")}>취소</CancelButton>
         <CompleteButton
           onClick={() => {
             createFreeBoard();
-            Create(props.create);
           }}
         >
           작성 완료

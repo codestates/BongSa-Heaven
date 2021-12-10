@@ -35,17 +35,17 @@ const InputText = styled.input`
   }
 `;
 
-export default function Input(props) {
-  const inputHandler = (e) => {
-    props.setTitle(e.target.value)
-    console.log(props.title)
-  }
+export default function Input2(props) {
+  const inputHandler = e => {
+    props.setHello(e.target.value);
+    console.log(props.hello);
+  };
 
   return (
     <>
       <InputBox>
         <InputTextBox>
-          <InputText onChange={inputHandler}></InputText>
+          <InputText placeholder={props.text} onChange={inputHandler}></InputText>
         </InputTextBox>
       </InputBox>
     </>
