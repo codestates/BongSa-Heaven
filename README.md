@@ -29,20 +29,19 @@ BongSa-Heaven은 이들에게 소통의 장을 제공합니다.
 
 
 ## PROTO-TYPE
-### front-end
 ![Mask Group](https://user-images.githubusercontent.com/83863101/143885559-ce29d6d3-9cbc-406b-9424-a6ef0d29e478.png)
 ![Component 4](https://user-images.githubusercontent.com/83863101/143885575-6cd45b28-9bf4-4577-8a8a-b6eee64907b2.png)
 ![Component 3](https://user-images.githubusercontent.com/83863101/143885578-36b355c7-55c3-4325-812c-24401d14cbe2.png)
 ![Component 2](https://user-images.githubusercontent.com/83863101/143885581-f97f818e-3281-4680-a445-61b4f6bb67f3.png)
 ![Component 1](https://user-images.githubusercontent.com/83863101/143885588-f294e700-0a5d-4eed-b270-3fca70b6af44.png)
-### back-end
+
 
 ## DB SCHEME
 ![스크린샷 2021-12-16 오전 11 36 20](https://user-images.githubusercontent.com/83863101/146297641-72c26b3e-184a-4486-9c7f-0c27598bb727.png)
 
 
 ## SYSTEM ARCHITECTURE
-
+![없어](https://media.discordapp.net/attachments/907147754386640903/920917038560575588/7fa0b62e48229900.png?width=1000&height=800)
 
 ## WIRE FRAME
 
