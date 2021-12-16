@@ -249,6 +249,7 @@ export default function UserSignUp() {
 
   const handleEmail = (e: any) => {
     console.log(e.target.value);
+    console.log(process.env.REACT_APP_API_URI, "uri경로");
     setEmail(e.target.value);
   };
   const handlePassword = (e: any) => {

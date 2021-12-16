@@ -14,7 +14,7 @@ export default function MainPage({
   const [freeBoardinfo, setFreeBoardinfo] = useState([]);
 
   const getCrewBoardList = () => {
-    console.log(process.env.REACT_APP_API_URI, "uri경로");
+    
     axios
       .get(`${process.env.REACT_APP_API_URI}/board/cblist`)
       .then(res => {
@@ -25,7 +25,7 @@ export default function MainPage({
   };
 
   const getFreeBoardList = () => {
-    console.log(process.env.REACT_APP_API_URI, "uri경로");
+    
     axios
       .get(`${process.env.REACT_APP_API_URI}/board/fblist`)
       .then(res => {
