@@ -211,7 +211,7 @@ export default function App() {
         });
     }
   };
-
+  console.log(process.env.REACT_APP_API_URI, "uri경로");
   return (
     <div id="app_div">
       <Header5
