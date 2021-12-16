@@ -2,7 +2,7 @@
 
 ##  LOGO : 사랑, 희생 그리고 당신. 
 > 세 마음이 모여 따뜻한 세상을 만들어 갑니다.
-![스크린샷 2021-12-16 오후 4 02 14](https://user-images.githubusercontent.com/83863101/146323628-5b57beb2-41b9-44d9-988d-23830efaa7c3.png)
+![image](https://user-images.githubusercontent.com/84559872/144054147-eb0423cd-cb5a-4432-9fb6-8403f93e8483.png)
 
 
 ### 봉사자, 봉사 구인자들의 통합 공간
