@@ -1,8 +1,8 @@
 # BongSa-Heaven
 
 ##  LOGO : 사랑, 희생 그리고 당신. 
-> 세 마음이 모여 따뜻한 세상을 만들어 갑니다.
-![image](https://user-images.githubusercontent.com/84559872/144054147-eb0423cd-cb5a-4432-9fb6-8403f93e8483.png)
+> 세 마음이 모여 따뜻한 세상을 만들어 갑니다.<br></br>
+![image](https://user-images.githubusercontent.com/84559872/144054147-eb0423cd-cb5a-4432-9fb6-8403f93e8483.png)<br></br>
 
 
 ### 봉사자, 봉사 구인자들의 통합 공간
