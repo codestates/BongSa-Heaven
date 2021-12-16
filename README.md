@@ -47,7 +47,7 @@ BongSa-Heaven은 이들에게 소통의 장을 제공합니다.
 ## WIRE FRAME
 
 
-## (현)BongSa-Sim Members (구)4_detectives
+## Members // (현)BongSa-Sim  // (구)4_detectives
 역할 | 이름 | 담당분야 | Github ID
 --- | --- | ------ | ---------
 팀원 | 김강민 | FRONT-END | starguys
