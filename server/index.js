@@ -24,7 +24,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URI || `https://bongsa-heaven.com`,
+    origin: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
