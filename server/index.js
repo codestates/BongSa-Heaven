@@ -23,7 +23,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: true,
+    origin: process.env.REACT_APP_API_URI || `https://bongsa-heavne.com`,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
@@ -47,7 +47,7 @@ app.use("/image", imageRouter);
 // app.post("/images", controller.imageControl);
 
 //server
-const HTTPS_PORT = 8080;
+const HTTPS_PORT = process.env.HTTPS_PORT || 8080;
 
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
