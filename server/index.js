@@ -23,7 +23,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: process.env.REACT_APP_API_URI || `https://bongsa-heavne.com`,
+    origin: process.env.CLIENT_URI|| `https://bongsa-heaven.com`,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
@@ -48,7 +48,6 @@ app.use("/image", imageRouter);
 
 //server
 const HTTPS_PORT = process.env.HTTPS_PORT || 8080;
-
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
