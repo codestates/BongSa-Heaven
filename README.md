@@ -36,13 +36,9 @@ BongSa-Heaven은 이들에게 소통의 장을 제공합니다._
 
 
 ## PROTO-TYPE
-![Mask Group](https://user-images.githubusercontent.com/83863101/143885559-ce29d6d3-9cbc-406b-9424-a6ef0d29e478.png)
-![Component 4](https://user-images.githubusercontent.com/83863101/143885575-6cd45b28-9bf4-4577-8a8a-b6eee64907b2.png)
-![Component 3](https://user-images.githubusercontent.com/83863101/143885578-36b355c7-55c3-4325-812c-24401d14cbe2.png)
-![Component 2](https://user-images.githubusercontent.com/83863101/143885581-f97f818e-3281-4680-a445-61b4f6bb67f3.png)
-![Component 1](https://user-images.githubusercontent.com/83863101/143885588-f294e700-0a5d-4eed-b270-3fca70b6af44.png)
-
-
+![스크린샷 2021-12-16 오후 4 42 52](https://user-images.githubusercontent.com/83863101/146329317-bb912263-a190-496d-be22-02b43fb5bccc.png)
+![스크린샷 2021-12-16 오후 4 43 05](https://user-images.githubusercontent.com/83863101/146329327-8770b5f1-0ffd-4673-bb34-2d339a171a10.png)
+![스크린샷 2021-12-16 오후 4 43 24](https://user-images.githubusercontent.com/83863101/146329329-44ec3f95-c316-4355-ad5f-f2bb1c06a07c.png)
 
 
 ## SYSTEM ARCHITECTURE
