@@ -15,7 +15,7 @@ export default function MainPage({
 
   const getCrewBoardList = () => {
     axios
-      .get(`https://bongsa-heaven.com/board/cblist`)
+      .get(`${process.env.REACT_APP_API_URI}/board/cblist`)
       .then(res => {
         setCrewBoardinfo(res.data.data);
         setTop3CrewBoardinfo(res.data.cbTopThree);
@@ -25,7 +25,7 @@ export default function MainPage({
 
   const getFreeBoardList = () => {
     axios
-      .get(`https://bongsa-heaven.com/board/fblist`)
+      .get(`${process.env.REACT_APP_API_URI}/board/fblist`)
       .then(res => {
         setFreeBoardinfo(res.data.data);
       })
