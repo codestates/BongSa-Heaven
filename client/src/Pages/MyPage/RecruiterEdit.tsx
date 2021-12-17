@@ -105,74 +105,6 @@ const CheckingPossibleOrNotButton = styled.div`
   border-radius: 20px;
 `;
 
-// const SelectSexBox = styled.div`
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   width: 80%;
-//   margin: 30px 0px 15px 0px;
-//   @media screen and (min-width: 37.5rem) {
-//     width: 40%;
-//     justify-content: space-between;
-//     /* background-color: yellow; */
-//   }
-// `;
-// const SelectSexButton = styled.div`
-//   background-color: #ffb1b1;
-//   color: black;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   width: 30vw;
-//   height: 17vh;
-//   border-radius: 50%;
-//   @media screen and (min-width: 37.5rem) {
-//     width: 140px;
-//     height: 140px;
-//     justify-content: space-between;
-//     /* background-color: yellow; */
-//   }
-// `;
-// const SexImageBox = styled.img`
-//   margin: 1vh 0vh 0.5vh 0vh;
-//   width: 70%;
-//   height: 70%;
-//   object-fit: cover;
-//   @media screen and (min-width: 37.5rem) {
-//     margin: 10;
-
-//     /* background-color: yellow; */
-//   }
-// `;
-
-// const SelectBox = styled.div`
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   width: 80%;
-//   margin: 15px 0px 15px 0px;
-//   @media screen and (min-width: 37.5rem) {
-//     justify-content: center;
-//   }
-// `;
-// const AgeButton = styled.div`
-//   background-color: #ffb1b1;
-//   color: black;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 30vw;
-//   height: 8vh;
-//   margin-right: 10px;
-//   margin-bottom: 20px;
-//   border-radius: 20px;
-//   @media screen and (min-width: 37.5rem) {
-//     margin: 0px 15px;
-//     width: 20%;
-//     height: 45px;
-//   }
-// `;
-
 const CompleteBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -249,7 +181,7 @@ export default function RecruiterEdit() {
 
     setUserInfo({...userInfo, [key]: e.target.value});
 
-    console.log(userInfo);
+    // console.log(userInfo);
     if (key === "password") {
       setNewPass({...newPass, [key]: e.target.value});
     } else if (key === "passwordCheck") {
@@ -300,15 +232,15 @@ export default function RecruiterEdit() {
     //닉네임 중복 체크
     const max = 8;
     const min = 2;
-    console.log("validate", nickname.length);
+    // console.log("validate", nickname.length);
 
     if (nickname.length < min || nickname.length > max) {
-      console.log("1이하, 9이상");
+      // console.log("1이하, 9이상");
       setNickCheckErrorMessage("닉네임은 2~8 자 입력해주세요");
       return false;
     } else {
       setNickCheckErrorMessage("");
-      console.log("2이상 8이하");
+      // console.log("2이상 8이하");
 
       return true;
       //2->1 로갈때 가 문제
@@ -340,14 +272,14 @@ export default function RecruiterEdit() {
           },
         )
         .then(res => {
-          console.log("통과");
+          // console.log("통과");
           if (userInfo.nickname !== res.data.data) {
             setNickCheckErrorMessage("사용 가능한 닉네임 입니다.");
             setIsNick(true);
           }
         })
         .catch(() => {
-          console.log("일치하는값 들어옴");
+          // console.log("일치하는값 들어옴");
           setNickCheckErrorMessage("중복된 닉네임 입니다.");
           setIsNick(false);
         });
@@ -370,7 +302,7 @@ export default function RecruiterEdit() {
     //비밀번호만 바꾸는경우
     //닉네임만 바꾸는 경우
     //그외 나머지를 바꾸는 경우
-    console.log(isDbNickname);
+    // console.log(isDbNickname);
 
     //비밀번호를 바꾸는 경우 비밀번호 유효성검사, 비밀번호가 같아야지 비밀번호를 바꿀수 있다.
     if (isDbNickname) {
@@ -396,7 +328,7 @@ export default function RecruiterEdit() {
             },
           )
           .then(res => {
-            console.log(res.data.data);
+            // console.log(res.data.data);
             history.push("/RecruiterMyPage");
           })
           .catch(err => {
@@ -425,7 +357,7 @@ export default function RecruiterEdit() {
             },
           )
           .then(res => {
-            console.log(res.data.data);
+            // console.log(res.data.data);
             history.push("/RecruiterMyPage");
           })
           .catch(err => {
@@ -435,7 +367,7 @@ export default function RecruiterEdit() {
     } else {
       //닉유효성검사 + 중복체크 통과
       if (validNickname && isNick) {
-        console.log("닉네임 변경");
+        // console.log("닉네임 변경");
         axios
           .patch(
             `${process.env.REACT_APP_API_URI}/user/edit`,
@@ -455,7 +387,7 @@ export default function RecruiterEdit() {
             },
           )
           .then(res => {
-            console.log(res.data.data);
+            // console.log(res.data.data);
             history.push("/RecruiterMyPage");
           })
           .catch(err => {
@@ -477,7 +409,7 @@ export default function RecruiterEdit() {
   };
 
   const getUserInfoHandler = () => {
-    console.log(localStorage.getItem("accessToken"));
+    // console.log(localStorage.getItem("accessToken"));
     //비밀번호, 닉네임, 등등 바꾸는 경우
 
     axios
@@ -489,7 +421,7 @@ export default function RecruiterEdit() {
       })
 
       .then(res => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
 
         setUserInfo({
           email: res.data.data.email,

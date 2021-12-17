@@ -8,13 +8,10 @@ const TopSpace = styled.div`
   height: 43px;
 `;
 const SeeContainer = styled.div`
-  @media screen and (min-width: 37.5rem) {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-  }
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 export default function SeeUsers() {
   const [userList, setUserList] = useState([]);
@@ -30,7 +27,7 @@ export default function SeeUsers() {
         setUserList(res.data);
       });
   }, []);
-  console.log(userList);
+  // console.log(userList);
 
   return (
     <>

@@ -38,7 +38,7 @@ const InputText = styled.input`
 export default function Input2(props: any) {
   const inputHandler = (e: any) => {
     props.setHello(e.target.value);
-    console.log(props.hello);
+    // console.log(props.hello);
   };
 
   return (

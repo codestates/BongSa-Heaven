@@ -17,7 +17,8 @@ const SelectBox = styled.div`
   height: 90vh;
 `;
 const GeneralButton = styled.div`
-  background-color: rgba(74, 241, 151, 0.6);
+  background-color: rgba(74, 241, 151, 0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: black;
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@ const GeneralButton = styled.div`
   cursor: pointer;
 
   @media screen and (min-width: 37.5rem) {
-    width: 1080px;
+    width: 400px;
     &:hover {
       background-color: #4af197;
       transition: 1s;
@@ -52,8 +53,10 @@ const GeneralButtonSubtitle = styled.div`
 `;
 
 const RecruiterButton = styled.div`
-  background-color: rgba(187, 123, 252, 0.6);
-  color: white;
+  background-color: rgba(187, 123, 252, 0.1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,7 +65,7 @@ const RecruiterButton = styled.div`
   margin-top: 10vh;
   cursor: pointer;
   @media screen and (min-width: 37.5rem) {
-    width: 1080px;
+    width: 400px;
     &:hover {
       background-color: #bb7bfc;
       transition: 1s;
@@ -70,7 +73,7 @@ const RecruiterButton = styled.div`
   }
 `;
 const RecruiterButtonTitle = styled.div`
-  color: white;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,7 +82,7 @@ const RecruiterButtonTitle = styled.div`
   font-weight: bold;
 `;
 const RecruiterButtonSubtitle = styled.div`
-  color: white;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;

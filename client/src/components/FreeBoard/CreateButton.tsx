@@ -106,7 +106,7 @@ export default function CreateButton(props: any) {
         },
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
 
         return axios
           .patch(

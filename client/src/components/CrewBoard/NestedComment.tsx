@@ -249,7 +249,7 @@ export default function NestedComment({
     <>
       {currentCBcontent.data.crewcomments[idx].crewchildcomments.map(
         (childComment: any, nestIdx: any) => (
-          <CommentListBigBox key={nestIdx}>
+          <CommentListBigBox key={childComment._id}>
             <NestedCommentsImgBox>
               <NestedCommentsImg src={"./image/nestedComment.png"} />
             </NestedCommentsImgBox>

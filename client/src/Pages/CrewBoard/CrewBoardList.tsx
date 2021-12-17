@@ -101,7 +101,7 @@ export default function CrewBoardList({
       .get(`${process.env.REACT_APP_API_URI}/board/cblist`)
       .then(res => {
         setCrewBoardinfo(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch(err => console.log(err));
   };

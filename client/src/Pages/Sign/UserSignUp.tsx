@@ -252,33 +252,33 @@ export default function UserSignUp() {
     setEmail(e.target.value);
   };
   const handlePassword = (e: any) => {
-    console.log(e.target.value, "pass");
+    // console.log(e.target.value, "pass");
     setPassword(e.target.value);
   };
   const handlePasswordCheck = (e: any) => {
-    console.log(e.target.value, "확인");
+    // console.log(e.target.value, "확인");
     setPasswordCheck(e.target.value);
   };
 
   const handleNickname = (e: any) => {
     //setName적용된후
-    console.log(nickname);
+    // console.log(nickname);
     setNicname(e.target.value);
 
     // validateNickname(e.target.vlaue)
   };
 
   const handleWantReigon = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setWant_region(e.target.value);
   };
   const handleWantVol = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setWant_vol(e.target.value);
   };
   //성별을 다룬다.
   const handleSex = (key: any) => (e: any) => {
-    console.log(key);
+    // console.log(key);
     if (key === "man") {
       setSex("남자");
     } else if (key === "woman") {
@@ -288,7 +288,7 @@ export default function UserSignUp() {
 
   // 나이를 다룬다.
   const handleAge = (key: any) => (e: any) => {
-    console.log(key, age);
+    // console.log(key, age);
 
     if (key === "teen") {
       setAge("청소년");
@@ -345,15 +345,15 @@ export default function UserSignUp() {
     //닉네임 중복 체크
     const max = 8;
     const min = 2;
-    console.log("validate", nickname.length);
+    // console.log("validate", nickname.length);
 
     if (nickname.length < min || nickname.length > max) {
-      console.log("1이하, 9이상");
+      // console.log("1이하, 9이상");
       setNickCheckErrorMessage("닉네임은 2~8 자 입력해주세요");
       return false;
     } else {
       setNickCheckErrorMessage("");
-      console.log("2이상 8이하");
+      // console.log("2이상 8이하");
 
       return true;
       //2->1 로갈때 가 문제
@@ -398,23 +398,23 @@ export default function UserSignUp() {
 
   //최종 회원가입을 눌렀을때
   const handleSignUpRequest = () => {
-    console.log("클릭했어");
+    // console.log("클릭했어");
 
     const validPassword = validatePassword(password);
     const checkPassword = validateCheckPassword(password, passwordCheck);
     const valideEmail = validateEmail(email);
     // const validNickname = validateNickname(nickname);
-    console.log(
-      // validNickname,
-      isNick,
-      validPassword,
-      checkPassword,
-      valideEmail,
-      want_vol,
-      want_region,
-      age,
-      sex,
-    );
+    // console.log(
+    // validNickname,
+    //   isNick,
+    //   validPassword,
+    //   checkPassword,
+    //   valideEmail,
+    //   want_vol,
+    //   want_region,
+    //   age,
+    //   sex,
+    // );
     // validateEmail(email);
     //모든 유효성 검사 통과가 되었다면 회원가입 가능
     if (
@@ -443,7 +443,7 @@ export default function UserSignUp() {
           {headers: {"Content-Type": "application/json"}},
         )
         .then(res => {
-          console.log("통과");
+          // console.log("통과");
           setIsSignUp(true);
           history.push("/SignIn");
 

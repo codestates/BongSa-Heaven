@@ -118,7 +118,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    console.log(isLogin, "login");
+    // console.log(isLogin, "login");
     setTimeout(() => {
       if (GetLife === "have") {
         axios
@@ -126,7 +126,7 @@ export default function App() {
             withCredentials: true,
           })
           .then(res => {
-            console.log("res");
+            // console.log("res");
             localStorage.setItem("accessToken", res.data.accessToken);
           });
 

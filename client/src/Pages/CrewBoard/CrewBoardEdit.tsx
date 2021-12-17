@@ -137,15 +137,12 @@ export default function CrewBoardEdit({
   };
   const editTitle = (e: any) => {
     setTitle(e.target.value);
-    console.log(editedTitle);
   };
   const editHello = (e: any) => {
     setHello(e.target.value);
-    console.log(editedHello);
   };
   const editDescription = (e: any) => {
     setDescription(e.target.value);
-    console.log(editedDescription);
   };
 
   const editCrewBoard = () => {
@@ -170,8 +167,6 @@ export default function CrewBoardEdit({
           },
         })
         .then(res => {
-          console.log(res.data);
-
           axios
             .patch(
               `${process.env.REACT_APP_API_URI}/board/cbedit`,
@@ -190,13 +185,11 @@ export default function CrewBoardEdit({
                 },
               },
             )
-            .then(res => {
-              console.log(res.data.message);
-            })
+            .then(res => {})
             .catch(err => console.log(err));
         })
 
-        .catch(err => console.log(err, "응안가"));
+        .catch(err => console.log(err, "Error!"));
 
       loadingHandler();
 
@@ -221,9 +214,7 @@ export default function CrewBoardEdit({
             },
           },
         )
-        .then(res => {
-          console.log(res.data.message);
-        })
+        .then(res => {})
         .catch(err => console.log(err, "응안가"));
 
       loadingHandler();

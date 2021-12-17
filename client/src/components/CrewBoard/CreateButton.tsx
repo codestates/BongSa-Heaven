@@ -109,7 +109,7 @@ export default function CreateButton(props: any) {
         },
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
 
         return axios
           .patch(
@@ -133,7 +133,7 @@ export default function CreateButton(props: any) {
           })
           .catch(err => console.log(err));
       })
-      .catch(err => console.log(err, "응안가"));
+      .catch(err => console.log(err, "Error!"));
   };
 
   return (

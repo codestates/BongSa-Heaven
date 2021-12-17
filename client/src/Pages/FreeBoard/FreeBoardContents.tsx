@@ -21,8 +21,6 @@ export default function FreeBoardContents({
   userId,
   GoToFreeBoardContent,
 }: any) {
-  console.log(currentFBcontent);
-
   const [isLoading, CheckLoading] = useState(true);
   const loadingHandler = () => {
     CheckLoading(false);

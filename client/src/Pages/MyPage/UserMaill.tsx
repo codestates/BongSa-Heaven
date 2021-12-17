@@ -11,8 +11,9 @@ import {resetList} from "../../modules/mailDeleteList";
 const MaillTitleContainer = styled.div`
   margin-top: 27px;
   height: 21px;
-  width: 375px;
+  width: 100%;
   display: flex;
+  justify-content: center;
   @media screen and (min-width: 37.5rem) {
     width: 100%;
     display: flex;
@@ -21,21 +22,25 @@ const MaillTitleContainer = styled.div`
 `;
 const MaillTitleContainerDiv = styled.div`
   @media screen and (min-width: 37.5rem) {
-    margin-right: 3%;
     width: 1080px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
   @media screen and (max-width: 37.5rem) {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    width: 100%;
   }
 `;
 
+const MaillTitleSpace = styled.div`
+  width: 20%;
+  height: 22px;
+`;
+
 const MaillTitleText = styled.div`
-  margin-left: 132px;
-  width: 111px;
-  height: 21px;
+  width: 50%;
+  height: 22px;
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
@@ -46,8 +51,8 @@ const MaillTitleText = styled.div`
   color: #448b76;
 `;
 const MaillTitleBtn = styled.button`
-  margin-left: 22px;
-  width: 90px;
+  width: 20%;
+  max-width: 80px;
   height: 22px;
   background: #f7f7f7;
   border-radius: 4px;
@@ -132,7 +137,8 @@ const MaillListEmptyContainer = styled.div`
 `;
 
 const MaillListEmptyDiv = styled.div`
-  width: 60%;
+  width: 80%;
+  max-width: 720px;
   height: 80%;
   display: flex;
   justify-content: center;
@@ -151,7 +157,7 @@ export default function UserMaill() {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [reload, setReload] = useState(false);
-  console.log(deleteList);
+  // console.log(deleteList);
 
   useEffect(() => {
     setTimeout(() => {
@@ -195,7 +201,7 @@ export default function UserMaill() {
 
   const handleDelete = () => {
     deleteList.forEach((el: any) => {
-      console.log(el);
+      // console.log(el);
 
       axios
         .delete(`${process.env.REACT_APP_API_URI}/mail/maildelete`, {
@@ -210,7 +216,7 @@ export default function UserMaill() {
           withCredentials: true,
         })
         .then(res => {
-          console.log(res.status);
+          // console.log(res.status);
           setReload(!reload);
         })
         .catch(res => {
@@ -224,6 +230,7 @@ export default function UserMaill() {
       <Header2 componentName={"쪽지"} />
       <MaillTitleContainer>
         <MaillTitleContainerDiv>
+          <MaillTitleSpace />
           <MaillTitleText>받은 쪽지함</MaillTitleText>
           <MaillTitleBtn onClick={GoMaillWrite}>쪽지 쓰기</MaillTitleBtn>
         </MaillTitleContainerDiv>

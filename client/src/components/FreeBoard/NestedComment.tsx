@@ -207,7 +207,7 @@ export default function NestedComment({
           },
         )
         .then(res => {
-          console.log(res.data.message);
+          // console.log(res.data.message);
           setEditMode(false);
           setNestedEditMode(false);
           setNestedCommentValue("");
@@ -233,7 +233,7 @@ export default function NestedComment({
         },
       })
       .then(res => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         setEditMode(false);
         setNestedCommentMode(false);
         setNestedEditMode(false);
@@ -248,7 +248,7 @@ export default function NestedComment({
     <>
       {currentFBcontent.data.freecomments[idx].freechildcomments.map(
         (childComment: any, nestIdx: any) => (
-          <CommentListBigBox key={nestIdx}>
+          <CommentListBigBox key={childComment._id}>
             <NestedCommentsImgBox>
               <NestedCommentsImg src={"./image/nestedComment.png"} />
             </NestedCommentsImgBox>
@@ -314,9 +314,9 @@ export default function NestedComment({
                       onClick={() => {
                         chosenEditCommentIdx(idx);
                         chosenEditNestedCommentIdx(nestIdx);
-                        console.log(isEditCommentIdx);
-                        console.log(isEditNestedCommentIdx);
                         deleteNestedComment(idx, nestIdx);
+                        // console.log(isEditCommentIdx);
+                        // console.log(isEditNestedCommentIdx);
                       }}
                     />
                   </CommentDeleteBox>
@@ -325,8 +325,8 @@ export default function NestedComment({
                       setNestedEditMode(true);
                       chosenEditCommentIdx(idx);
                       chosenEditNestedCommentIdx(nestIdx);
-                      console.log(isEditCommentIdx);
-                      console.log(isEditNestedCommentIdx);
+                      // console.log(isEditCommentIdx);
+                      // console.log(isEditNestedCommentIdx);
                     }}
                   >
                     수정

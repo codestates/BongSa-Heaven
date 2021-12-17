@@ -18,6 +18,8 @@ export default function MapReg() {
   const [value, setValue] = useState("강남");
   const [btnValue, setBtnValue] = useState("");
   const [reRender, setRender] = useState(true);
+  const [dbNick, setDbNick] = useState("");
+  const [myPin, setMyPin] = useState("등록하기");
   const history = useHistory();
 
   useEffect(() => {
@@ -341,6 +343,16 @@ export default function MapReg() {
     }
 
     let positions = [{}];
+
+    Axios.get(`${process.env.REACT_APP_API_URI}/user/info`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "applicaton/json",
+      },
+    }).then(res => {
+      setDbNick(res.data.data.nickname);
+    });
+
     Axios.get(`${process.env.REACT_APP_API_URI}/map/info`)
       .then(res => {
         for (let i = 0; i < res.data.length; i++) {
@@ -352,6 +364,14 @@ export default function MapReg() {
             vol_type: res.data[i].user_id.want_vol,
             company_name: res.data[i].user_id.company,
           });
+          if (res.data[i].user_id.nickname === dbNick) {
+            console.log("hi~~");
+
+            const myName = res.data[i].user_id.nickname;
+            console.log(myName);
+            console.log(positions[2], positions[i - 3]);
+            positions[i - 3].title = "내꺼";
+          }
         }
       })
       .then(res => {

@@ -6,8 +6,8 @@ import {faPaperPlane} from "@fortawesome/free-regular-svg-icons";
 
 const SeeRecruiterContainer = styled.div`
   margin-bottom: 13px;
-  margin-left: 17.5px;
-  width: 340px;
+  width: 90%;
+  max-width: 340px;
   height: 290px;
   background: #ffffff;
   box-shadow: 0px 2px 11px 4px rgba(0, 0, 0, 0.05);
@@ -18,7 +18,8 @@ const SeeRecruiterContainer = styled.div`
 `;
 const RecruiterUserName = styled.div`
   margin-top: 26px;
-  width: 111px;
+  width: 80%;
+  max-width: 111px;
   height: 21px;
   font-family: Roboto;
   font-style: normal;
@@ -45,27 +46,33 @@ const SendMaillBtn = styled.button`
 const VolRegion = styled.div`
   border-bottom: solid 1px rgb(0, 0, 0, 0.1);
   margin-top: 10px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 27px;
   display: flex;
 `;
 const VolType = styled.div`
   border-bottom: solid 1px rgb(0, 0, 0, 0.1);
   margin-top: 10px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 27px;
   display: flex;
 `;
 const RecruiterGroupName = styled.div`
   border-bottom: solid 1px rgb(0, 0, 0, 0.1);
   margin-top: 10px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 27px;
   display: flex;
 `;
 const LeftBox = styled.div`
-  width: 190px;
+  width: 100%;
+  max-width: 190px;
   height: 100%;
+  display: flex;
+  justify-content: center;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -73,8 +80,11 @@ const LeftBox = styled.div`
   line-height: 19px;
 `;
 const RightBox = styled.div`
-  width: 110px;
+  width: 100%;
+  max-width: 110px;
   height: 100%;
+  display: flex;
+  justify-content: center;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;

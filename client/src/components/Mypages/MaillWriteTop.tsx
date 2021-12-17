@@ -8,29 +8,29 @@ import {faPaperPlane} from "@fortawesome/free-regular-svg-icons";
 const MaillTitleContainer = styled.div`
   margin-top: 27px;
   height: 33px;
-  width: 375px;
+  width: 100%;
+  max-width: 375px;
   display: flex;
+  justify-content: center;
   border-bottom: 1px solid #f2f2f2;
   @media screen and (min-width: 37.5rem) {
-    width: 100%;
+    width: 42%;
+    max-width: none;
     justify-content: center;
     border: 0;
   }
 `;
 const MaillTitleContainerDiv = styled.div`
-  @media screen and (min-width: 37.5rem) {
-    width: 1080px;
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 3%;
-  }
+  width: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MaillTitleCancle = styled.button`
-  margin-left: 36px;
   background: #f7f7f7;
-  width: 65px;
+  width: 20%;
+  min-width: 65px;
   height: 22px;
   border-radius: 4px;
   font-family: Roboto;
@@ -42,12 +42,13 @@ const MaillTitleCancle = styled.button`
   color: #000000;
   border: 0;
   @media screen and (min-width: 37.5rem) {
-    display: none;
+    background: none;
+    color: none;
+    opacity: 0;
   }
 `;
 const MaillTitleText = styled.div`
-  margin-left: 31px;
-  width: 111px;
+  width: 50%;
   height: 21px;
   font-family: Roboto;
   font-style: normal;
@@ -59,8 +60,8 @@ const MaillTitleText = styled.div`
   color: #448b76;
 `;
 const MaillTitleBtn = styled.button`
-  margin-left: 31px;
-  width: 90px;
+  width: 30%;
+  max-width: 90px;
   height: 22px;
   background: #ff7676;
   border-radius: 4px;

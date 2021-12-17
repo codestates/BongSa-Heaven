@@ -106,20 +106,14 @@ export default function FreeBoardEdit({
   };
   const editTitle = (e: any) => {
     setTitle(e.target.value);
-    console.log(editedTitle);
   };
   const editDescription = (e: any) => {
     setDescription(e.target.value);
-    console.log(editedDescription);
   };
 
   const editFreeBoard = () => {
     if (editedTitle === "" || editedDescription === "") {
       alert("제목이나 내용이 아무것도 없으면, 수정되지 않습니다.");
-      return;
-    }
-    if (fileImage === "") {
-      alert("대표 이미지 파일이 없으면, 수정되지 않습니다.");
       return;
     }
     if (fileImage !== previousFileImage) {
@@ -135,8 +129,6 @@ export default function FreeBoardEdit({
           },
         })
         .then(res => {
-          console.log(res.data);
-
           axios
             .patch(
               `${process.env.REACT_APP_API_URI}/board/fbedit`,
@@ -154,13 +146,11 @@ export default function FreeBoardEdit({
                 },
               },
             )
-            .then(res => {
-              console.log(res.data.message);
-            })
+            .then(res => {})
             .catch(err => console.log(err));
         })
 
-        .catch(err => console.log(err, "응안가"));
+        .catch(err => console.log(err, "Error!"));
 
       loadingHandler();
 
@@ -172,7 +162,7 @@ export default function FreeBoardEdit({
         .patch(
           `${process.env.REACT_APP_API_URI}/board/fbedit`,
           {
-            crewboard_id: currentFBcontent.data._id,
+            freeboard_id: currentFBcontent.data._id,
             title: editedTitle,
             description: editedDescription,
             images: fileImage,
@@ -184,10 +174,8 @@ export default function FreeBoardEdit({
             },
           },
         )
-        .then(res => {
-          console.log(res.data.message);
-        })
-        .catch(err => console.log(err, "응안가"));
+        .then(res => {})
+        .catch(err => console.log(err, "error!"));
 
       loadingHandler();
 

@@ -15,13 +15,15 @@ const MyNameContainer = styled.div`
   border-radius: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
   @media screen and (min-width: 37.5rem) {
     width: 760px;
     height: 330px;
   }
 `;
 const MyNameText = styled.div`
+  width: 70%;
+  display: flex;
+  justify-content: center;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
@@ -33,11 +35,18 @@ const MyNameText = styled.div`
   }
 `;
 const MynameMaill = styled.div`
+  width: 30%;
+  display: flex;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+  }
 `;
 const MynameMaillSpan = styled.span`
   font-family: Roboto;

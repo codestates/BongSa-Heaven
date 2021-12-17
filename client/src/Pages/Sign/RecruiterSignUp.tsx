@@ -137,37 +137,37 @@ export default function UserEdit() {
   //청소년 청년 장년 클릭시 해당 정보를 가져온다.
 
   const handleEmail = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setEmail(e.target.value);
   };
   const handlePassword = (e: any) => {
-    console.log(e.target.value, "pass");
+    // console.log(e.target.value, "pass");
     setPassword(e.target.value);
   };
   const handlePasswordCheck = (e: any) => {
-    console.log(e.target.value, "확인");
+    // console.log(e.target.value, "확인");
     setPasswordCheck(e.target.value);
   };
 
   const handleNickname = (e: any) => {
     //setName적용된후
-    console.log(nickname);
+    // console.log(nickname);
     setNicname(e.target.value);
 
     // validateNickname(e.target.vlaue)
   };
 
   const handleWantReigon = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setWant_region(e.target.value);
   };
   const handleWantVol = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setWant_vol(e.target.value);
   };
 
   const handleCompany = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setCompay(e.target.value);
   };
   //성별을 다룬다.
@@ -218,16 +218,16 @@ export default function UserEdit() {
     //닉네임 중복 체크
     const max = 8;
     const min = 2;
-    console.log("validate", nickname.length);
+    // console.log("validate", nickname.length);
 
     if (nickname.length < min || nickname.length > max) {
-      console.log("2이상 8이하");
+      // console.log("2이상 8이하");
       setNickCheckErrorMessage("닉네임은 2~8 자 입력해주세요");
       return false;
     } else {
       setNickCheckErrorMessage("");
 
-      console.log("1이하, 9이상");
+      // console.log("1이하, 9이상");
       return true;
       //2->1 로갈때 가 문제
       //9->7까지 문제
@@ -256,14 +256,14 @@ export default function UserEdit() {
           },
         )
         .then(res => {
-          console.log("통과");
+          // console.log("통과");
           if (nickname !== res.data.data) {
             setNickCheckErrorMessage("사용 가능한 닉네임 입니다.");
             setIsNick(true);
           }
         })
         .catch(() => {
-          console.log("일치하는값 들어옴");
+          // console.log("일치하는값 들어옴");
           setNickCheckErrorMessage("중복된 닉네임 입니다.");
           setIsNick(false);
         });
@@ -272,20 +272,20 @@ export default function UserEdit() {
   };
   //최종 회원가입을 눌렀을때
   const handleSignUpRequest = () => {
-    console.log("클릭했어");
+    // console.log("클릭했어");
 
     const validPassword = validatePassword(password);
     const checkPassword = validateCheckPassword(password, passwordCheck);
     const valideEmail = validateEmail(email);
-    console.log(
-      isNick,
-      validPassword,
-      checkPassword,
-      valideEmail,
-      want_vol,
-      want_region,
-      company,
-    );
+    // console.log(
+    //   isNick,
+    //   validPassword,
+    //   checkPassword,
+    //   valideEmail,
+    //   want_vol,
+    //   want_region,
+    //   company,
+    // );
     // validateEmail(email);
     //모든 유효성 검사 통과가 되었다면 회원가입 가능
     if (
@@ -312,7 +312,7 @@ export default function UserEdit() {
           {headers: {"Content-Type": "application/json"}},
         )
         .then(res => {
-          console.log("통과");
+          // console.log("통과");
           setIsSignUp(true);
           history.push("/SignIn");
         })

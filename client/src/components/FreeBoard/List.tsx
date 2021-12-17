@@ -103,7 +103,7 @@ export default function List(props: any) {
           },
         )
         .then(res => {
-          console.log("like good");
+          // console.log("like good");
           props.GoToFreeBoardContent(props.currentFBcontent.data._id);
         })
         .catch(err => console.log(err));
@@ -128,7 +128,7 @@ export default function List(props: any) {
           },
         )
         .then(res => {
-          console.log("dislike good");
+          // console.log("dislike good");
           props.GoToFreeBoardContent(props.currentFBcontent.data._id);
         })
         .catch(err => console.log(err));

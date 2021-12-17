@@ -108,7 +108,7 @@ export default function UserEditPasswordCheck() {
   const [passwordIsNotRight, setPasswordIsNotRight] = useState("");
 
   const handlePassword = (e: any) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setPasswordToCheck(e.target.value);
   };
 
@@ -126,10 +126,10 @@ export default function UserEditPasswordCheck() {
       )
       .then(res => {
         GoUserEdit();
-        console.log(res.data.message);
+        // console.log(res.data.message);
       })
       .catch(err => {
-        console.log(err.response.status);
+        // console.log(err.response.status);
 
         if (err.response.status === 404) {
           setPasswordIsNotRight("비밀번호가 일치하지 않습니다.");

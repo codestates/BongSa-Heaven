@@ -5,27 +5,31 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-regular-svg-icons";
 
 const MaillTitleContainer = styled.div`
-  margin-top: 27px;
+  margin: 20px 0px 20px 0px;
   height: 33px;
-  width: 375px;
+  width: 100%;
+  max-width: 375px;
   display: flex;
-  border-bottom: 1px solid #f2f2f2;
+  justify-content: center;
   @media screen and (min-width: 37.5rem) {
-    width: 100%;
+    width: 42%;
+    max-width: none;
     justify-content: center;
   }
 `;
 const MaillTitleContainerDiv = styled.div`
+  width: 100%;
   display: flex;
-  @media screen and (min-width: 37.5rem) {
-    width: 1080px;
-    justify-content: space-between;
-  }
+  justify-content: center;
+  align-items: center;
+`;
+const MaillTitleCancleBox = styled.div`
+  width: 20%;
 `;
 const MaillTitleCancle = styled.button`
-  margin-left: 36px;
   background: #f7f7f7;
-  width: 65px;
+  min-width: 65px;
+  width: 100px;
   height: 22px;
   border-radius: 4px;
   font-family: Roboto;
@@ -37,10 +41,15 @@ const MaillTitleCancle = styled.button`
   color: #000000;
   border: 0;
   cursor: pointer;
+  &:hover {
+    background-color: #e8e8e8;
+    transition: 0.3s;
+  }
+  @media screen and (min-width: 37.5rem) {
+  }
 `;
 const MaillTitleText = styled.div`
-  margin-left: 31px;
-  width: 111px;
+  width: 50%;
   height: 21px;
   font-family: Roboto;
   font-style: normal;
@@ -50,10 +59,13 @@ const MaillTitleText = styled.div`
   /* identical to box height */
   text-align: center;
   color: #448b76;
+  @media screen and (min-width: 37.5rem) {
+    width: 50%;
+  }
 `;
 const MaillTitleBtn = styled.button`
-  margin-left: 31px;
-  width: 90px;
+  width: 30%;
+  max-width: 90px;
   height: 22px;
   background: #ff7676;
   border-radius: 4px;
@@ -65,10 +77,6 @@ const MaillTitleBtn = styled.button`
   text-align: center;
   color: #000000;
   border: 0;
-  @media screen and (min-width: 37.5rem) {
-    margin-right: 3%;
-    cursor: pointer;
-  }
 `;
 const MaillTitleBtnSpan = styled.span`
   color: #ffffff;
@@ -89,7 +97,9 @@ export default function MaillWriteBottom() {
     <>
       <MaillTitleContainer>
         <MaillTitleContainerDiv>
-          <MaillTitleCancle onClick={GoBack}>취소</MaillTitleCancle>
+          <MaillTitleCancleBox>
+            <MaillTitleCancle onClick={GoBack}>취소</MaillTitleCancle>
+          </MaillTitleCancleBox>
           <MaillTitleText></MaillTitleText>
           <MaillTitleBtn onClick={GoMaillWriteCheck}>
             <FontAwesomeIcon icon={faPaperPlane} />

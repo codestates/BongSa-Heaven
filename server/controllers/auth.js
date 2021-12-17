@@ -342,6 +342,7 @@ module.exports = {
       const query = {kakao_id: userKakao};
       const existUser = await User.findOne(query);
       console.log(existUser);
+
       if (existUser) {
         const {_id, kakao_id, nickname} = existUser;
         const accessToken = generateAccessToken({_id, kakao_id, nickname});

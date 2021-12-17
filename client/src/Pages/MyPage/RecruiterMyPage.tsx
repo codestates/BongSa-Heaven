@@ -85,7 +85,9 @@ export default function UserMyPage() {
         <InfoEditBtn onClick={GoUserEditPasswordCheck}>
           회원정보 수정하기
         </InfoEditBtn>
-        <MapRegister onClick={GoMapRegister}>지도등록 하기</MapRegister>
+        <MapRegister onClick={GoMapRegister}>
+          지도등록 하기 (하나만 등록 가능합니다 !)
+        </MapRegister>
       </WebContainer>
     </>
   );

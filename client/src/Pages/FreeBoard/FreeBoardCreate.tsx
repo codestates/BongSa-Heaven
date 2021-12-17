@@ -80,7 +80,6 @@ export default function FreeBoardCreate() {
 
   const inputHandler = (e: any) => {
     setDescription(e.target.value);
-    console.log(description);
   };
 
   return (

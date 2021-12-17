@@ -364,17 +364,17 @@ export default function Comment({
         setMyId(res.data.data._id);
       })
       .catch(err => {
-        console.log("응 안돼~", err);
+        console.log("Error!", err);
       });
   };
 
   const makeComment = (e: any) => {
     setCommentValue(e.target.value);
-    console.log(commentValue);
+    // console.log(commentValue);
   };
   const makeNestedComment = (e: any) => {
     setNestedCommentValue(e.target.value);
-    console.log(nestedCommentValue);
+    // console.log(nestedCommentValue);
   };
 
   const GoNestCommentInputMode = (idx: any) => {
@@ -399,7 +399,7 @@ export default function Comment({
           },
         )
         .then(res => {
-          console.log(res.data.message);
+          // console.log(res.data.message);
           setCommentValue("");
           GoToCrewBoardContent(currentCBcontent.data._id);
         })
@@ -426,7 +426,7 @@ export default function Comment({
           },
         )
         .then(res => {
-          console.log(res.data.message);
+          // console.log(res.data.message);
           setCommentValue("");
           setNestedCommentValue("");
           setNestedCommentMode(false);
@@ -453,7 +453,7 @@ export default function Comment({
           },
         )
         .then(res => {
-          console.log(res.data.message);
+          // console.log(res.data.message);
           setEditMode(false);
           setCommentValue("");
           GoToCrewBoardContent(currentCBcontent.data._id);
@@ -463,7 +463,7 @@ export default function Comment({
   };
 
   const deleteComment = (idx: any) => {
-    console.log(idx);
+    // console.log(idx);
     axios
       .delete(`${process.env.REACT_APP_API_URI}/comment/cbcommentdelete`, {
         data: {
@@ -476,7 +476,7 @@ export default function Comment({
         },
       })
       .then(res => {
-        console.log(res.data.message);
+        // console.log(res.data.message);
         setEditMode(false);
         setNestedCommentMode(false);
         GoToCrewBoardContent(currentCBcontent.data._id);
