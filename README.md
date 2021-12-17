@@ -45,7 +45,7 @@ BongSa-Heaven은 이들에게 소통의 장을 제공합니다._
 ![없어](https://media.discordapp.net/attachments/907147754386640903/920917038560575588/7fa0b62e48229900.png?width=1000&height=800)
 
 ## API-FLOW
-추가 예정입니다!
+![스크린샷 2021-12-17 오전 11 58 53](https://user-images.githubusercontent.com/83863101/146481986-a996d0c4-5833-41a6-93c2-af5ab9a1d7e7.png)
 
 ## DB SCHEME
 ![스크린샷 2021-12-16 오전 11 36 20](https://user-images.githubusercontent.com/83863101/146297641-72c26b3e-184a-4486-9c7f-0c27598bb727.png)
