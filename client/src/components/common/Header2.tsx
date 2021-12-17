@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
+import {useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
 import {faUserCircle} from "@fortawesome/free-regular-svg-icons";
 import {faUserCircle as LoginIcon} from "@fortawesome/free-solid-svg-icons";
+import {issignin} from "../../modules/isSignIn";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -44,6 +46,7 @@ export default function Header2(props: any) {
   const history = useHistory();
   const isLogin = false;
   const isRecruiter = false;
+  const isSignIn = useSelector((state: any) => state.issignin.isSign);
 
   const GoBack = () => {
     history.goBack();
@@ -51,7 +54,6 @@ export default function Header2(props: any) {
   };
 
   const GoMyPage = () => {
-    console.log("hi");
     isRecruiter
       ? history.push("/RecruiterMyPage")
       : history.push("/UserMyPage");
@@ -59,6 +61,9 @@ export default function Header2(props: any) {
 
   const GoHome = () => {
     history.push("/");
+  };
+  const GoSignIn = () => {
+    history.push("/SignIn");
   };
 
   return (
@@ -69,13 +74,17 @@ export default function Header2(props: any) {
         </HeaderLogIconLeft>
         <HeaderText onClick={GoHome}>{props.componentName}</HeaderText>
         <HeaderLogIconRight>
-          {isLogin ? (
-            <FontAwesomeIcon icon={LoginIcon} className="HeaderIcon" />
+          {isSignIn ? (
+            <FontAwesomeIcon
+              icon={LoginIcon}
+              className="HeaderIcon"
+              onClick={GoMyPage}
+            />
           ) : (
             <FontAwesomeIcon
               icon={faUserCircle}
               className="HeaderIcon"
-              onClick={GoMyPage}
+              onClick={GoSignIn}
             />
           )}
         </HeaderLogIconRight>

@@ -87,6 +87,10 @@ const CheckBtn = styled.button`
   border-radius: 4px;
   border: 0;
   cursor: pointer;
+  &:hover {
+    background-color: #e8e8e8;
+    transition: 0.3s;
+  }
 
   @media screen and (min-width: 37.5rem) {
     margin-left: 0px;

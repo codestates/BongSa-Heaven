@@ -6,7 +6,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope} from "@fortawesome/free-regular-svg-icons";
 
 const MyNameContainer = styled.div`
-  margin-left: 22px;
   margin-top: 36px;
   margin-bottom: 48px;
   width: 331px;

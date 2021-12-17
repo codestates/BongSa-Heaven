@@ -1,9 +1,7 @@
-import React from "react";
 import styled from "styled-components";
-
 import Header3 from "../../components/common/Header3";
-import {useState, useRef, useEffect} from "react";
-import {Route, useHistory} from "react-router-dom";
+import {useState} from "react";
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 
 const Wrapper = styled.div`
@@ -42,12 +40,6 @@ const LogoBox = styled.div`
 const Logo = styled.img`
   width: 60%;
   object-fit: cover;
-`;
-const EditEmaill = styled.div`
-  @media screen and (min-width: 37.5rem) {
-    font-size: 36px;
-    margin-bottom: 5%;
-  }
 `;
 
 const SignUpWhiteBox = styled.div`
@@ -100,75 +92,6 @@ const CheckingPossibleOrNotButton = styled.div`
   border-radius: 20px;
   cursor: pointer;
 `;
-
-const SelectSexBox = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 80%;
-  margin: 30px 0px 15px 0px;
-  @media screen and (min-width: 37.5rem) {
-    width: 40%;
-    justify-content: space-between;
-    /* background-color: yellow; */
-  }
-`;
-const SelectSexButton = styled.div`
-  background-color: #ffb1b1;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 30vw;
-  height: 17vh;
-  border-radius: 50%;
-  @media screen and (min-width: 37.5rem) {
-    width: 140px;
-    height: 140px;
-    justify-content: space-between;
-    /* background-color: yellow; */
-  }
-`;
-const SexImageBox = styled.img`
-  margin: 1vh 0vh 0.5vh 0vh;
-  width: 70%;
-  height: 70%;
-  object-fit: cover;
-  @media screen and (min-width: 37.5rem) {
-    margin: 10;
-
-    /* background-color: yellow; */
-  }
-`;
-
-const SelectBox = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 80%;
-  margin: 15px 0px 15px 0px;
-  @media screen and (min-width: 37.5rem) {
-    justify-content: center;
-  }
-`;
-const AgeButton = styled.div`
-  background-color: #ffb1b1;
-  color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30vw;
-  height: 8vh;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  border-radius: 20px;
-  @media screen and (min-width: 37.5rem) {
-    margin: 0px 15px;
-    width: 20%;
-    height: 45px;
-  }
-`;
-
 const CompleteBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -188,19 +111,6 @@ const CompleteButton = styled.div`
   border-radius: 5px;
   width: 110px;
   cursor: pointer;
-`;
-const DeleteBtn = styled.div`
-  margin-bottom: 15px;
-  background-color: #448b76;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 80px 20px 80px;
-  border-radius: 5px;
-  width: 110px;
-  opacity: 0.6;
-  height: 5px;
 `;
 
 export default function UserEdit() {

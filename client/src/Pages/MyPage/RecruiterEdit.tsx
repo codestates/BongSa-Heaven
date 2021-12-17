@@ -224,6 +224,8 @@ export default function RecruiterEdit() {
     want_vol: "",
     company: "",
   });
+  const [dbNickName, setDbNickName] = useState("");
+  const [dbPassword, setdbPassword] = useState("");
   const [newPass, setNewPass] = useState<any>({
     password: "",
     passwordCheck: "",
@@ -359,106 +361,113 @@ export default function RecruiterEdit() {
       newPass.password,
       newPass.passwordCheck,
     );
+    const isDbNickname = dbNickName === userInfo.nickname;
 
-    console.log(validNickname, validPassword, validCheckPassword, isNick);
     //유저정보 변경은 어떻게 이루어지는가?
     //닉네임만 바꾸는 경우  userinfo를 onchange로 변화시키면 값읃 얻을수 있다.
 
-    console.log(userInfo);
     //비밀번호랑 닉네임 같이 바꾸는 경우
     //비밀번호만 바꾸는경우
     //닉네임만 바꾸는 경우
     //그외 나머지를 바꾸는 경우
+    console.log(isDbNickname);
 
     //비밀번호를 바꾸는 경우 비밀번호 유효성검사, 비밀번호가 같아야지 비밀번호를 바꿀수 있다.
-    if (validPassword && validCheckPassword) {
-      console.log("비번 변경");
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            nickname: userInfo.nickname,
-            email: userInfo.email,
-            password: newPass.password,
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-            iscompany: true,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    if (isDbNickname) {
+      if (isDbNickname && userInfo.password === "") {
+        axios
+          .patch(
+            `${process.env.REACT_APP_API_URI}/user/edit`,
+            {
+              nickname: userInfo.nickname,
+              email: userInfo.email,
+              password: newPass.password,
+              want_region: userInfo.want_region,
+              want_vol: userInfo.want_vol,
+              sex: userInfo.sex,
+              age: userInfo.age,
+              company: userInfo.company,
+              iscompany: true,
             },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/RecruiterMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-    //닉유효성검사 + 중복체크 통과
-    if (validNickname && isNick) {
-      console.log("닉네임 변경");
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: userInfo.password,
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            company: userInfo.company,
-            iscompany: true,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
             },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/RecruiterMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          )
+          .then(res => {
+            console.log(res.data.data);
+            history.push("/RecruiterMyPage");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+      if (validPassword && validCheckPassword) {
+        axios
+          .patch(
+            `${process.env.REACT_APP_API_URI}/user/edit`,
+            {
+              nickname: userInfo.nickname,
+              email: userInfo.email,
+              password: newPass.password,
+              want_region: userInfo.want_region,
+              want_vol: userInfo.want_vol,
+              sex: userInfo.sex,
+              age: userInfo.age,
+              company: userInfo.company,
+              iscompany: true,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            },
+          )
+          .then(res => {
+            console.log(res.data.data);
+            history.push("/RecruiterMyPage");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    } else {
+      //닉유효성검사 + 중복체크 통과
+      if (validNickname && isNick) {
+        console.log("닉네임 변경");
+        axios
+          .patch(
+            `${process.env.REACT_APP_API_URI}/user/edit`,
+            {
+              email: userInfo.email,
+              nickname: userInfo.nickname,
+              password: userInfo.password,
+              want_region: userInfo.want_region,
+              want_vol: userInfo.want_vol,
+              company: userInfo.company,
+              iscompany: true,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            },
+          )
+          .then(res => {
+            console.log(res.data.data);
+            history.push("/RecruiterMyPage");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        setNickCheckErrorMessage("닉네임 중복을 확인해주세요.");
+      }
     }
+
     //비번 닉네임 동시에 바꾸는 경우
-    if (validNickname && isNick && validPassword && validCheckPassword) {
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: newPass.password,
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-            company: userInfo.company,
-            iscompany: true,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/RecruiterMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+
     //비번 제외 닉네임 제외하고 바꾸는 경우
 
     //닉네임 비번 외에는 유효성 검증 필요 없고 그냥 바꿀수 있음.
@@ -491,6 +500,8 @@ export default function RecruiterEdit() {
 
           company: res.data.data.company,
         });
+        setDbNickName(res.data.data.nickname);
+        setdbPassword(res.data.data.password);
       })
 
       .catch(err => {

@@ -79,6 +79,10 @@ const ContentsBoxAdjust = styled.div`
   align-items: center;
   padding: 10px;
   border-radius: 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 `;
 
 const ContentsBoxAdjust2 = styled.div`
@@ -123,8 +127,8 @@ const Img = styled.img`
   border-radius: 10px;
 
   @media screen and (min-width: 37.5rem) {
-    max-width: 60%;
-    max-height: 60%;
+    max-width: 40%;
+    max-height: 40%;
   }
 `;
 
@@ -151,7 +155,7 @@ const ContentsBoxDeleteButton = styled.div`
   }
 `;
 
-export default function Writing({currentCBcontent, userId}: any) {
+export default function Writing({currentCBcontent, userId, isLogin}: any) {
   // console.log("currentCBcontent.data.images", currentCBcontent.data.images);
   const history = useHistory();
 
@@ -178,7 +182,7 @@ export default function Writing({currentCBcontent, userId}: any) {
                 </ContentsBoxWriter>
               )}
               <IconBox>
-                {currentCBcontent.data.user_id == null ? null : (
+                {currentCBcontent.data.user_id == null || !isLogin ? null : (
                   <FontAwesomeIcon
                     icon={faPaperPlane}
                     onClick={GotoMailWrite}

@@ -167,6 +167,7 @@ const SelectBox = styled.div`
   margin: 15px 0px 15px 0px;
   @media screen and (min-width: 37.5rem) {
     justify-content: center;
+    width: 60%;
   }
 `;
 const AgeButton = styled.div`
@@ -255,8 +256,8 @@ export default function OauthUserReg() {
     sex: "",
   });
   const [newPass, setNewPass] = useState<any>({
-    password: "",
-    asswordCheck: "",
+    password: "oauth",
+    asswordCheck: "oauth",
   });
 
   //errorMessage
@@ -353,7 +354,6 @@ export default function OauthUserReg() {
     //닉네임 중복 체크
     const max = 8;
     const min = 2;
-    console.log("validate", nickname.length);
 
     if (nickname.length < min || nickname.length > max) {
       console.log("1이하, 9이상");
@@ -426,34 +426,7 @@ export default function OauthUserReg() {
     //그외 나머지를 바꾸는 경우
 
     //비밀번호를 바꾸는 경우 비밀번호 유효성검사, 비밀번호가 같아야지 비밀번호를 바꿀수 있다.
-    if (validPassword && validCheckPassword) {
-      console.log("비번 변경");
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: newPass.password,
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/UserMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+
     //닉유효성검사 + 중복체크 통과
     if (validNickname && isNick) {
       console.log("닉네임 변경");
@@ -469,6 +442,8 @@ export default function OauthUserReg() {
             want_vol: userInfo.want_vol,
             sex: userInfo.sex,
             age: userInfo.age,
+            isopen: true,
+            iscompany: false,
           },
           {
             headers: {
@@ -485,34 +460,7 @@ export default function OauthUserReg() {
         });
     }
     //비번 닉네임 동시에 바꾸는 경우
-    if (validNickname && isNick && validPassword && validCheckPassword) {
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: newPass.password,
 
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/UserMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
     //비번 제외 닉네임 제외하고 바꾸는 경우
 
     //닉네임 비번 외에는 유효성 검증 필요 없고 그냥 바꿀수 있음.
@@ -539,12 +487,13 @@ export default function OauthUserReg() {
 
         setUserInfo({
           email: res.data.data.email,
-          nickname: res.data.data.nickname,
-          password: res.data.data.password,
+          nickname: "",
+          password: "oauth",
           want_region: res.data.data.want_region,
           want_vol: res.data.data.want_vol,
           sex: res.data.data.sex,
           age: res.data.data.age,
+          iscompany: false,
         });
       })
 
@@ -577,12 +526,6 @@ export default function OauthUserReg() {
             <CheckingPossibleOrNotButton onClick={handleNicknameCheck}>
               중복 확인
             </CheckingPossibleOrNotButton>
-          </CheckingPossibleOrNotBox>
-          <CheckingPossibleOrNotBox>
-            <PossibleOrNot>
-              {passErrorMessage}
-              {passCheckErrorMessage}
-            </PossibleOrNot>
           </CheckingPossibleOrNotBox>
           <SignUpWhiteBox>
             <SignUpWhiteInput
@@ -629,7 +572,7 @@ export default function OauthUserReg() {
             </SelectSexBox>
           )}
           {userInfo.age ? (
-            userInfo.age === "청소년" ? (
+            age === "청소년" ? (
               <SelectBox>
                 <AgeButtonSelected onClick={handleChange("teen")}>
                   청소년
@@ -665,7 +608,6 @@ export default function OauthUserReg() {
             <CompleteButton onClick={userInfoEditHandler}>
               수정완료 완료
             </CompleteButton>
-            <CompleteButton onClick={GoUserDelete}>회원탈퇴</CompleteButton>
           </CompleteBox>
         </MainContainer>
       </Wrapper>

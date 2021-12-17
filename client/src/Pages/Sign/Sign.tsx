@@ -1,10 +1,13 @@
-import React from "react";
 import {useState, useEffect} from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
+import {useDispatch} from "react-redux";
 import Header3 from "../../components/common/Header3";
 import axios from "axios";
-import {faCode} from "@fortawesome/free-solid-svg-icons";
+<<<<<<< HEAD
+=======
+import {issignin} from "../../modules/isSignIn";
+>>>>>>> 53b5828d3d8c1cd89505001f2912b7d1fc8a4f97
 
 const Wrapper = styled.div`
   width: 100%;
@@ -93,6 +96,7 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const history = useHistory();
+  const dispatch = useDispatch();
   //로그인 버튼을 클릭햇을때 메인으로 이동하고 로그인 상태여야하고,
   const GoogleOauth = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT}&response_type=code&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email&prompt=select_account`;
 
@@ -100,10 +104,12 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
 
   const googleControl = () => {
     sessionStorage.setItem("life", "have");
+    sessionStorage.setItem("oauth", "have");
     window.location.assign(GoogleOauth);
   };
   const kakaoControl = () => {
     sessionStorage.setItem("life", "have");
+    sessionStorage.setItem("oauth", "have");
     window.location.assign(kakaoOauth);
   };
 
@@ -166,9 +172,13 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
               if (res.data.data.iscompany !== undefined) {
                 setIsUserLogin("recruiter");
                 setIsLogin(true);
+                dispatch(issignin());
+
                 history.push("/");
               } else {
                 setIsLogin(true);
+                dispatch(issignin());
+
                 history.push("/");
               }
             }),
@@ -213,6 +223,7 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
           console.log("성공");
           history.push("/SignIn");
           setIsLogin(true);
+          dispatch(issignin());
         })
         .catch(err => {
           console.log(err, "erro");

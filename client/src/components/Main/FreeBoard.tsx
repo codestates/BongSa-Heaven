@@ -75,9 +75,6 @@ export default function FreeBoard({
     CheckLoading(false);
   };
 
-  console.log(currentPosts);
-  console.log(freeBoardinfo);
-
   useEffect(() => {
     setTimeout(() => loadingHandler(), 1000);
   }, []);

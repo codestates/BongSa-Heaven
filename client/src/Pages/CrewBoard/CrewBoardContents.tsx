@@ -39,7 +39,11 @@ export default function CrewBoardContents({
           <Wrapper>
             <Header2 componentName="모집글 보기" />
             <DesktopTitle title="모집글 보기" url="/CrewBoardList" />
-            <Writing currentCBcontent={currentCBcontent} userId={userId} />
+            <Writing
+              currentCBcontent={currentCBcontent}
+              userId={userId}
+              isLogin={isLogin}
+            />
             <List
               backtoList="/CrewBoardList"
               isLogin={isLogin}

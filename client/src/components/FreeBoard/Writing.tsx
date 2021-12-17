@@ -81,6 +81,10 @@ const ContentsBoxAdjust = styled.div`
   align-items: center;
   padding: 10px;
   border-radius: 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 `;
 
 const ContentsBoxAdjust2 = styled.div`
@@ -125,8 +129,8 @@ const Img = styled.img`
   border-radius: 10px;
 
   @media screen and (min-width: 37.5rem) {
-    max-width: 60%;
-    max-height: 60%;
+    max-width: 40%;
+    max-height: 40%;
   }
 `;
 
@@ -153,7 +157,7 @@ const ContentsBoxDeleteButton = styled.div`
   }
 `;
 
-export default function Writing({currentFBcontent, userId}: any) {
+export default function Writing({currentFBcontent, userId, isLogin}: any) {
   const history = useHistory();
 
   const Gotoedit = () => history.push("/FreeBoardEdit");
@@ -179,7 +183,7 @@ export default function Writing({currentFBcontent, userId}: any) {
                 </ContentsBoxWriter>
               )}
               <IconBox>
-                {currentFBcontent.data.user_id == null ? null : (
+                {currentFBcontent.data.user_id == null || !isLogin ? null : (
                   <FontAwesomeIcon
                     icon={faPaperPlane}
                     onClick={GotoMailWrite}

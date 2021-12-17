@@ -49,11 +49,17 @@ const CrewBoardTop3 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20%;
+  width: 30%;
   margin: auto;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 
+  &:hover {
+    width: 21%;
+    transition: 0.3s;
+  }
+  @media screen and (min-width: 37.5rem) {
+    width: 20%;
   }
 `;
 const CrewBoardTop3Image = styled.img`
@@ -86,6 +92,10 @@ const CrewBoardMoreBtn = styled.button`
   font-size: 16px;
   cursor: pointer;
   border: 0;
+  &:hover {
+    background-color: #e8e8e8;
+    transition: 0.3s;
+  }
   @media screen and (min-width: 37.5rem) {
     width: 100%;
   }
@@ -95,7 +105,6 @@ export default function BestCrew({
   GoToCrewBoardContent,
   Top3crewBoardinfo,
 }: any) {
-  console.log("Top3crewBoardinfo", Top3crewBoardinfo);
   const history = useHistory();
 
   const GoCrewBoardList = () => {

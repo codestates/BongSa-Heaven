@@ -33,6 +33,10 @@ const ListButton = styled.div`
   padding: 10px 0 10px 0;
   margin: 10px;
   border-radius: 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 
   @media screen and (min-width: 37.5rem) {
     background-color: #ff7676;
@@ -53,29 +57,28 @@ const LikeBox = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 70%;
-
-  font-size: 16px;
+  font-size: 12px;
   @media screen and (min-width: 37.5rem) {
-    width: 80%;
+    width: 60%;
     height: 100%;
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 
 const LikeImg = styled.img`
-  width: 30%;
+  width: 20%;
   object-fit: cover;
   cursor: pointer;
   @media screen and (min-width: 37.5rem) {
-    width: 5%;
+    width: 7%;
   }
 `;
 const NotLikeImg = styled.img`
-  width: 30%;
+  width: 20%;
   object-fit: cover;
   cursor: pointer;
   @media screen and (min-width: 37.5rem) {
-    width: 5%;
+    width: 7%;
   }
 `;
 

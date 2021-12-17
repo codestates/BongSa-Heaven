@@ -36,22 +36,23 @@ const LikeBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 12px;
   width: 20%;
   border-bottom: dashed gray 1px;
 `;
 
 const LikeImg = styled.img`
-  width: 50%;
+  width: 35%;
   object-fit: cover;
   @media screen and (min-width: 37.5rem) {
-    width: 20%;
+    width: 15%;
   }
 `;
 const NotLikeImg = styled.img`
-  width: 50%;
+  width: 35%;
   object-fit: cover;
   @media screen and (min-width: 37.5rem) {
-    width: 20%;
+    width: 15%;
   }
 `;
 

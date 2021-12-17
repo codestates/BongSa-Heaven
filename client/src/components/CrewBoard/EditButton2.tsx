@@ -21,6 +21,10 @@ const ImgUploadButton = styled.div`
   padding: 20px 80px 20px 80px;
   border-radius: 20px;
   cursor: pointer;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 `;
 const ImgUpload = styled.input`
   display: none;

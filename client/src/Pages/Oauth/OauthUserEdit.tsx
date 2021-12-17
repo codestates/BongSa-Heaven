@@ -167,6 +167,7 @@ const SelectBox = styled.div`
   margin: 15px 0px 15px 0px;
   @media screen and (min-width: 37.5rem) {
     justify-content: center;
+    width: 60%;
   }
 `;
 const AgeButton = styled.div`
@@ -242,7 +243,7 @@ const DeleteBtn = styled.div`
   height: 5px;
 `;
 
-export default function OauthUserEdit() {
+export default function OauthUserReg() {
   const [userInfo, setUserInfo] = useState<any>({
     email: "",
     nickname: "",
@@ -254,9 +255,10 @@ export default function OauthUserEdit() {
     age: "",
     sex: "",
   });
+  const [dbNickName, setDbNickName] = useState("");
   const [newPass, setNewPass] = useState<any>({
-    password: "",
-    asswordCheck: "",
+    password: "oauth",
+    asswordCheck: "oauth",
   });
 
   //errorMessage
@@ -353,7 +355,6 @@ export default function OauthUserEdit() {
     //닉네임 중복 체크
     const max = 8;
     const min = 2;
-    console.log("validate", nickname.length);
 
     if (nickname.length < min || nickname.length > max) {
       console.log("1이하, 9이상");
@@ -408,37 +409,33 @@ export default function OauthUserEdit() {
     setIsNick(false);
   };
   const userInfoEditHandler = () => {
-    const validPassword = validatePassword(newPass.password);
     const validNickname = validateNickname(userInfo.nickname);
-    const validCheckPassword: any = validateCheckPassword(
-      newPass.password,
-      newPass.passwordCheck,
-    );
 
-    console.log(validNickname, validPassword, validCheckPassword, isNick);
     //유저정보 변경은 어떻게 이루어지는가?
     //닉네임만 바꾸는 경우  userinfo를 onchange로 변화시키면 값읃 얻을수 있다.
 
-    console.log(userInfo);
     //비밀번호랑 닉네임 같이 바꾸는 경우
     //비밀번호만 바꾸는경우
     //닉네임만 바꾸는 경우
     //그외 나머지를 바꾸는 경우
 
     //비밀번호를 바꾸는 경우 비밀번호 유효성검사, 비밀번호가 같아야지 비밀번호를 바꿀수 있다.
-    if (validPassword && validCheckPassword) {
-      console.log("비번 변경");
+
+    if (userInfo.nickname === dbNickName) {
       axios
         .patch(
           `${process.env.REACT_APP_API_URI}/user/edit`,
           {
             email: userInfo.email,
             nickname: userInfo.nickname,
-            password: newPass.password,
+            password: userInfo.password,
+
             want_region: userInfo.want_region,
             want_vol: userInfo.want_vol,
             sex: userInfo.sex,
-            age: userInfo.age,
+            age: age,
+            isopen: true,
+            iscompany: false,
           },
           {
             headers: {
@@ -469,6 +466,8 @@ export default function OauthUserEdit() {
             want_vol: userInfo.want_vol,
             sex: userInfo.sex,
             age: userInfo.age,
+            isopen: true,
+            iscompany: false,
           },
           {
             headers: {
@@ -485,34 +484,7 @@ export default function OauthUserEdit() {
         });
     }
     //비번 닉네임 동시에 바꾸는 경우
-    if (validNickname && isNick && validPassword && validCheckPassword) {
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: newPass.password,
 
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/UserMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
     //비번 제외 닉네임 제외하고 바꾸는 경우
 
     //닉네임 비번 외에는 유효성 검증 필요 없고 그냥 바꿀수 있음.
@@ -540,12 +512,15 @@ export default function OauthUserEdit() {
         setUserInfo({
           email: res.data.data.email,
           nickname: res.data.data.nickname,
-          password: res.data.data.password,
+          password: "oauth",
           want_region: res.data.data.want_region,
           want_vol: res.data.data.want_vol,
           sex: res.data.data.sex,
           age: res.data.data.age,
+          isopen: true,
         });
+        setDbNickName(res.data.data.nickname);
+        setAge(res.data.data.age);
       })
 
       .catch(err => {
@@ -577,26 +552,6 @@ export default function OauthUserEdit() {
             <CheckingPossibleOrNotButton onClick={handleNicknameCheck}>
               중복 확인
             </CheckingPossibleOrNotButton>
-          </CheckingPossibleOrNotBox>
-          <SignUpWhiteBox>
-            <SignUpWhiteInput
-              onChange={handleChange("password")}
-              placeholder="비밀번호"
-              type="password"
-            ></SignUpWhiteInput>
-          </SignUpWhiteBox>
-          <SignUpWhiteBox>
-            <SignUpWhiteInput
-              onChange={handleChange("passwordCheck")}
-              placeholder="비밀번호 확인"
-              type="password"
-            ></SignUpWhiteInput>
-          </SignUpWhiteBox>
-          <CheckingPossibleOrNotBox>
-            <PossibleOrNot>
-              {passErrorMessage}
-              {passCheckErrorMessage}
-            </PossibleOrNot>
           </CheckingPossibleOrNotBox>
           <SignUpWhiteBox>
             <SignUpWhiteInput
@@ -643,7 +598,7 @@ export default function OauthUserEdit() {
             </SelectSexBox>
           )}
           {userInfo.age ? (
-            userInfo.age === "청소년" ? (
+            age === "청소년" ? (
               <SelectBox>
                 <AgeButtonSelected onClick={handleChange("teen")}>
                   청소년
@@ -679,7 +634,6 @@ export default function OauthUserEdit() {
             <CompleteButton onClick={userInfoEditHandler}>
               수정완료 완료
             </CompleteButton>
-            <CompleteButton onClick={GoUserDelete}>회원탈퇴</CompleteButton>
           </CompleteBox>
         </MainContainer>
       </Wrapper>

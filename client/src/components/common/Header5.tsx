@@ -223,6 +223,7 @@ export default function Header({
     });
     localStorage.removeItem("accessToken");
     sessionStorage.removeItem("life");
+    sessionStorage.removeItem("oauth");
     setIsLogin(false);
     setIsUserLogin("user");
     setUserId("");

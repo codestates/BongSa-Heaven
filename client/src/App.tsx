@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import {Route} from "react-router-dom";
 import axios from "axios";
 import {useHistory} from "react-router";
+import {useDispatch} from "react-redux";
 import "./App.css";
 import "./css/Reset.css";
 import Footer from "./components/common/Footer";
@@ -48,6 +49,8 @@ import MapRegister from "./Pages/Map/MapRegister";
 import OauthUserReg from "./Pages/Oauth/OauthUserReg";
 import OauthUserEdit from "./Pages/Oauth/OauthUserEdit";
 
+import {issignin} from "./modules/isSignIn";
+
 export default function App() {
   const [isDevHeader, setIsDevHeader] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -57,6 +60,8 @@ export default function App() {
   const [currentCBcontent, setCBcontent] = useState({});
 
   const GetLife = sessionStorage.getItem("life");
+
+  const dispatch = useDispatch();
 
   const handleDevHeader = () => {
     setIsDevHeader(!isDevHeader);
@@ -102,7 +107,6 @@ export default function App() {
         },
       )
       .then(res => {
-        console.log(res.data);
         setCBcontent(res.data);
         GotoCard();
       })
@@ -115,48 +119,61 @@ export default function App() {
 
   useEffect(() => {
     console.log(isLogin, "login");
+    setTimeout(() => {
+      if (GetLife === "have") {
+        axios
+          .get(`${process.env.REACT_APP_API_URI}/auth/refreshtoken`, {
+            withCredentials: true,
+          })
+          .then(res => {
+            console.log("res");
+            localStorage.setItem("accessToken", res.data.accessToken);
+          });
 
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/auth/refreshtoken`, {
-        withCredentials: true,
-      })
-      .then(res => {
-        console.log("res");
-        localStorage.setItem("accessToken", res.data.accessToken);
-      });
-
-    axios
-      .get(`${process.env.REACT_APP_API_URI}/user/info`, {
-        headers: {
-          authorization: `Bearer ` + localStorage.getItem("accessToken"),
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then(res => {
-        setUserId(res.data.data._id);
-        if (res.data.data.iscompany) {
-          setIsUserLogin("recruiter");
-          setIsLogin(true);
-        } else {
-          setIsUserLogin("user");
-          setIsLogin(true);
-        }
-      })
-      .catch(err => {
-        console.log("err");
-        setIsLogin(false);
-      });
+        axios
+          .get(`${process.env.REACT_APP_API_URI}/user/info`, {
+            headers: {
+              authorization: `Bearer ` + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          })
+          .then(res => {
+            const isNick = res.data.data.nickname;
+            if (isNick) {
+              console.log("have");
+            } else {
+              console.log("not Have");
+              history.push("/OauthUserReg");
+            }
+            console.log(res.data.data);
+            setUserId(res.data.data._id);
+            if (res.data.data.iscompany) {
+              setIsUserLogin("recruiter");
+              setIsLogin(true);
+              dispatch(issignin());
+            } else {
+              setIsUserLogin("user");
+              setIsLogin(true);
+              dispatch(issignin());
+            }
+          })
+          .catch(err => {
+            console.log("err");
+            setIsLogin(false);
+          });
+      } else {
+        console.log("No Life");
+      }
+    }, 100);
   }, [isUserLogin, isLogin]);
 
   const googleAuthCode = () => {
     const url = new URL(window.location.href);
-    console.log(url.pathname);
     const searchs = url.search;
 
     if (url.pathname === "/callback") {
       const code = searchs.split("=")[1].split("&")[0];
-      console.log(code);
       axios
         .post(
           `${process.env.REACT_APP_API_URI}/auth/google`,
@@ -169,14 +186,14 @@ export default function App() {
           },
         )
         .then(data => {
-          console.log("성공");
+          console.log("google");
           console.log(data);
           history.push("/");
           setIsLogin(true);
+          dispatch(issignin());
         })
         .catch(err => {
           setIsLogin(false);
-          console.log(err, "erro");
         });
     }
   };
@@ -187,7 +204,6 @@ export default function App() {
 
     if (url.pathname === "/kakao/callback") {
       const code = searchs.split("=")[1].split("&")[0];
-      console.log(code);
       axios
         .post(
           `${process.env.REACT_APP_API_URI}/auth/kakao`,
@@ -200,14 +216,13 @@ export default function App() {
           },
         )
         .then(data => {
-          console.log("성공");
-          console.log(data);
           history.push("/");
           setIsLogin(true);
+          dispatch(issignin());
         })
         .catch(err => {
           setIsLogin(false);
-          console.log(err, "erro");
+          dispatch(issignin(false));
         });
     }
   };

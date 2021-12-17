@@ -29,6 +29,10 @@ const LinkButton = styled.div`
     width: 100px;
     padding: 20px 0px 20px 0px;
     border-radius: 20px;
+    &:hover {
+      background-color: #ff3030;
+      transition: 0.3s;
+    }
   }
 `;
 

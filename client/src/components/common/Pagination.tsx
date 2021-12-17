@@ -15,6 +15,9 @@ const PageButton = styled.button`
   font-size: 1.5rem;
   border: none;
   background: none;
+  &:focus {
+    font-weight: bold;
+  }
 `;
 
 export default function Pagination({postPerPage, totalPosts, paginate}: any) {

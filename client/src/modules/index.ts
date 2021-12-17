@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import mailWriteName from "./mailWriteName";
 import mailWriteText from "./mailWriteText";
 import mailDeleteList from "./mailDeleteList";
+import issignin from "./isSignIn";
 
 const persistConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   mailWriteName,
   mailWriteText,
   mailDeleteList,
+  issignin,
 });
 
 export default persistReducer(persistConfig, rootReducer);

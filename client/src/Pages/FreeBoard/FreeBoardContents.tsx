@@ -41,7 +41,11 @@ export default function FreeBoardContents({
           <Wrapper>
             <Header2 componentName="게시글 보기" />
             <DesktopTitle title="게시글 보기" url="/FreeBoardList" />
-            <Writing currentFBcontent={currentFBcontent} userId={userId} />
+            <Writing
+              currentFBcontent={currentFBcontent}
+              userId={userId}
+              isLogin={isLogin}
+            />
             <List
               backtoList="/FreeBoardList"
               isLogin={isLogin}

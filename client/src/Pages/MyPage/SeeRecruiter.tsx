@@ -28,6 +28,8 @@ export default function SeeRecruiter() {
         },
       })
       .then(res => {
+        console.log(res.data);
+
         setRecruiterList(res.data);
       });
   }, []);

@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
+import {useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMapMarkerAlt} from "@fortawesome/free-solid-svg-icons";
 import {faUserCircle} from "@fortawesome/free-regular-svg-icons";
 import {faUserCircle as LoginIcon} from "@fortawesome/free-solid-svg-icons";
+
+import {issignin} from "../../modules/isSignIn";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -133,8 +136,10 @@ const HeaderSignUp = styled.button`
 
 export default function Header() {
   const history = useHistory();
-  const isLogin = false;
   const isRecruiter = false;
+
+  const isSignIn = useSelector((state: any) => state.issignin.isSign);
+  console.log(isSignIn, "im king");
 
   const GoMyPage = () => {
     console.log("hi");
@@ -144,6 +149,9 @@ export default function Header() {
   };
   const GoMap = () => {
     history.push("/Map");
+  };
+  const GoSignIn = () => {
+    history.push("/SignIn");
   };
 
   return (
@@ -158,13 +166,17 @@ export default function Header() {
         </HeaderLogIconLeft>
         <LogoImg src="/image/logo2.png" />
         <HeaderLogIconRight>
-          {isLogin ? (
-            <FontAwesomeIcon icon={LoginIcon} className="HeaderIcon" />
+          {isSignIn ? (
+            <FontAwesomeIcon
+              icon={LoginIcon}
+              className="HeaderIcon"
+              onClick={GoMyPage}
+            />
           ) : (
             <FontAwesomeIcon
               icon={faUserCircle}
               className="HeaderIcon"
-              onClick={GoMyPage}
+              onClick={GoSignIn}
             />
           )}
         </HeaderLogIconRight>

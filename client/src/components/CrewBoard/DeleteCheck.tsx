@@ -33,6 +33,10 @@ const DeleteButton = styled.div`
   margin-right: 20px;
   margin-bottom: 300px;
   border-radius: 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 
   @media screen and (min-width: 37.5rem) {
     width: 150px;

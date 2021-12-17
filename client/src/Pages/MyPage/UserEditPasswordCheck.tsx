@@ -17,7 +17,9 @@ const PasswordCheckContainer = styled.div`
 `;
 
 const PassCheckTitle = styled.div`
-  margin-left: 43px;
+  width: 80%;
+  max-width: 290px;
+  margin-left: 40px;
   margin-top: 26px;
   font-family: Roboto;
   font-style: normal;
@@ -31,13 +33,14 @@ const PassCheckTitle = styled.div`
 `;
 const PassCheckText = styled.div`
   margin-top: 30px;
-  margin-left: 43px;
-  width: 290px;
+  margin-left: 35px;
+  width: 80%;
+  max-width: 290px;
   height: 42px;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 21px;
 
   color: #000000;
@@ -52,7 +55,8 @@ const PassCheckIsNotRight = styled.div`
   align-items: center;
   margin-top: 10px;
   margin-left: 43px;
-  width: 290px;
+  width: 80%;
+  max-width: 290px;
   height: 40px;
   color: red;
   font-family: Roboto;
@@ -67,9 +71,10 @@ const PassCheckIsNotRight = styled.div`
 `;
 
 const PasswordCheckInput = styled.input`
-  margin-top: 116px;
+  margin-top: 100px;
   margin-left: 28px;
-  width: 320px;
+  width: 80%;
+  max-width: 320px;
   height: 45px;
   background: #ffffff;
   border: 1px solid #000000;
@@ -81,7 +86,8 @@ const CheckBtn = styled.button`
   margin-left: 27px;
   margin-top: 45px;
   margin-bottom: 140px;
-  width: 327px;
+  width: 80%;
+  max-width: 327px;
   height: 55px;
   background: #f7f7f7;
   border-radius: 4px;

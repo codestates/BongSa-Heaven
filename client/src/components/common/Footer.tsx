@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import {useHistory} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
+
+import {issignout} from "../../modules/isSignIn";
 
 const LogInOut = styled.div`
   background: #ffd5d5;
@@ -67,6 +70,10 @@ const FooterContainer = styled.div`
 
 export default function Footer({isLogin, setIsLogin, setIsUserLogin}: any) {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const isSignIn = useSelector((state: any) => state.issignin.isSign);
+  console.log(isSignIn, "im king of footer");
 
   const GoSignIn = () => {
     history.push("/SignIn");
@@ -90,8 +97,10 @@ export default function Footer({isLogin, setIsLogin, setIsUserLogin}: any) {
       )
       .then(res => {
         localStorage.removeItem("accessToken");
+        sessionStorage.removeItem("accessToken");
         setIsLogin(false);
         setIsUserLogin("user");
+        dispatch(issignout());
         GoHome();
       })
       .catch(err => console.log(err));

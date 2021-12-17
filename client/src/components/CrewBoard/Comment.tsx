@@ -2,6 +2,7 @@ import styled from "styled-components";
 import axios from "axios";
 import {useState, useEffect} from "react";
 import {useHistory} from "react-router";
+import NestedComment from "./NestedComment";
 
 const CommentList = styled.div`
   flex-direction: column;
@@ -20,47 +21,24 @@ const CommentList = styled.div`
 const CommentListBigBox = styled.div`
   display: flex;
 `;
-const NestedCommentsImgBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 10%;
-`;
-const NestedCommentsImg = styled.img`
-  width: 50%;
-  heigth: 50%;
-  object-fit: cover;
-`;
 
 const CommentBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
   border-bottom: dashed gray 1px;
-  padding: 20px 0px;
+  padding: 10px 0px;
 
   @media screen and (min-width: 37.5rem) {
-    padding: 30px 0px;
-  }
-`;
-
-const NestedCommentBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  border-bottom: dashed gray 1px;
-  padding: 20px 0px;
-
-  @media screen and (min-width: 37.5rem) {
-    padding: 30px 0px;
+    padding: 15px 0px;
   }
 `;
 
 const CommentWriter = styled.span`
-  margin-left: 20px;
+  margin-left: 16px;
 
   @media screen and (min-width: 37.5rem) {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 
@@ -71,16 +49,16 @@ const CommentDate = styled.span`
 
   @media screen and (min-width: 37.5rem) {
     margin-left: 20px;
-    font-size: 20px;
+    font-size: 16px;
   }
 `;
 const CommentNestedCommentButton = styled.span`
   cursor: pointer;
   color: blue;
-  font-size: 12px;
+  font-size: 10px;
   margin-left: 5px;
   @media screen and (min-width: 37.5rem) {
-    font-size: 20px;
+    font-size: 16px;
     margin-left: 20px;
   }
 `;
@@ -111,14 +89,10 @@ const CommentListSmallBox = styled.div`
   flex-direction: column;
   width: 20%;
   border-bottom: dashed gray 1px;
-  padding: 20px 0px;
-`;
-const NestedCommentListSmallBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 20%;
-  border-bottom: dashed gray 1px;
-  padding: 20px 0px;
+  padding: 10px 0px;
+  @media screen and (min-width: 37.5rem) {
+    padding: 15px 0px;
+  }
 `;
 
 const CommentDeleteBox = styled.div`
@@ -145,10 +119,11 @@ const CommentEditButton = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: flex-end;
-  margin-right: 25px;
+  margin-right: 18px;
   color: #ff7676;
   font-size: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
+
   @media screen and (min-width: 37.5rem) {
     font-size: 16px;
     margin-top: 20px;
@@ -168,6 +143,10 @@ const CommentEditButtonCheck = styled.div`
   margin-left: 5px;
   margin-top: 12px;
   font-size: 12px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 
   @media screen and (min-width: 37.5rem) {
     width: 30%;
@@ -249,6 +228,10 @@ const CommentInputButton = styled.div`
   align-items: center;
   font-size: 16px;
   margin: 30px 0px 30px 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 
   @media screen and (min-width: 37.5rem) {
     margin: 0px 0px 30px 20px;
@@ -271,6 +254,10 @@ const NestCommentInputButton = styled.div`
   font-size: 16px;
   margin: 20px 0px 0px 20px;
   font-size: 12px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 
   @media screen and (min-width: 37.5rem) {
     margin: 0px 0px 30px 20px;
@@ -343,6 +330,10 @@ const GoToLogin = styled.div`
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     width: 800px;
     font-size: 24px;
+    &:hover {
+      background-color: #ff3030;
+      transition: 0.3s;
+    }
   }
 `;
 export default function Comment({
@@ -357,9 +348,7 @@ export default function Comment({
     useState(Number);
   const [isNestedCommentMode, setNestedCommentMode] = useState(false);
   const [isEditMode, setEditMode] = useState(false);
-  const [isNestedEditMode, setNestedEditMode] = useState(false);
   const [isEditCommentIdx, chosenEditCommentIdx] = useState(Number);
-  const [isEditNestedCommentIdx, chosenEditNestedCommentIdx] = useState(Number);
   const history = useHistory();
   const GotoLogIn = () => history.push("/SignIn");
 
@@ -472,37 +461,7 @@ export default function Comment({
         .catch(err => console.log(err));
     }
   };
-  const editNestedComment = () => {
-    if (nestedCommentValue.length > 0) {
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/comment/cbchildedit`,
-          {
-            crewboard_id: currentCBcontent.data._id,
-            crewcomment_id:
-              currentCBcontent.data.crewcomments[isEditCommentIdx]._id,
-            crewchild_id:
-              currentCBcontent.data.crewcomments[isEditCommentIdx]
-                .crewchildcomments[isEditNestedCommentIdx]._id,
-            comment: nestedCommentValue,
-          },
-          {
-            headers: {
-              authorization: `Bearer ` + localStorage.getItem("accessToken"),
-              "Content-Type": "application/json",
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.message);
-          setEditMode(false);
-          setNestedEditMode(false);
-          setNestedCommentValue("");
-          GoToCrewBoardContent(currentCBcontent.data._id);
-        })
-        .catch(err => console.log(err));
-    }
-  };
+
   const deleteComment = (idx: any) => {
     console.log(idx);
     axios
@@ -520,33 +479,6 @@ export default function Comment({
         console.log(res.data.message);
         setEditMode(false);
         setNestedCommentMode(false);
-        GoToCrewBoardContent(currentCBcontent.data._id);
-      })
-      .catch(err => console.log(err));
-
-    alert("댓글이 삭제되었습니다!");
-  };
-
-  const deleteNestedComment = (idx: number, nestIdx: number) => {
-    axios
-      .delete(`${process.env.REACT_APP_API_URI}/comment/cbchilddelete`, {
-        data: {
-          crewboard_id: currentCBcontent.data._id,
-          crewcomment_id: currentCBcontent.data.crewcomments[idx]._id,
-          crewchild_id:
-            currentCBcontent.data.crewcomments[idx].crewchildcomments[nestIdx]
-              ._id,
-        },
-        headers: {
-          authorization: `Bearer ` + localStorage.getItem("accessToken"),
-          "Content-Type": "application/json",
-        },
-      })
-      .then(res => {
-        console.log(res.data.message);
-        setEditMode(false);
-        setNestedCommentMode(false);
-        setNestedEditMode(false);
         GoToCrewBoardContent(currentCBcontent.data._id);
       })
       .catch(err => console.log(err));
@@ -648,100 +580,20 @@ export default function Comment({
                   </CommentListSmallBox>
                 </CommentListBigBox>
 
-                {currentCBcontent.data.crewcomments[idx].crewchildcomments.map(
-                  (childComment: any, nestIdx: any) => (
-                    <CommentListBigBox key={nestIdx}>
-                      <NestedCommentsImgBox>
-                        <NestedCommentsImg src={"./image/nestedComment.png"} />
-                      </NestedCommentsImgBox>
-                      <NestedCommentBox>
-                        <CommentWriter>
-                          {childComment.user_id === null
-                            ? "회원탈퇴자"
-                            : childComment.user_id.nickname}
-                          <CommentDate>
-                            {childComment.createdAt === undefined
-                              ? null
-                              : childComment.createdAt.slice(0, 10)}
-                          </CommentDate>
-                        </CommentWriter>
-                        {childComment.user_id === null ? (
-                          <>
-                            <CommentContents>
-                              {childComment.child_comment}
-                            </CommentContents>
-                          </>
-                        ) : childComment.user_id._id === myId &&
-                          isNestedEditMode &&
-                          nestIdx === isEditNestedCommentIdx &&
-                          idx === isEditCommentIdx ? (
-                          <EditCommentContents
-                            onChange={makeNestedComment}
-                            defaultValue={childComment.child_comment}
-                          />
-                        ) : (
-                          <>
-                            <CommentContents>
-                              {childComment.child_comment}
-                            </CommentContents>
-                          </>
-                        )}
-                      </NestedCommentBox>
-                      <NestedCommentListSmallBox>
-                        {childComment.user_id === null ? (
-                          <></>
-                        ) : childComment.user_id._id !==
-                          myId ? null : isNestedEditMode &&
-                          comment._id === childComment.crewcomment_id &&
-                          nestIdx === isEditNestedCommentIdx &&
-                          idx === isEditCommentIdx ? (
-                          <>
-                            <CommentEditAndNestedCommentBox>
-                              <CommentEditButtonCheck
-                                onClick={() => editNestedComment()}
-                              >
-                                수정
-                              </CommentEditButtonCheck>
-                              <CommentEditButtonCancel
-                                onClick={() => {
-                                  setNestedEditMode(false);
-                                }}
-                              >
-                                취소
-                              </CommentEditButtonCancel>
-                            </CommentEditAndNestedCommentBox>
-                          </>
-                        ) : (
-                          <>
-                            <CommentDeleteBox>
-                              <CommentDeleteButton
-                                src={"./image/delete-button.png"}
-                                onClick={() => {
-                                  chosenEditCommentIdx(idx);
-                                  chosenEditNestedCommentIdx(nestIdx);
-                                  console.log(isEditCommentIdx);
-                                  console.log(isEditNestedCommentIdx);
-                                  deleteNestedComment(idx, nestIdx);
-                                }}
-                              />
-                            </CommentDeleteBox>
-                            <CommentEditButton
-                              onClick={() => {
-                                setNestedEditMode(true);
-                                chosenEditCommentIdx(idx);
-                                chosenEditNestedCommentIdx(nestIdx);
-                                console.log(isEditCommentIdx);
-                                console.log(isEditNestedCommentIdx);
-                              }}
-                            >
-                              수정
-                            </CommentEditButton>
-                          </>
-                        )}
-                      </NestedCommentListSmallBox>
-                    </CommentListBigBox>
-                  ),
-                )}
+                <NestedComment
+                  setEditMode={setEditMode}
+                  isEditCommentIdx={isEditCommentIdx}
+                  chosenEditCommentIdx={chosenEditCommentIdx}
+                  setNestedCommentMode={setNestedCommentMode}
+                  nestedCommentValue={nestedCommentValue}
+                  setNestedCommentValue={setNestedCommentValue}
+                  makeNestedComment={makeNestedComment}
+                  myId={myId}
+                  comment={comment}
+                  idx={idx}
+                  currentCBcontent={currentCBcontent}
+                  GoToCrewBoardContent={GoToCrewBoardContent}
+                />
               </>
             ))}
       </CommentList>

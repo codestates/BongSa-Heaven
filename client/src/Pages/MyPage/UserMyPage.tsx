@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
 import Header2 from "../../components/common/Header2";
@@ -6,9 +6,9 @@ import UserMyPageMain from "../../components/Mypages/UserMyPageMain";
 import axios from "axios";
 
 const SeeRecruiterBtn = styled.button`
-  margin-left: 24px;
   margin-bottom: 14px;
-  width: 327px;
+  width: 97%;
+  max-width: 327px;
   height: 29px;
   background: #ff7676;
   font-family: Roboto;
@@ -19,15 +19,15 @@ const SeeRecruiterBtn = styled.button`
   color: #ffffff;
   border: 0;
   @media screen and (min-width: 37.5rem) {
-    width: 760px;
+    max-width: 760px;
     height: 71px;
     cursor: pointer;
   }
 `;
 const InfoEditBtn = styled.button`
   margin-bottom: 24px;
-  margin-left: 24px;
-  width: 327px;
+  width: 97%;
+  max-width: 327px;
   height: 29px;
   background: #ff7676;
   font-family: Roboto;
@@ -38,24 +38,24 @@ const InfoEditBtn = styled.button`
   color: #ffffff;
   border: 0;
   @media screen and (min-width: 37.5rem) {
-    width: 760px;
+    max-width: 760px;
     height: 71px;
     cursor: pointer;
   }
 `;
 
 const HiddenVolContainer = styled.div`
-  margin-left: 24px;
   margin-bottom: 30px;
   width: 325px;
   height: 29px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   @media screen and (min-width: 37.5rem) {
     width: 760px;
     height: 71px;
     align-items: flex-start;
+    justify-content: flex-end;
   }
 `;
 
@@ -63,18 +63,26 @@ const HiddenVolToogleInput = styled.input``;
 const HiddenVolToogleLabel = styled.label``;
 const HiddenVolToogleBall = styled.span``;
 const WebContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const HiddenVolSpan = styled.span`
   @media screen and (min-width: 37.5rem) {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-right: 30px;
+    margin-top: 5px;
+    font-size: 20px;
   }
 `;
 
 export default function UserMyPage() {
   const history = useHistory();
   const [isChecked, setIsChecked] = useState(true);
+
+  const GetOauth = sessionStorage.getItem("oauth");
+
   const handleSwitch = () => {
     setIsChecked(!isChecked);
     axios
@@ -118,7 +126,11 @@ export default function UserMyPage() {
     history.push("/SeeRecruiter");
   };
   const GoUserEditPasswordCheck = () => {
-    history.push("/UserEditPasswordCheck");
+    if (GetOauth) {
+      history.push("/OauthUserEdit");
+    } else {
+      history.push("/UserEditPasswordCheck");
+    }
   };
 
   const getUserInfoHandler = () => {
@@ -165,7 +177,7 @@ export default function UserMyPage() {
           회원정보 수정하기
         </InfoEditBtn>
         <HiddenVolContainer>
-          <span>봉사희망정보 숨기기</span>
+          <HiddenVolSpan>봉사희망정보 숨기기</HiddenVolSpan>
           {/* 개인정보숨기기를 닫으면 개인정보가 recruiter한테 안보여짐 
           on =true, off = false*/}
           <div>

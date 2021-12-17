@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
 import Header3 from "../../components/common/Header3";
@@ -170,6 +170,7 @@ const SelectBox = styled.div`
   margin: 15px 0px 15px 0px;
   @media screen and (min-width: 37.5rem) {
     justify-content: center;
+    width: 60%;
   }
 `;
 const AgeButton = styled.div`
@@ -231,19 +232,6 @@ const CompleteButton = styled.div`
   width: 110px;
   cursor: pointer;
 `;
-const DeleteBtn = styled.div`
-  margin-bottom: 15px;
-  background-color: #448b76;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 80px 20px 80px;
-  border-radius: 5px;
-  width: 110px;
-  opacity: 0.6;
-  height: 5px;
-`;
 
 export default function UserEdit() {
   const [userInfo, setUserInfo] = useState<any>({
@@ -257,13 +245,14 @@ export default function UserEdit() {
     age: "",
     sex: "",
   });
+  const [dbNickName, setDbNickName] = useState("");
+  const [dbPassword, setdbPassword] = useState("");
   const [newPass, setNewPass] = useState<any>({
     password: "",
     asswordCheck: "",
   });
 
   //errorMessage
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passErrorMessage, setPassErrorMessage] = useState("");
   const [passCheckErrorMessage, setPassCheckErrorMessage] = useState("");
   const [nickCheckErrorMessage, setNickCheckErrorMessage] = useState("");
@@ -407,7 +396,11 @@ export default function UserEdit() {
         })
         .catch(() => {
           console.log("일치하는값 들어옴");
-          setNickCheckErrorMessage("중복된 닉네임 입니다.");
+          if (dbNickName === userInfo.nickname) {
+            setNickCheckErrorMessage("현재 닉네임 입니다.");
+          } else {
+            setNickCheckErrorMessage("중복된 닉네임 입니다.");
+          }
           setIsNick(false);
         });
     }
@@ -421,6 +414,8 @@ export default function UserEdit() {
       newPass.passwordCheck,
     );
 
+    const isDbNickname = dbNickName === userInfo.nickname;
+
     console.log(validNickname, validPassword, validCheckPassword, isNick);
     //유저정보 변경은 어떻게 이루어지는가?
     //닉네임만 바꾸는 경우  userinfo를 onchange로 변화시키면 값읃 얻을수 있다.
@@ -432,93 +427,100 @@ export default function UserEdit() {
     //그외 나머지를 바꾸는 경우
 
     //비밀번호를 바꾸는 경우 비밀번호 유효성검사, 비밀번호가 같아야지 비밀번호를 바꿀수 있다.
-    if (validPassword && validCheckPassword) {
-      console.log("비번 변경");
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: newPass.password,
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    if (isDbNickname) {
+      if (isDbNickname && userInfo.password === "") {
+        axios
+          .patch(
+            `${process.env.REACT_APP_API_URI}/user/edit`,
+            {
+              email: userInfo.email,
+              nickname: userInfo.nickname,
+              password: dbPassword,
+              want_region: userInfo.want_region,
+              want_vol: userInfo.want_vol,
+              sex: userInfo.sex,
+              age: age,
             },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/UserMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            },
+          )
+          .then(res => {
+            console.log(res.data.data);
+            history.push("/UserMyPage");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+      if (validPassword && validCheckPassword) {
+        axios
+          .patch(
+            `${process.env.REACT_APP_API_URI}/user/edit`,
+            {
+              email: userInfo.email,
+              nickname: userInfo.nickname,
+              password: newPass.password,
+
+              want_region: userInfo.want_region,
+              want_vol: userInfo.want_vol,
+              sex: userInfo.sex,
+              age: userInfo.age,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            },
+          )
+          .then(res => {
+            console.log(res.data.data);
+            history.push("/UserMyPage");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    } else {
+      if (validNickname && isNick) {
+        console.log("닉네임 변경");
+        axios
+          .patch(
+            `${process.env.REACT_APP_API_URI}/user/edit`,
+            {
+              email: userInfo.email,
+              nickname: userInfo.nickname,
+              password: userInfo.password,
+
+              want_region: userInfo.want_region,
+              want_vol: userInfo.want_vol,
+              sex: userInfo.sex,
+              age: userInfo.age,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            },
+          )
+          .then(res => {
+            console.log(res.data.data);
+            history.push("/UserMyPage");
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        setNickCheckErrorMessage("닉네임 중복을 확인해주세요.");
+      }
     }
+
     //닉유효성검사 + 중복체크 통과
-    if (validNickname && isNick) {
-      console.log("닉네임 변경");
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: userInfo.password,
 
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/UserMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
     //비번 닉네임 동시에 바꾸는 경우
-    if (validNickname && isNick && validPassword && validCheckPassword) {
-      axios
-        .patch(
-          `${process.env.REACT_APP_API_URI}/user/edit`,
-          {
-            email: userInfo.email,
-            nickname: userInfo.nickname,
-            password: newPass.password,
 
-            want_region: userInfo.want_region,
-            want_vol: userInfo.want_vol,
-            sex: userInfo.sex,
-            age: userInfo.age,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          },
-        )
-        .then(res => {
-          console.log(res.data.data);
-          history.push("/UserMyPage");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
     //비번 제외 닉네임 제외하고 바꾸는 경우
 
     //닉네임 비번 외에는 유효성 검증 필요 없고 그냥 바꿀수 있음.
@@ -552,6 +554,9 @@ export default function UserEdit() {
           sex: res.data.data.sex,
           age: res.data.data.age,
         });
+        setDbNickName(res.data.data.nickname);
+        setdbPassword(res.data.data.password);
+        setAge(res.data.data.age);
       })
 
       .catch(err => {
@@ -693,3 +698,27 @@ export default function UserEdit() {
     </>
   );
 }
+
+/*
+1.
+현재 db 닉네임 = 인풋에 닉네임 true
+else false
+
+(password = null || checkpassword null) true
+
+2.
+현재 db 닉네임 = 인풋에 닉네임 true
+else false
+
+(유효password === 유효checkpassword) true
+
+3. 
+현재 db 닉네임 != 인풋에 유효닉네임 true
+
+(password = null || checkpassword null) true
+
+4.
+현재 db 닉네임 != 인풋에 유효닉네임 true
+
+(유효password === 유효checkpassword) true
+*/

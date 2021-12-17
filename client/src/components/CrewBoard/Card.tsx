@@ -9,6 +9,10 @@ const Cardbox = styled.div`
   width: 80%;
   margin: auto;
   margin-top: 3vh;
+  &:hover {
+    width: 82%;
+    transition: 0.3s;
+  }
 `;
 
 const ImageBox = styled.div`

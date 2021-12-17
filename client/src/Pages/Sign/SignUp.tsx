@@ -1,34 +1,6 @@
-import React, {useState} from "react";
 import styled from "styled-components";
-
 import {useHistory} from "react-router-dom";
 import Header2 from "../../components/common/Header2";
-import axios from "axios";
-const Header = styled.div`
-  display: flex;
-  background-color: #ffd4d4;
-  align-items: center;
-  width: 100%;
-  padding: 30px 0px 20px 0px;
-`;
-const HeaderText = styled.div`
-  width: 60%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-`;
-
-const IconBox = styled.div`
-  width: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const BackIcon = styled.img`
-  width: 30%;
-  object-fit: cover;
-`;
 
 const SignupSpace = styled.div`
   display: flex;

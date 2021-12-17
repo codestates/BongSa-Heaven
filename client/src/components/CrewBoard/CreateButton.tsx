@@ -22,6 +22,10 @@ const ImgUploadButton = styled.div`
   align-items: center;
   padding: 20px 80px 20px 80px;
   border-radius: 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
 `;
 const ImgUpload = styled.input`
   display: none;
@@ -66,6 +70,10 @@ const CompleteButton = styled.div`
   margin-left: 10px;
   margin-bottom: 20px;
   border-radius: 20px;
+  &:hover {
+    background-color: #ff3030;
+    transition: 0.3s;
+  }
   @media screen and (min-width: 37.5rem) {
   }
 `;

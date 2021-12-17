@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
@@ -148,7 +148,6 @@ export default function UserMaill() {
 
   const deleteList = useSelector((state: any) => state.mailDeleteList);
   const [mailList, setMailList] = useState([]);
-  const [checkList, setCheckList] = useState([]);
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [reload, setReload] = useState(false);
