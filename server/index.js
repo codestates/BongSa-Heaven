@@ -1,4 +1,4 @@
-require("dotenv").config();
+
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -16,7 +16,7 @@ const commentRouter = require("./routes/comment");
 const mailRouter = require("./routes/mail");
 const mapRouter = require("./routes/map");
 const imageRouter = require("./routes/image");
-
+require("dotenv").config();
 //use modules
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -48,7 +48,7 @@ app.use("/image", imageRouter);
 // app.post("/images", controller.imageControl);
 
 //server
-const HTTPS_PORT = 80;
+const HTTPS_PORT = process.env.HTTPS_PORT;
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");

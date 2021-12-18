@@ -1,8 +1,12 @@
-require("dotenv").config();
+require("dotenv").config({
+  path: "../.env",
+});
 const mongoose = require("mongoose");
 
 module.exports = () => {
-  const uri = env.MONGODB_URI;
+  const uri = process.env.MONGODB_URI;
+
+  console.log(uri);
   // * mongoDB connect *
   mongoose
     .connect(uri, {
@@ -10,7 +14,6 @@ module.exports = () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
-      useMongoClient: true,
     })
     .then(() => console.log(`mongoDB connected`))
     .catch(err => console.error(`failed connection cause ${err}`));
