@@ -10,6 +10,7 @@ module.exports = () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
+      useMongoClient: true,
     })
     .then(() => console.log(`mongoDB connected`))
     .catch(err => console.error(`failed connection cause ${err}`));
