@@ -1,4 +1,3 @@
-
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -44,11 +43,12 @@ app.use("/comment", commentRouter);
 app.use("/mail", mailRouter);
 app.use("/map", mapRouter);
 app.use("/image", imageRouter);
+console.log(process.env.MONGODB_URI)
+console.log(process.env.ACCESS_SECRET)
 
-// app.post("/images", controller.imageControl);
 
 //server
-const HTTPS_PORT = process.env.HTTPS_PORT;
+const HTTPS_PORT = process.env.HTTPS_PORT || 80;
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
