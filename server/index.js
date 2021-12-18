@@ -43,8 +43,7 @@ app.use("/comment", commentRouter);
 app.use("/mail", mailRouter);
 app.use("/map", mapRouter);
 app.use("/image", imageRouter);
-console.log(process.env.MONGODB_URI)
-console.log(process.env.ACCESS_SECRET)
+
 
 
 //server
