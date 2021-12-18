@@ -48,7 +48,7 @@ app.use("/image", imageRouter);
 // app.post("/images", controller.imageControl);
 
 //server
-const HTTPS_PORT = process.env.HTTPS_PORT
+const HTTPS_PORT = 80;
 let server;
 if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
   const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
