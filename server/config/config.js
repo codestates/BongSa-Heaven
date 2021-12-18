@@ -2,10 +2,10 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 module.exports = () => {
-  const uri = process.env.MONGODB_URI;
+  const uri = env.MONGODB_URI;
   // * mongoDB connect *
   mongoose
-    .connect(`${uri}`, {
+    .connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
