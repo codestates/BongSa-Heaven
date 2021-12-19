@@ -23,7 +23,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: true,
+    origin: [process.env.CLIENT_URL, "https://bongsa-heaven.com"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
@@ -47,11 +47,12 @@ app.use("/image", imageRouter);
 
 
 //server
-const HTTPS_PORT = process.env.HTTPS_PORT || 80;
+const HTTPS_PORT = process.env.HTTPS_PORT||8080
 
-  app.listen(HTTPS_PORT, () => {
-    console.log(`      🚀 Server is starting on http ${HTTPS_PORT}`);
-  });
+//인증서 없는경우
 
+app.listen(HTTPS_PORT, () => {
+  console.log(`      🚀 Server is starting on http ${HTTPS_PORT}`);
+});
 
 module.exports = app;
