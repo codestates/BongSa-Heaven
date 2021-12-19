@@ -38,6 +38,10 @@ const MynameMaill = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+  }
 `;
 const MynameMaillSpan = styled.span`
   font-family: Roboto;

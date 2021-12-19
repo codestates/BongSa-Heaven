@@ -14,7 +14,7 @@ const Headerspace = styled.div`
   padding: 20px 0px 20px 0px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-around;
 
   @media screen and (min-width: 37.5rem) {
     display: none;
@@ -54,6 +54,32 @@ const ContentsBox = styled.div`
     margin-bottom: 30px;
   }
 `;
+const BlankBox = styled.div`
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  opacity: 0.6;
+  @media screen and (min-width: 37.5rem) {
+    margin: auto;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+`;
+const BlankImg = styled.img`
+  width: 50%;
+  opacity: 0.3;
+  object-fit: cover;
+  margin-bottom: 20px;
+`;
 
 export default function FreeBoardList({
   GoToFreeBoardContent,
@@ -81,13 +107,14 @@ export default function FreeBoardList({
       .get(`${process.env.REACT_APP_API_URI}/board/fblist`)
       .then(res => {
         setFreeBoardinfo(res.data.data);
+        loadingHandler();
       })
       .catch(err => console.log(err));
   };
 
   useEffect(() => {
-    setTimeout(() => loadingHandler(), 1000);
     getFreeBoardList();
+    setTimeout(() => loadingHandler(), 5000); // 무한 로딩 방지
   }, []);
 
   return (
@@ -108,8 +135,12 @@ export default function FreeBoardList({
             <CreateLink create="/FreeBoardCreate" isLogin={isLogin} />
           </TitleBox>
           <ContentsBox>
-            {currentPosts &&
-              currentPosts.length > 0 &&
+            {currentPosts && currentPosts.length === 0 ? (
+              <BlankBox>
+                <BlankImg src={"./image/NoData.png"} />
+                데이터가 존재하지 않습니다!
+              </BlankBox>
+            ) : (
               currentPosts.map((board: any) =>
                 board.user_id == null ? (
                   <Contents
@@ -136,7 +167,8 @@ export default function FreeBoardList({
                     GoToFreeBoardContent={GoToFreeBoardContent}
                   />
                 ),
-              )}
+              )
+            )}
           </ContentsBox>
         </>
       )}

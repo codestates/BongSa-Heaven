@@ -30,20 +30,55 @@ const MainContainer = styled.div`
 
 const LogoBox = styled.div`
   width: 80%;
-  margin: 10px 0px 50px 0px;
+  margin: 80px 0px 50px 0px;
   background-color: #ffd4d4;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
   @media screen and (min-width: 37.5rem) {
     display: none;
   }
 `;
 const Logo = styled.img`
-  width: 60%;
+  width: 15%;
   object-fit: cover;
 `;
-
+const LogInImageBox = styled.div`
+  display: none;
+  @media screen and (min-width: 37.5rem) {
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    margin: 0px 0px 50px 0px;
+  }
+`;
+const LogInImage = styled.img`
+  width: 12%;
+  object-fit: cover;
+`;
+const HeaderName = styled.span`
+  color: #ff7676;
+  margin-left: 5%;
+  font-family: Roboto;
+  font-size: 36px;
+  font-weight: bold;
+  @media screen and (min-width: 37.5rem) {
+    margin-left: 4%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 48px;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    color: #ff7676;
+    cursor: pointer;
+  }
+`;
 const SignInWhiteBox = styled.div`
   background-color: white;
   width: 90%;
@@ -52,6 +87,9 @@ const SignInWhiteBox = styled.div`
   border-radius: 20px;
   padding: 15px 0px 15px 0px;
   margin: 8px 0px 8px 0px;
+  @media screen and (min-width: 37.5rem) {
+    margin: 0;
+  }
 `;
 const SignInWhiteInput = styled.input`
   width: 90%;
@@ -72,7 +110,7 @@ const CompleteBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
-  margin: 10px 0px 30px 0px;
+  margin: 30px 0px 30px 0px;
 `;
 const CompleteButton = styled.div`
   margin-bottom: 15px;
@@ -136,6 +174,23 @@ const SingUpButton = styled.div`
   width: 115px;
   cursor: pointer;
 `;
+
+const GotoMainByGuestButton = styled.div`
+  margin-bottom: 15px;
+  background-color: #bb7bfc;
+
+  background-size: 100% 100%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 80px 20px 80px;
+  border-radius: 5px;
+  height: 25px;
+  width: 115px;
+  cursor: pointer;
+`;
+
 export default function SignIn({setIsLogin, setIsUserLogin}: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -240,6 +295,9 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
   const moveToSignUP = () => {
     history.push("/signup");
   };
+  const moveToMain = () => {
+    history.push("/");
+  };
   //회원가입후 이메일 인증을 받도록 한다.
   //authcode를 받아와야함,
   //이메일 인증을 받지않으면 로그인 불가 (인증을 10분 이상 안할시 계정파기)
@@ -283,11 +341,15 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
   // console.log(window.location.href);
   return (
     <>
-      <Header3 />
       <Wrapper>
         <MainContainer>
+          <LogInImageBox onClick={moveToMain}>
+            <LogInImage src="./image/logo2.png" />
+            <HeaderName>봉사천국</HeaderName>
+          </LogInImageBox>
           <LogoBox>
             <Logo src="./image/logo2.png"></Logo>
+            <HeaderName onClick={moveToMain}>봉사천국</HeaderName>
           </LogoBox>
           <SignInWhiteBox>
             <SignInWhiteInput
@@ -313,6 +375,9 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
             <GoogleButton onClick={googleControl}></GoogleButton>
             <KakaoButton onClick={kakaoControl}></KakaoButton>
             <SingUpButton onClick={moveToSignUP}>회원가입</SingUpButton>
+            <GotoMainByGuestButton onClick={moveToMain}>
+              구경하기
+            </GotoMainByGuestButton>
           </CompleteBox>
         </MainContainer>
       </Wrapper>

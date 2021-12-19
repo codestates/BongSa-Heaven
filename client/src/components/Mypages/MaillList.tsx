@@ -6,10 +6,11 @@ import {addList, deleteList} from "../../modules/mailDeleteList";
 const MaillContentsComponent = styled.div`
   margin-top: 21px;
   margin-left: 8px;
-  width: 359px;
+  width: 90%;
   height: 168px;
   @media screen and (min-width: 37.5rem) {
-    width: 100%;
+    width: 80%;
+    max-width: 800px;
   }
 `;
 const MaillContentsUserName = styled.div`

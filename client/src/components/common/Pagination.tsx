@@ -12,11 +12,14 @@ const PageNumber = styled.li``;
 
 const PageButton = styled.button`
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 14px;
   border: none;
   background: none;
   &:focus {
     font-weight: bold;
+  }
+  @media screen and (min-width: 37.5rem) {
+    font-size: 24px;
   }
 `;
 

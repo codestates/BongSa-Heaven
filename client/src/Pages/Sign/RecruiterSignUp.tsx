@@ -28,18 +28,53 @@ const MainContainer = styled.div`
 
 const LogoBox = styled.div`
   width: 80%;
-  margin: 10px 0px 50px 0px;
+  margin: 10px 0px 30px 0px;
   background-color: #ffd4d4;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
   @media screen and (min-width: 37.5rem) {
     display: none;
   }
 `;
 const Logo = styled.img`
-  width: 60%;
+  width: 10%;
   object-fit: cover;
+`;
+const SignUpImageBox = styled.div`
+  display: none;
+  @media screen and (min-width: 37.5rem) {
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 50px 0px;
+  }
+`;
+const SignUpImage = styled.img`
+  width: 10%;
+  object-fit: cover;
+`;
+const HeaderName = styled.span`
+  color: #ff7676;
+  margin-left: 5%;
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: bold;
+  @media screen and (min-width: 37.5rem) {
+    margin-left: 4%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    color: #ff7676;
+    cursor: pointer;
+  }
 `;
 
 const SignUpWhiteBox = styled.div`
@@ -77,8 +112,10 @@ const PossibleOrNot = styled.div`
   align-items: center;
   opacity: 0.5;
   margin-left: 5vw;
+  font-size: 12px;
   @media screen and (min-width: 37.5rem) {
     margin: 0;
+    font-size: 16px;
   }
 `;
 
@@ -98,7 +135,7 @@ const CompleteBox = styled.div`
   justify-content: center;
   align-items: center;
   width: 80%;
-  margin: 10px 0px 30px 0px;
+  margin: 50px 0px 30px 0px;
 `;
 const CompleteButton = styled.div`
   margin-bottom: 15px;
@@ -328,8 +365,13 @@ export default function UserEdit() {
       <Header3 />
       <Wrapper>
         <MainContainer>
+          <SignUpImageBox>
+            <SignUpImage src="./image/logo2.png" />
+            <HeaderName>봉사모집자 회원가입</HeaderName>
+          </SignUpImageBox>
           <LogoBox>
             <Logo src="./image/logo2.png"></Logo>
+            <HeaderName>봉사모집자 회원가입</HeaderName>
           </LogoBox>
           <SignUpWhiteBox>
             <SignUpWhiteInput

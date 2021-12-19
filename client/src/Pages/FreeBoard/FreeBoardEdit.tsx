@@ -74,14 +74,23 @@ const ContentsBoxImgBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 80%;
   margin: 15px 0 30px 0;
+
+  @media screen and (min-width: 37.5rem) {
+    align-items: flex-start;
+    margin-left: 8vw;
+  }
 `;
 const Img = styled.img`
   width: 80%;
   object-fit: cover;
-  opacity: 0.5;
   border-radius: 10px;
+
+  @media screen and (min-width: 37.5rem) {
+    max-width: 40%;
+    max-height: 40%;
+  }
 `;
 
 export default function FreeBoardEdit({
@@ -232,7 +241,7 @@ export default function FreeBoardEdit({
                 <></>
               )}
               <ContentsBoxImgBox>
-                <Img src={previewFileImage} alt="수정할 이미지 자리" />
+                <Img src={previewFileImage} alt="" />
               </ContentsBoxImgBox>
             </ContentsBox>
             <EditButton
