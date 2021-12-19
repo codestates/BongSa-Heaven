@@ -6,9 +6,6 @@ import {useDispatch} from "react-redux";
 import "./App.css";
 import "./css/Reset.css";
 import Footer from "./components/common/Footer";
-import DevHeader from "./components/DevHeader";
-import DevFooter from "./components/DevFooter";
-import DevBtn from "./components/DevBtn";
 import MainPage from "./Pages/Main/MainPage";
 
 import RecruiterSignUp from "./Pages/Sign/RecruiterSignUp";
@@ -237,7 +234,7 @@ export default function App() {
         setUserId={setUserId}
       />
 
-      {isDevHeader ? <DevHeader /> : null}
+    
       <Route
         exact
         path="/"
@@ -395,10 +392,6 @@ export default function App() {
 
       <Route exact path="/OauthUserReg" component={OauthUserReg} />
       <Route exact path="/OauthUserEdit" component={OauthUserEdit} />
-
-      <DevFooter handleDevHeader={handleDevHeader} isDevHeader={isDevHeader} />
-
-      <DevBtn />
 
       <Footer
         isLogin={isLogin}
