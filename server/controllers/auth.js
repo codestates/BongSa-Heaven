@@ -384,94 +384,94 @@ module.exports = {
     }
   },
 
-  sendEmailControl: async (req, res) => {
-    //회원가입 완료후 인증하라고 나온다.
-    //회원가입 완료후 추가인증
+  // sendEmailControl: async (req, res) => {
+  //   //회원가입 완료후 인증하라고 나온다.
+  //   //회원가입 완료후 추가인증
 
-    const {email} = req.body;
+  //   const {email} = req.body;
 
-    const vaildCheck = email.indexOf("@");
+  //   const vaildCheck = email.indexOf("@");
 
-    if (!email || email.length === 0 || vaildCheck === -1) {
-      return res.status(400).json({message: "Need accurate informations"});
-    }
-    //2. 링크타고 들어오도록 authcode를 생성하여 db에 저장,
-    //보안을위해 auth => crypto 로 생성
-    //끝에 =이 생겨서 가운데 일부만 가져오고싶음
-    const authCode = crypto.randomBytes(64).toString("base64").split("=")[0];
-    // console.log(authCode, "authcode");
-    let action = ""; //? 회원가입/ 로그인을 구분하기위한 변수
-    let endPoint = ""; //? 상황에 따른 리다이렉트 엔드포인트
-    let display = ""; //? 상황에 따른 이메일 인증 폼
+  //   if (!email || email.length === 0 || vaildCheck === -1) {
+  //     return res.status(400).json({message: "Need accurate informations"});
+  //   }
+  //   //2. 링크타고 들어오도록 authcode를 생성하여 db에 저장,
+  //   //보안을위해 auth => crypto 로 생성
+  //   //끝에 =이 생겨서 가운데 일부만 가져오고싶음
+  //   const authCode = crypto.randomBytes(64).toString("base64").split("=")[0];
+  //   // console.log(authCode, "authcode");
+  //   let action = ""; //? 회원가입/ 로그인을 구분하기위한 변수
+  //   let endPoint = ""; //? 상황에 따른 리다이렉트 엔드포인트
+  //   let display = ""; //? 상황에 따른 이메일 인증 폼
 
-    //인증 성공하면 status =1로 바꾼다.
+  //   //인증 성공하면 status =1로 바꾼다.
 
-    // 3. 회원 가입 유무 에 따른 차이를 둔다. 회원가입을 이미 했다면(2번 하지 못하도록)
-    // code를 보내지 않고 이미 인증 or 가입 했다고 나와야함
-    const userInfo = await User.findOne({email: email}).exec();
-    //계정이 존재하는경우, status 가 false => 계정인증이 되어야 로그인 가능하다.
-    //계정이 존재하는데, 회원가입을 한번더 요청하는경우
-    if (userInfo) {
-      if (userInfo.status === false) {
-        //주어진 아이디를 찾아서 authcode를 넣는다. insertOne(authCode)
-        User.updateOne({_id: userInfo._id}, {authcode: authCode}).exec();
-        //1시간이 지나도 회원가입인증 안할시 자동으로 회원정보 파기
-        setTimeout(async () => {
-          if (userInfo.status === false) {
-            userInfo.remove(authCode);
-            return;
-          }
-        }, 60000);
-      } else {
-        //인증이 완료 되었거나
-        return res.status(400).send("인증되었다");
-      }
-    }
-    //클릭했는데,
+  //   // 3. 회원 가입 유무 에 따른 차이를 둔다. 회원가입을 이미 했다면(2번 하지 못하도록)
+  //   // code를 보내지 않고 이미 인증 or 가입 했다고 나와야함
+  //   const userInfo = await User.findOne({email: email}).exec();
+  //   //계정이 존재하는경우, status 가 false => 계정인증이 되어야 로그인 가능하다.
+  //   //계정이 존재하는데, 회원가입을 한번더 요청하는경우
+  //   if (userInfo) {
+  //     if (userInfo.status === false) {
+  //       //주어진 아이디를 찾아서 authcode를 넣는다. insertOne(authCode)
+  //       User.updateOne({_id: userInfo._id}, {authcode: authCode}).exec();
+  //       //1시간이 지나도 회원가입인증 안할시 자동으로 회원정보 파기
+  //       setTimeout(async () => {
+  //         if (userInfo.status === false) {
+  //           userInfo.remove(authCode);
+  //           return;
+  //         }
+  //       }, 60*60*1000);
+  //     } else {
+  //       //인증이 완료 되었거나
+  //       return res.status(400).send("인증되었다");
+  //     }
+  //   }
+  //   //클릭했는데,
 
-    //이메일을 통해 인증이 된다면 => status =1로 바꿔준다. 링크를 클릭했을때
-    //auth 가 동일 하다면, status=1
-    let authEmailForm;
-    const clientAddr = process.env.CLIENT_ADDR || "http://localhost:3000";
-    //? ejs 모듈을 이용해 ejs 파일을 불러온다.
-    //? ejs 에 담기는 변수들은 위 코드에서 경우에 따라 설정 된 상태로 올 것이다.
-    ejs.renderFile(
-      __dirname + "/authForm/authMail.ejs", //filename
-      {clientAddr, authCode, action, endPoint, display}, //data
-      (err, data) => {
-        //funcion
-        if (err) console.log(err);
-        console.log("파일불러오기");
-        authEmailForm = data;
-      },
-    );
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
+  //   //이메일을 통해 인증이 된다면 => status =1로 바꿔준다. 링크를 클릭했을때
+  //   //auth 가 동일 하다면, status=1
+  //   let authEmailForm;
+  //   const clientAddr = process.env.CLIENT_ADDR || "http://localhost:3000";
+  //   //? ejs 모듈을 이용해 ejs 파일을 불러온다.
+  //   //? ejs 에 담기는 변수들은 위 코드에서 경우에 따라 설정 된 상태로 올 것이다.
+  //   ejs.renderFile(
+  //     __dirname + "/authForm/authMail.ejs", //filename
+  //     {clientAddr, authCode, action, endPoint, display}, //data
+  //     (err, data) => {
+  //       //funcion
+  //       if (err) console.log(err);
+  //       console.log("파일불러오기");
+  //       authEmailForm = data;
+  //     },
+  //   );
+  //   const transporter = nodemailer.createTransport({
+  //     service: "gmail",
+  //     host: "smtp.gmail.com",
 
-      auth: {
-        user: `${process.env.NODEMAILER_USER}`,
-        pass: `${process.env.NODEMAILER_PASS}`,
-      },
-    });
+  //     auth: {
+  //       user: `${process.env.NODEMAILER_USER}`,
+  //       pass: `${process.env.NODEMAILER_PASS}`,
+  //     },
+  //   });
 
-    const mailOptions = {
-      from: `${process.env.NODEMAILER_USER}`,
-      to: userInfo.email,
-      subject: "봉사 천국에 회원가입 해주셔서 감사합니다.",
-      html: authEmailForm,
-    };
+  //   const mailOptions = {
+  //     from: `${process.env.NODEMAILER_USER}`,
+  //     to: userInfo.email,
+  //     subject: "봉사 천국에 회원가입 해주셔서 감사합니다.",
+  //     html: authEmailForm,
+  //   };
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent success! : " + info.response);
-      }
-      transporter.close();
-      return res.status(200).send("끝");
-    });
-  },
+  //   transporter.sendMail(mailOptions, function (error, info) {
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  //       console.log("Email sent success! : " + info.response);
+  //     }
+  //     transporter.close();
+  //     return res.status(200).send("끝");
+  //   });
+  // },
 
   confirmEmailControl: async (req, res) => {
     //가입후 클라이언트에서 주는 코드로 로그인

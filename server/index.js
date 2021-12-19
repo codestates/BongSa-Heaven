@@ -24,7 +24,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL||'https://bongsa-heaven.com',
+    origin: [process.env.CLIENT_URL, "https://bongsa-heaven.com"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   }),
@@ -48,22 +48,12 @@ app.use("/image", imageRouter);
 // app.post("/images", controller.imageControl);
 
 //server
-const HTTPS_PORT = process.env.HTTPS_PORT||8080;
-let server;
-if (fs.existsSync("./key.pem") && fs.existsSync("./cert.pem")) {
-  const privateKey = fs.readFileSync(__dirname + "/key.pem", "utf8");
-  const certificate = fs.readFileSync(__dirname + "/cert.pem", "utf8");
-  const credentials = {key: privateKey, cert: certificate};
+const HTTPS_PORT = process.env.HTTPS_PORT||8080
 
-  server = https.createServer(credentials, app);
-  server.listen(HTTPS_PORT, () =>
-    console.log(` 🚀 Server is starting on https ${HTTPS_PORT}`),
-  );
-  //인증서 없는경우
-} else {
-  app.listen(HTTPS_PORT, () => {
-    console.log(`      🚀 Server is starting on http ${HTTPS_PORT}`);
-  });
-}
+//인증서 없는경우
+
+app.listen(HTTPS_PORT, () => {
+  console.log(`      🚀 Server is starting on http ${HTTPS_PORT}`);
+});
 
 module.exports = app;
