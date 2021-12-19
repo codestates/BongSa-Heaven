@@ -295,7 +295,11 @@ export default function App() {
         component={UserEditPasswordCheck}
       />
       <Route exact path="/UserMaill" component={UserMaill} />
-      <Route exact path="/UserMyPage" component={UserMyPage} />
+      <Route
+        exact
+        path="/UserMyPage"
+        render={() => <UserMyPage isLogin={isLogin} />}
+      />
       {/* FreeBoard */}
 
       <Route

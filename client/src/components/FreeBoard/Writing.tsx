@@ -167,7 +167,7 @@ export default function Writing({currentFBcontent, userId, isLogin}: any) {
   return (
     <>
       {currentFBcontent.data === undefined ? (
-        history.push("/")
+        <></>
       ) : (
         <>
           <ContentsBox>

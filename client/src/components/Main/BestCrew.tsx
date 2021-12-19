@@ -18,17 +18,21 @@ const MainCrewBoardContainer = styled.div`
 const CrewBoardBestTitle = styled.div`
   cursor: pointer;
   height: 24px;
-  margin-top: 64px;
+  margin-top: 30px;
   margin-left: 18px;
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
   line-height: 35px;
   display: flex;
   align-items: center;
   letter-spacing: -0.495238px;
   color: #000000;
+  @media screen and (min-width: 37.5rem) {
+    font-size: 24px;
+    margin-top: 64px;
+  }
 `;
 
 const CrewBoardTop3Container = styled.div`
@@ -51,7 +55,7 @@ const CrewBoardTop3 = styled.div`
   align-items: center;
   width: 30%;
   margin: auto;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+
   cursor: pointer;
 
   &:hover {
@@ -65,16 +69,29 @@ const CrewBoardTop3 = styled.div`
 const CrewBoardTop3Image = styled.img`
   width: 100%;
   cursor: pointer;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   margin-bottom: 10px;
+`;
+const CrewBoardTop3Title = styled.div`
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 37.5rem) {
+    margin-top: 5px 0px 8px 0px;
+    font-size: 20px;
+  }
 `;
 
 const CrewBoardMoreBtnContainer = styled.div`
   width: 100%;
+  margin-top: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   @media screen and (min-width: 37.5rem) {
     width: 100%;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,7 +106,7 @@ const CrewBoardMoreBtn = styled.button`
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
   border: 0;
   &:hover {
@@ -98,8 +115,36 @@ const CrewBoardMoreBtn = styled.button`
   }
   @media screen and (min-width: 37.5rem) {
     width: 100%;
+    font-size: 16px;
   }
 `;
+const BlankBox = styled.div`
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  opacity: 0.6;
+  @media screen and (min-width: 37.5rem) {
+    margin: auto;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+`;
+const BlankImg = styled.img`
+  width: 50%;
+  opacity: 0.3;
+  object-fit: cover;
+  margin-bottom: 20px;
+`;
+
 export default function BestCrew({
   crewBoardinfo,
   GoToCrewBoardContent,
@@ -118,28 +163,37 @@ export default function BestCrew({
         <CrewBoardBestTitle>Best Top 3 봉사단</CrewBoardBestTitle>
         <CrewBoardTop3Container>
           {Top3crewBoardinfo.length === 0 ? (
-            <></>
+            <BlankBox>
+              <BlankImg src={"./image/NoData.png"} />
+              데이터가 존재하지 않습니다!
+            </BlankBox>
           ) : (
             <>
               <CrewBoardTop3
                 onClick={() => GoToCrewBoardContent(Top3crewBoardinfo[0]._id)}
               >
                 <CrewBoardTop3Image src={Top3crewBoardinfo[0].images} />
-                {Top3crewBoardinfo[0].title}
+                <CrewBoardTop3Title>
+                  {Top3crewBoardinfo[0].title}
+                </CrewBoardTop3Title>
               </CrewBoardTop3>
 
               <CrewBoardTop3
                 onClick={() => GoToCrewBoardContent(Top3crewBoardinfo[1]._id)}
               >
                 <CrewBoardTop3Image src={Top3crewBoardinfo[1].images} />
-                {Top3crewBoardinfo[1].title}
+                <CrewBoardTop3Title>
+                  {Top3crewBoardinfo[1].title}
+                </CrewBoardTop3Title>
               </CrewBoardTop3>
 
               <CrewBoardTop3
                 onClick={() => GoToCrewBoardContent(Top3crewBoardinfo[2]._id)}
               >
                 <CrewBoardTop3Image src={Top3crewBoardinfo[2].images} />
-                {Top3crewBoardinfo[2].title}
+                <CrewBoardTop3Title>
+                  {Top3crewBoardinfo[2].title}
+                </CrewBoardTop3Title>
               </CrewBoardTop3>
             </>
           )}
