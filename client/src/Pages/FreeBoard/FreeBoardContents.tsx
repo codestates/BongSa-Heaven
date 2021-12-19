@@ -84,10 +84,10 @@ export default function FreeBoardContents({
       ) : currentFBcontent.data === undefined ? (
         <>
           <LinkButton2 onClick={() => history.push("/")}>메인으로</LinkButton2>
-          {/* <BlankBox>
+          <BlankBox>
             <BlankImg src={"./image/NoData.png"} />
             데이터가 존재하지 않습니다!
-          </BlankBox> */}
+          </BlankBox>
         </>
       ) : (
         <>
