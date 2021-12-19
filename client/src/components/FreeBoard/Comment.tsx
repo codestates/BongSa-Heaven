@@ -18,6 +18,17 @@ const CommentList = styled.div`
     width: 1080px;
   }
 `;
+const CommentBlankBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 12px;
+  opacity: 0.5;
+  @media screen and (min-width: 37.5rem) {
+    font-size: 16px;
+  }
+`;
 const CommentListBigBox = styled.div`
   display: flex;
 `;
@@ -497,106 +508,110 @@ export default function Comment({
   return (
     <>
       <CommentList>
-        {currentFBcontent.data === undefined
-          ? null
-          : currentFBcontent.data.freecomments.map((comment: any, idx: any) => (
-              <>
-                <CommentListBigBox key={idx}>
-                  <CommentBox>
-                    <CommentWriter>
-                      {comment.user_id == null
-                        ? "회원탈퇴자"
-                        : comment.user_id.nickname}
-                      <CommentDate>
-                        {comment.createdAt === undefined
-                          ? null
-                          : comment.createdAt.slice(0, 10)}
-                      </CommentDate>
-                      {comment.user_id == null || !isLogin ? (
-                        <></>
-                      ) : (
-                        <>
-                          <CommentNestedCommentButton
-                            onClick={() => GoNestCommentInputMode(idx)}
-                          >
-                            대댓글
-                          </CommentNestedCommentButton>
-                        </>
-                      )}
-                    </CommentWriter>
-                    {comment.user_id == null ? (
-                      <>
-                        <CommentContents>{comment.comment}</CommentContents>
-                      </>
-                    ) : comment.user_id._id === myId &&
-                      isEditMode &&
-                      idx === isEditCommentIdx ? (
-                      <EditCommentContents
-                        onChange={makeComment}
-                        defaultValue={comment.comment}
-                      />
+        {currentFBcontent.data === undefined ? (
+          <></>
+        ) : currentFBcontent.data.freecomments.length === 0 ? (
+          <CommentBlankBox>첫번째 댓글을 남겨주세요.</CommentBlankBox>
+        ) : (
+          currentFBcontent.data.freecomments.map((comment: any, idx: any) => (
+            <>
+              <CommentListBigBox key={idx}>
+                <CommentBox>
+                  <CommentWriter>
+                    {comment.user_id == null
+                      ? "회원탈퇴자"
+                      : comment.user_id.nickname}
+                    <CommentDate>
+                      {comment.createdAt === undefined
+                        ? null
+                        : comment.createdAt.slice(0, 10)}
+                    </CommentDate>
+                    {comment.user_id == null || !isLogin ? (
+                      <></>
                     ) : (
                       <>
-                        <CommentContents>{comment.comment}</CommentContents>
+                        <CommentNestedCommentButton
+                          onClick={() => GoNestCommentInputMode(idx)}
+                        >
+                          대댓글
+                        </CommentNestedCommentButton>
                       </>
                     )}
-                  </CommentBox>
-                  <CommentListSmallBox>
-                    {comment.user_id == null || comment.user_id._id !== myId ? (
-                      <></>
-                    ) : isEditMode && idx === isEditCommentIdx ? (
-                      <>
-                        <CommentEditAndNestedCommentBox>
-                          <CommentEditButtonCheck
-                            onClick={() => editComment(isEditCommentIdx)}
-                          >
-                            수정
-                          </CommentEditButtonCheck>
-                          <CommentEditButtonCancel
-                            onClick={() => {
-                              setEditMode(false);
-                            }}
-                          >
-                            취소
-                          </CommentEditButtonCancel>
-                        </CommentEditAndNestedCommentBox>
-                      </>
-                    ) : (
-                      <>
-                        <CommentDeleteBox>
-                          <CommentDeleteButton
-                            src={"./image/delete-button.png"}
-                            onClick={() => deleteComment(isEditCommentIdx)}
-                          />
-                        </CommentDeleteBox>
-                        <CommentEditButton
-                          onClick={() => {
-                            setEditMode(true);
-                            chosenEditCommentIdx(idx);
-                          }}
+                  </CommentWriter>
+                  {comment.user_id == null ? (
+                    <>
+                      <CommentContents>{comment.comment}</CommentContents>
+                    </>
+                  ) : comment.user_id._id === myId &&
+                    isEditMode &&
+                    idx === isEditCommentIdx ? (
+                    <EditCommentContents
+                      onChange={makeComment}
+                      defaultValue={comment.comment}
+                    />
+                  ) : (
+                    <>
+                      <CommentContents>{comment.comment}</CommentContents>
+                    </>
+                  )}
+                </CommentBox>
+                <CommentListSmallBox>
+                  {comment.user_id == null || comment.user_id._id !== myId ? (
+                    <></>
+                  ) : isEditMode && idx === isEditCommentIdx ? (
+                    <>
+                      <CommentEditAndNestedCommentBox>
+                        <CommentEditButtonCheck
+                          onClick={() => editComment(isEditCommentIdx)}
                         >
                           수정
-                        </CommentEditButton>
-                      </>
-                    )}
-                  </CommentListSmallBox>
-                </CommentListBigBox>
-                <NestedComment
-                  setEditMode={setEditMode}
-                  isEditCommentIdx={isEditCommentIdx}
-                  chosenEditCommentIdx={chosenEditCommentIdx}
-                  setNestedCommentMode={setNestedCommentMode}
-                  nestedCommentValue={nestedCommentValue}
-                  setNestedCommentValue={setNestedCommentValue}
-                  makeNestedComment={makeNestedComment}
-                  myId={myId}
-                  comment={comment}
-                  idx={idx}
-                  currentFBcontent={currentFBcontent}
-                  GoToFreeBoardContent={GoToFreeBoardContent}
-                />
-              </>
-            ))}
+                        </CommentEditButtonCheck>
+                        <CommentEditButtonCancel
+                          onClick={() => {
+                            setEditMode(false);
+                          }}
+                        >
+                          취소
+                        </CommentEditButtonCancel>
+                      </CommentEditAndNestedCommentBox>
+                    </>
+                  ) : (
+                    <>
+                      <CommentDeleteBox>
+                        <CommentDeleteButton
+                          src={"./image/delete-button.png"}
+                          onClick={() => deleteComment(isEditCommentIdx)}
+                        />
+                      </CommentDeleteBox>
+                      <CommentEditButton
+                        onClick={() => {
+                          setEditMode(true);
+                          chosenEditCommentIdx(idx);
+                        }}
+                      >
+                        수정
+                      </CommentEditButton>
+                    </>
+                  )}
+                </CommentListSmallBox>
+              </CommentListBigBox>
+              <NestedComment
+                setEditMode={setEditMode}
+                isEditCommentIdx={isEditCommentIdx}
+                chosenEditCommentIdx={chosenEditCommentIdx}
+                setNestedCommentMode={setNestedCommentMode}
+                nestedCommentValue={nestedCommentValue}
+                setNestedCommentValue={setNestedCommentValue}
+                makeNestedComment={makeNestedComment}
+                myId={myId}
+                comment={comment}
+                idx={idx}
+                currentFBcontent={currentFBcontent}
+                GoToFreeBoardContent={GoToFreeBoardContent}
+              />
+            </>
+          ))
+        )}
       </CommentList>
       {!isLogin ? (
         <>

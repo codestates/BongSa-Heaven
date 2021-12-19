@@ -103,7 +103,7 @@ export default function CrewBoardCreate({GoToCrewBoardContent}: any) {
             />
           </CreateBoxContentsBox>
           <ContentsBoxImgBox>
-            <Img src={previewFileImage} alt="수정할 이미지 자리" />
+            <Img src={previewFileImage} alt="" />
           </ContentsBoxImgBox>
         </CreateBox>
         <CreateButton

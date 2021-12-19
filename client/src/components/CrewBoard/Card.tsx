@@ -51,23 +51,34 @@ const Describe = styled.div`
   }
 `;
 const LikeBox = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 25%;
-  height: 100%;
+  font-size: 10px;
+  width: 20%;
 
   @media screen and (min-width: 37.5rem) {
+    font-size: 14px;
   }
 `;
 
 const LikeImg = styled.img`
-  height: 60%;
+  width: 50%;
   object-fit: cover;
+
+  @media screen and (min-width: 37.5rem) {
+    width: 35%;
+  }
 `;
 const NotLikeImg = styled.img`
-  height: 60%;
+  width: 50%;
   object-fit: cover;
+
+  @media screen and (min-width: 37.5rem) {
+    width: 35%;
+  }
 `;
 
 const SayHello = styled.div`

@@ -1,8 +1,8 @@
 import {useHistory} from "react-router";
 import styled from "styled-components";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import Pagination from "../../components/common/Pagination";
-import Loading from "../../components/common/Loading";
+
 import FreeBoardList from "./FreeBoardList";
 
 const MainFreeBoardContianer = styled.div`
@@ -24,11 +24,14 @@ const FreeBoardTitleContainer = styled.div`
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 16px;
   line-height: 35px;
   display: flex;
   align-items: center;
   letter-spacing: -0.495238px;
+  @media screen and (min-width: 37.5rem) {
+    font-size: 24px;
+  }
 `;
 
 const FreeBoardTittle = styled.span`
@@ -53,6 +56,32 @@ const ContentsBox = styled.div`
     margin-bottom: 30px;
   }
 `;
+const BlankBox = styled.div`
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  opacity: 0.6;
+  @media screen and (min-width: 37.5rem) {
+    margin: auto;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+`;
+const BlankImg = styled.img`
+  width: 50%;
+  opacity: 0.3;
+  object-fit: cover;
+  margin-bottom: 20px;
+`;
 export default function FreeBoard({
   GoToFreeBoardContent,
   userId,
@@ -63,7 +92,6 @@ export default function FreeBoard({
     history.push("/FreeBoardList");
   };
 
-  const [isLoading, CheckLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const postPerPage = 5;
   const indexOfLastPost = currentPage * postPerPage;
@@ -71,67 +99,56 @@ export default function FreeBoard({
   const currentPosts = freeBoardinfo.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber: any) => setCurrentPage(pageNumber);
 
-  const loadingHandler = () => {
-    CheckLoading(false);
-  };
-
-  useEffect(() => {
-    setTimeout(() => loadingHandler(), 1000);
-  }, []);
-
   return (
     <>
-      {isLoading ? (
-        <>
-          <Loading />
-        </>
-      ) : (
-        <>
-          <MainFreeBoardContianer>
-            <FreeBoardTitleContainer>
-              <FreeBoardTittle onClick={() => GoFreeBoradList()}>
-                자유게시판
-              </FreeBoardTittle>
-            </FreeBoardTitleContainer>
-            <ContentsBox>
-              {currentPosts &&
-                currentPosts.length > 0 &&
-                currentPosts.map((board: any) =>
-                  board.user_id == null ? (
-                    <FreeBoardList
-                      key={board._id}
-                      like={board.like}
-                      like_count={board.like_count}
-                      user_id={userId}
-                      freeboard_id={board._id}
-                      title={board.title}
-                      writer="회원탈퇴자"
-                      date={board.createdAt.slice(0, 10)}
-                      GoToFreeBoardContent={GoToFreeBoardContent}
-                    />
-                  ) : (
-                    <FreeBoardList
-                      key={board._id}
-                      like={board.like}
-                      like_count={board.like_count}
-                      user_id={userId}
-                      freeboard_id={board._id}
-                      title={board.title}
-                      writer={board.user_id.nickname}
-                      date={board.createdAt.slice(0, 10)}
-                      GoToFreeBoardContent={GoToFreeBoardContent}
-                    />
-                  ),
-                )}
-            </ContentsBox>
-            <Pagination
-              postPerPage={postPerPage}
-              totalPosts={freeBoardinfo.length}
-              paginate={paginate}
-            />
-          </MainFreeBoardContianer>
-        </>
-      )}
+      <MainFreeBoardContianer>
+        <FreeBoardTitleContainer>
+          <FreeBoardTittle onClick={() => GoFreeBoradList()}>
+            자유게시판
+          </FreeBoardTittle>
+        </FreeBoardTitleContainer>
+        <ContentsBox>
+          {currentPosts && currentPosts.length === 0 ? (
+            <BlankBox>
+              <BlankImg src={"./image/NoData.png"} />
+              데이터가 존재하지 않습니다!
+            </BlankBox>
+          ) : (
+            currentPosts.map((board: any) =>
+              board.user_id == null ? (
+                <FreeBoardList
+                  key={board._id}
+                  like={board.like}
+                  like_count={board.like_count}
+                  user_id={userId}
+                  freeboard_id={board._id}
+                  title={board.title}
+                  writer="회원탈퇴자"
+                  date={board.createdAt.slice(0, 10)}
+                  GoToFreeBoardContent={GoToFreeBoardContent}
+                />
+              ) : (
+                <FreeBoardList
+                  key={board._id}
+                  like={board.like}
+                  like_count={board.like_count}
+                  user_id={userId}
+                  freeboard_id={board._id}
+                  title={board.title}
+                  writer={board.user_id.nickname}
+                  date={board.createdAt.slice(0, 10)}
+                  GoToFreeBoardContent={GoToFreeBoardContent}
+                />
+              ),
+            )
+          )}
+        </ContentsBox>
+        <Pagination
+          postPerPage={postPerPage}
+          totalPosts={freeBoardinfo.length}
+          paginate={paginate}
+        />
+      </MainFreeBoardContianer>
     </>
   );
 }
