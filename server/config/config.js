@@ -4,9 +4,7 @@ require("dotenv").config({
 const mongoose = require("mongoose");
 
 module.exports = () => {
-  const uri = process.env.MONGODB_URI;
-
-  console.log(uri);
+  const uri = `${process.env.MONGODB_URI}`;
   // * mongoDB connect *
   mongoose
     .connect(uri, {

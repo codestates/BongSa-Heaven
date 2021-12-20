@@ -28,20 +28,40 @@ const ContentsBox = styled.div`
 `;
 
 export default function CrewBoardDelete({currentCBcontent}: any) {
+  let temporaryData: any = localStorage.getItem("currentCBcontent");
   return (
     <>
-      <Wrapper>
-        <Header2 componentName="삭제" />
-        <DesktopTitle title="삭제" />
-        <ContentsBox>
-          <DeleteCheck
-            contents="모집글"
-            delete="/CrewBoardList"
-            cancel="/CrewBoardContents"
-            currentCBcontent={currentCBcontent}
-          />
-        </ContentsBox>
-      </Wrapper>
+      {currentCBcontent.data === undefined && temporaryData !== undefined ? (
+        <>
+          <Wrapper>
+            <Header2 componentName="삭제" />
+            <DesktopTitle title="삭제" />
+            <ContentsBox>
+              <DeleteCheck
+                contents="모집글"
+                delete="/CrewBoardList"
+                cancel="/CrewBoardContents"
+                currentCBcontent={JSON.parse(temporaryData)}
+              />
+            </ContentsBox>
+          </Wrapper>
+        </>
+      ) : (
+        <>
+          <Wrapper>
+            <Header2 componentName="삭제" />
+            <DesktopTitle title="삭제" />
+            <ContentsBox>
+              <DeleteCheck
+                contents="모집글"
+                delete="/CrewBoardList"
+                cancel="/CrewBoardContents"
+                currentCBcontent={currentCBcontent}
+              />
+            </ContentsBox>
+          </Wrapper>
+        </>
+      )}
     </>
   );
 }

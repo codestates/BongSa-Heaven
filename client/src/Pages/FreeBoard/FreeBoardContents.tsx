@@ -70,24 +70,59 @@ export default function FreeBoardContents({
     CheckLoading(false);
   };
   useEffect(() => {
-    if (currentFBcontent) {
+    if (currentFBcontent.data !== undefined) {
       loadingHandler();
+      localStorage.setItem(
+        "currentFBcontent",
+        JSON.stringify(currentFBcontent),
+      );
     }
     setTimeout(() => loadingHandler(), 5000); // 무한 로딩 방지
   }, []);
+  let temporaryData: any = localStorage.getItem("currentFBcontent");
+  useEffect(() => {
+    if (temporaryData !== undefined) {
+      loadingHandler();
+    }
+  }, []);
+
   return (
     <>
       {isLoading ? (
         <>
           <Loading />
         </>
-      ) : currentFBcontent.data === undefined ? (
+      ) : currentFBcontent.data === undefined && temporaryData === undefined ? (
         <>
           <LinkButton2 onClick={() => history.push("/")}>메인으로</LinkButton2>
           <BlankBox>
             <BlankImg src={"./image/NoData.png"} />
             데이터가 존재하지 않습니다!
           </BlankBox>
+        </>
+      ) : currentFBcontent.data === undefined && temporaryData !== undefined ? (
+        <>
+          <Wrapper>
+            <Header2 componentName="게시글 보기" />
+            <DesktopTitle title="게시글 보기" url="/FreeBoardList" />
+            <Writing
+              currentFBcontent={JSON.parse(temporaryData)}
+              userId={userId}
+              isLogin={isLogin}
+            />
+            <List
+              backtoList="/FreeBoardList"
+              isLogin={isLogin}
+              currentFBcontent={JSON.parse(temporaryData)}
+              userId={userId}
+              GoToFreeBoardContent={GoToFreeBoardContent}
+            />
+            <Comment
+              isLogin={isLogin}
+              currentFBcontent={JSON.parse(temporaryData)}
+              GoToFreeBoardContent={GoToFreeBoardContent}
+            />
+          </Wrapper>
         </>
       ) : (
         <>

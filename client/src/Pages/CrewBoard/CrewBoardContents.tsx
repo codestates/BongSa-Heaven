@@ -70,24 +70,59 @@ export default function CrewBoardContents({
     CheckLoading(false);
   };
   useEffect(() => {
-    if (currentCBcontent) {
+    if (currentCBcontent.data !== undefined) {
       loadingHandler();
+      localStorage.setItem(
+        "currentCBcontent",
+        JSON.stringify(currentCBcontent),
+      );
     }
     setTimeout(() => loadingHandler(), 5000); // 무한 로딩 방지
   }, []);
+  let temporaryData: any = localStorage.getItem("currentCBcontent");
+  useEffect(() => {
+    if (temporaryData !== undefined) {
+      loadingHandler();
+    }
+  }, []);
+
   return (
     <>
       {isLoading ? (
         <>
           <Loading />
         </>
-      ) : currentCBcontent.data === undefined ? (
+      ) : currentCBcontent.data === undefined && temporaryData === undefined ? (
         <>
           <LinkButton2 onClick={() => history.push("/")}>메인으로</LinkButton2>
           <BlankBox>
             <BlankImg src={"./image/NoData.png"} />
             데이터가 존재하지 않습니다!
           </BlankBox>
+        </>
+      ) : currentCBcontent.data === undefined && temporaryData !== undefined ? (
+        <>
+          <Wrapper>
+            <Header2 componentName="모집글 보기" />
+            <DesktopTitle title="모집글 보기" url="/CrewBoardList" />
+            <Writing
+              currentCBcontent={JSON.parse(temporaryData)}
+              userId={userId}
+              isLogin={isLogin}
+            />
+            <List
+              backtoList="/CrewBoardList"
+              isLogin={isLogin}
+              currentCBcontent={JSON.parse(temporaryData)}
+              userId={userId}
+              GoToCrewBoardContent={GoToCrewBoardContent}
+            />
+            <Comment
+              isLogin={isLogin}
+              currentCBcontent={JSON.parse(temporaryData)}
+              GoToCrewBoardContent={GoToCrewBoardContent}
+            />
+          </Wrapper>
         </>
       ) : (
         <>

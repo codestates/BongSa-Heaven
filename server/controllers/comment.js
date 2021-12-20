@@ -46,6 +46,7 @@ module.exports = {
     if (!userData) {
       return res.send({message: "싸장님~ 댓글 수정 권한 없어!"});
     }
+    try{
     if (userData) {
       const fbcontent = await Freeboard.findOneAndUpdate(
         {
@@ -71,12 +72,16 @@ module.exports = {
           .send({data: fbcontent, message: "싸장님~ 댓글이 없어"});
       }
     }
+  }catch(err){
+    console.log(err)
+  }
   },
 
   fbcommentdeleteControl: async (req, res) => {
     // 1. 토큰 본인인증 // freeboard_id, freecomment_id
     // 2. 게시글의 번호 찾고 freecomments 유저 아이디랑 비교
     // 3. 내용 삭제
+    try{
     const userData = await isAuthorized(req, res);
     if (!userData) {
       return res.status(401).send({message: "싸장님~ 댓글 수정 권한 없어!"});
@@ -109,6 +114,9 @@ module.exports = {
           .send({data: fbcontent, message: "싸장님~ 댓글 삭제 실패야!!"});
       }
     }
+  }catch(err){
+    console.log(err)
+  }
   },
 
   // crew board comment
@@ -148,10 +156,13 @@ module.exports = {
     // 1. 토큰 본인인증
     // 2. 게시글의 번호 찾고 crewcomments 유저 아이디랑 비교
     // 3. 내용 업데이트
+
+ 
     const userData = await isAuthorized(req, res);
     if (!userData) {
       return res.send({message: "싸장님~ 댓글 수정 권한 없어!"});
     }
+    try{
     if (userData) {
       const cbcontent = await Crewboard.findOneAndUpdate(
         {
@@ -177,6 +188,9 @@ module.exports = {
           .send({data: cbcontent, message: "싸장님~ 댓글이 없어"});
       }
     }
+  }catch(err){
+    console.log(err)
+  }
   },
 
   cbcommentdeleteControl: async (req, res) => {
@@ -187,6 +201,7 @@ module.exports = {
     if (!userData) {
       return res.status(401).send({message: "싸장님~ 댓글 수정 권한 없어!"});
     }
+    try{
     if (userData) {
       const cbcontent = await Crewboard.findOneAndUpdate(
         {
@@ -215,6 +230,9 @@ module.exports = {
           .send({data: cbcontent, message: "싸장님~ 댓글 삭제 실패야!!"});
       }
     }
+  }catch(err){
+    console.log(err)
+  }
   },
 
   // freeboard child comment control
