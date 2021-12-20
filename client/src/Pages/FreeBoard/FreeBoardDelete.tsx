@@ -28,20 +28,40 @@ const ContentsBox = styled.div`
 `;
 
 export default function FreeBoardDelete({currentFBcontent}: any) {
+  let temporaryData: any = localStorage.getItem("currentFBcontent");
   return (
     <>
-      <Wrapper>
-        <Header2 componentName="삭제" />
-        <DesktopTitle title="삭제" />
-        <ContentsBox>
-          <DeleteCheck
-            contents="게시글"
-            delete="/FreeBoardList"
-            cancel="/FreeBoardContents"
-            currentFBcontent={currentFBcontent}
-          />
-        </ContentsBox>
-      </Wrapper>
+      {currentFBcontent.data === undefined && temporaryData !== undefined ? (
+        <>
+          <Wrapper>
+            <Header2 componentName="삭제" />
+            <DesktopTitle title="삭제" />
+            <ContentsBox>
+              <DeleteCheck
+                contents="게시글"
+                delete="/FreeBoardList"
+                cancel="/FreeBoardContents"
+                currentFBcontent={JSON.parse(temporaryData)}
+              />
+            </ContentsBox>
+          </Wrapper>
+        </>
+      ) : (
+        <>
+          <Wrapper>
+            <Header2 componentName="삭제" />
+            <DesktopTitle title="삭제" />
+            <ContentsBox>
+              <DeleteCheck
+                contents="게시글"
+                delete="/FreeBoardList"
+                cancel="/FreeBoardContents"
+                currentFBcontent={currentFBcontent}
+              />
+            </ContentsBox>
+          </Wrapper>
+        </>
+      )}
     </>
   );
 }

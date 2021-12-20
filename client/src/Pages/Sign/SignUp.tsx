@@ -17,17 +17,19 @@ const SelectBox = styled.div`
   height: 90vh;
 `;
 const GeneralButton = styled.div`
-  background-color: rgba(74, 241, 151, 0.1);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #4af197;
   color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 75vw;
   height: 20vh;
   cursor: pointer;
 
   @media screen and (min-width: 37.5rem) {
+    background-color: rgba(74, 241, 151, 0.1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 400px;
     &:hover {
       background-color: #4af197;
@@ -40,9 +42,13 @@ const GeneralButtonTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  font-size: 24px;
+  margin-top: 15px;
+  font-size: 20px;
   font-weight: bold;
+  @media screen and (min-width: 37.5rem) {
+    margin-top: 10px;
+    font-size: 24px;
+  }
 `;
 const GeneralButtonSubtitle = styled.div`
   color: black;
@@ -53,19 +59,20 @@ const GeneralButtonSubtitle = styled.div`
 `;
 
 const RecruiterButton = styled.div`
-  background-color: rgba(187, 123, 252, 0.1);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+  background-color: #bb7bfc;
   color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 75vw;
   height: 20vh;
   margin-top: 10vh;
   cursor: pointer;
   @media screen and (min-width: 37.5rem) {
     width: 400px;
+    background-color: rgba(187, 123, 252, 0.1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     &:hover {
       background-color: #bb7bfc;
       transition: 1s;
@@ -77,9 +84,13 @@ const RecruiterButtonTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  font-size: 24px;
+  margin-top: 15px;
+  font-size: 20px;
   font-weight: bold;
+  @media screen and (min-width: 37.5rem) {
+    margin-top: 10px;
+    font-size: 24px;
+  }
 `;
 const RecruiterButtonSubtitle = styled.div`
   color: black;

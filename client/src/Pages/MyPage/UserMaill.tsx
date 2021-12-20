@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useHistory} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-
 import styled from "styled-components";
 import Header2 from "../../components/common/Header2";
 import MaillList from "../../components/Mypages/MaillList";
@@ -28,7 +27,6 @@ const MaillTitleContainerDiv = styled.div`
   }
   @media screen and (max-width: 37.5rem) {
     display: flex;
-    justify-content: center;
     width: 100%;
   }
 `;
@@ -36,6 +34,9 @@ const MaillTitleContainerDiv = styled.div`
 const MaillTitleSpace = styled.div`
   width: 20%;
   height: 22px;
+  @media screen and (min-width: 37.5rem) {
+    width: 10%;
+  }
 `;
 
 const MaillTitleText = styled.div`
@@ -49,6 +50,9 @@ const MaillTitleText = styled.div`
   /* identical to box height */
   text-align: center;
   color: #448b76;
+  @media screen and (min-width: 37.5rem) {
+    font-size: 24px;
+  }
 `;
 const MaillTitleBtn = styled.button`
   width: 20%;
@@ -65,6 +69,9 @@ const MaillTitleBtn = styled.button`
   color: #000000;
   border: 0;
   cursor: pointer;
+  @media screen and (min-width: 37.5rem) {
+    font-size: 16px;
+  }
 `;
 
 const MaillDeleteContainer = styled.div`
@@ -74,15 +81,15 @@ const MaillDeleteContainer = styled.div`
   display: flex;
   align-items: center;
   @media screen and (min-width: 37.5rem) {
-    width: 100%;
+    margin-left: 25%;
+    width: 1080px;
     display: flex;
     justify-content: center;
   }
 `;
 const MaillDeleteContainerDiv = styled.div`
   @media screen and (min-width: 37.5rem) {
-    margin-left: 8%;
-    width: 1080px;
+    width: 100%;
   }
 `;
 const MaillDeleteInput = styled.input`
@@ -116,7 +123,8 @@ const MaillDeleteBtn = styled.button`
 
 const WebMaillContainer = styled.div`
   @media screen and (min-width: 37.5rem) {
-    width: 100%;
+    margin-left: 25%;
+    width: 1080px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -124,8 +132,7 @@ const WebMaillContainer = styled.div`
 `;
 const WebMaillContainerDiv = styled.div`
   @media screen and (min-width: 37.5rem) {
-    width: 1080px;
-    margin-left: 8%;
+    width: 100%;
   }
 `;
 const MaillListEmptyContainer = styled.div`

@@ -166,7 +166,7 @@ export default function Writing({currentCBcontent, userId, isLogin}: any) {
   return (
     <>
       {currentCBcontent.data === undefined ? (
-        history.push("/")
+        <></>
       ) : (
         <>
           <ContentsBox>

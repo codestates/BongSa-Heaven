@@ -77,7 +77,7 @@ const HiddenVolSpan = styled.span`
   }
 `;
 
-export default function UserMyPage() {
+export default function UserMyPage({isLogin}: any) {
   const history = useHistory();
   const [isChecked, setIsChecked] = useState(true);
 
@@ -160,6 +160,10 @@ export default function UserMyPage() {
 
       .catch(err => {});
   };
+  const YouhavetoLogin = () => {
+    alert("로그인이 필요합니다.");
+    history.push("/SignIn");
+  };
 
   useEffect(() => {
     getUserInfoHandler();
@@ -168,30 +172,34 @@ export default function UserMyPage() {
   return (
     <>
       <Header2 componentName={"마이페이지"} />
-      <WebContainer>
-        <UserMyPageMain userInfo={userInfo} />
-        <SeeRecruiterBtn onClick={GoSeeRecruiter}>
-          봉사모집자 보기
-        </SeeRecruiterBtn>
-        <InfoEditBtn onClick={GoUserEditPasswordCheck}>
-          회원정보 수정하기
-        </InfoEditBtn>
-        <HiddenVolContainer>
-          <HiddenVolSpan>봉사희망정보 숨기기</HiddenVolSpan>
-          {/* 개인정보숨기기를 닫으면 개인정보가 recruiter한테 안보여짐 
+      {!isLogin ? (
+        YouhavetoLogin()
+      ) : (
+        <WebContainer>
+          <UserMyPageMain userInfo={userInfo} />
+          <SeeRecruiterBtn onClick={GoSeeRecruiter}>
+            봉사모집자 보기
+          </SeeRecruiterBtn>
+          <InfoEditBtn onClick={GoUserEditPasswordCheck}>
+            회원정보 수정하기
+          </InfoEditBtn>
+          <HiddenVolContainer>
+            <HiddenVolSpan>봉사희망정보 숨기기</HiddenVolSpan>
+            {/* 개인정보숨기기를 닫으면 개인정보가 recruiter한테 안보여짐 
           on =true, off = false*/}
-          <div>
-            <HiddenVolToogleLabel className="switch-button">
-              <HiddenVolToogleInput
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleSwitch}
-              />
-              <HiddenVolToogleBall className="onoff-switch" />
-            </HiddenVolToogleLabel>
-          </div>
-        </HiddenVolContainer>
-      </WebContainer>
+            <div>
+              <HiddenVolToogleLabel className="switch-button">
+                <HiddenVolToogleInput
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleSwitch}
+                />
+                <HiddenVolToogleBall className="onoff-switch" />
+              </HiddenVolToogleLabel>
+            </div>
+          </HiddenVolContainer>
+        </WebContainer>
+      )}
     </>
   );
 }

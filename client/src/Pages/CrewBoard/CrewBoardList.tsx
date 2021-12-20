@@ -38,7 +38,7 @@ const Title = styled.div`
 const LinkBox = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   margin-top: 20px;
 
   @media screen and (min-width: 37.5rem) {
@@ -68,6 +68,32 @@ const LeftCards = styled.div`
     width: 40%;
     margin: auto;
   }
+`;
+const BlankBox = styled.div`
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  opacity: 0.6;
+  @media screen and (min-width: 37.5rem) {
+    margin: auto;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+`;
+const BlankImg = styled.img`
+  width: 50%;
+  opacity: 0.3;
+  object-fit: cover;
+  margin-bottom: 20px;
 `;
 
 export default function CrewBoardList({
@@ -101,14 +127,15 @@ export default function CrewBoardList({
       .get(`${process.env.REACT_APP_API_URI}/board/cblist`)
       .then(res => {
         setCrewBoardinfo(res.data.data);
+        loadingHandler();
         // console.log(res.data.data);
       })
       .catch(err => console.log(err));
   };
 
   useEffect(() => {
-    setTimeout(() => loadingHandler(), 1000);
     getCrewBoardList();
+    setTimeout(() => loadingHandler(), 5000); // 무한 로딩 방지
   }, []);
 
   return (
@@ -129,7 +156,12 @@ export default function CrewBoardList({
               <CreateLink create="/CrewBoardCreate" isLogin={isLogin} />
             </TitleBox>
             <Cards>
-              {currentPosts && currentPosts.length > 0 && (
+              {currentPosts && currentPosts.length === 0 ? (
+                <BlankBox>
+                  <BlankImg src={"./image/NoData.png"} />
+                  데이터가 존재하지 않습니다!
+                </BlankBox>
+              ) : (
                 <>
                   <BigCard>
                     <Card

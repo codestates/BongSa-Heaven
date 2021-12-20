@@ -39,7 +39,10 @@ const HeaderText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 16px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
 `;
 
 export default function Header2(props: any) {
