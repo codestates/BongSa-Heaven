@@ -66,7 +66,6 @@ export default function RecruiterMyPageMain() {
   const [myname, setMyname] = useState("");
 
   const handleMaillBox = () => {
-    console.log("hi");
     history.push("/UserMaill");
   };
 
@@ -83,7 +82,7 @@ export default function RecruiterMyPageMain() {
         setMyname(res.data.data.nickname);
       })
       .catch(err => {
-        console.log("응 안돼~", err);
+        console.log(err);
       });
   };
 

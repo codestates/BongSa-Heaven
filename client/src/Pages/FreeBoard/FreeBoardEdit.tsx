@@ -211,7 +211,7 @@ export default function FreeBoardEdit({
             .catch(err => console.log(err));
         })
 
-        .catch(err => console.log(err, "Error!"));
+        .catch(err => console.log(err));
 
       loadingHandler();
 
@@ -239,7 +239,7 @@ export default function FreeBoardEdit({
           },
         )
         .then(res => {})
-        .catch(err => console.log(err, "error!"));
+        .catch(err => console.log(err));
 
       loadingHandler();
 
@@ -264,7 +264,7 @@ export default function FreeBoardEdit({
           },
         )
         .then(res => {})
-        .catch(err => console.log(err, "error!"));
+        .catch(err => console.log(err));
 
       loadingHandler();
 

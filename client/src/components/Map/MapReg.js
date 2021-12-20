@@ -67,7 +67,6 @@ export default function MapReg() {
       if (status === kakao.maps.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면
         // 검색 목록과 마커를 표출합니다
-        console.log(data, "data");
 
         displayPlaces(data);
 
@@ -148,11 +147,10 @@ export default function MapReg() {
                 },
               )
                 .then(res => {
-                  console.log("res");
                   setRender(!reRender);
                 })
                 .catch(res => {
-                  console.log("err", res.message);
+                  console.log(res.message);
                 });
             }
           };
@@ -185,22 +183,14 @@ export default function MapReg() {
             "click",
             function (mouseEvent) {
               overlay.setMap(map);
-              console.log(
-                document.getElementsByClassName("ContentOverlay").length,
-              );
+
               if (
                 document.getElementsByClassName("ContentOverlay").length > 1
               ) {
                 overlay.setMap(null);
-                console.log(" IM A LOT !!!");
               }
 
               selectedMarker = marker;
-              console.log("hi", selectedMarker);
-              console.log("hi", title);
-
-              console.log(marker.getPosition().getLat());
-              console.log(marker.getPosition().getLng());
             },
           );
 
@@ -368,15 +358,13 @@ export default function MapReg() {
             console.log("hi~~");
 
             const myName = res.data[i].user_id.nickname;
-            console.log(myName);
-            console.log(positions[2], positions[i - 3]);
+
             positions[i - 3].title = "내꺼";
           }
         }
       })
       .then(res => {
         for (let i = 1; i < positions.length; i++) {
-          console.log(positions[i], i);
           let imageSrc = "https://ifh.cc/g/u788hh.png", // 마커이미지의 주소입니다
             imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
             imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -449,7 +437,6 @@ export default function MapReg() {
 
   const ChangePage = () => {
     setBtnValue(value);
-    console.log(btnValue);
   };
 
   return (

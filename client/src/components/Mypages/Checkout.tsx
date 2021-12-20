@@ -66,7 +66,7 @@ export default function Checkout({contents, leftBtn, setIsLogin}: any) {
   const Cancel = () => history.goBack();
   const userWithdrawalHandler = (props: any) => {
     // 회원탈퇴시 모든 정보 삭제, 쿠키, 토큰 삭제
-    console.log("삭제클릭");
+
     axios
       .delete(
         `${process.env.REACT_APP_API_URI}/user/withdrawal`,
@@ -83,9 +83,7 @@ export default function Checkout({contents, leftBtn, setIsLogin}: any) {
         setIsLogin(false);
         axios
           .get(`${process.env.REACT_APP_API_URI}/auth/resetrftk`)
-          .then(res => {
-            console.log(res);
-          });
+          .then(res => {});
         localStorage.clear();
         sessionStorage.clear();
         history.push("/");

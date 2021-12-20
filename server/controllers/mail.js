@@ -20,14 +20,13 @@ module.exports = {
           .send({message: "쪽지 보내는 대상이 존재하지 않습니다!"});
       }
       if (receiver) {
-        console.log("===receiver_id===", receiver._id);
         const mailBox = {
           writer_id: userData.user_id,
           writer_nickname: userData.nickname,
           text: req.body.text,
           receiver_id: receiver._id,
         };
-        console.log("===mailBox===", mailBox);
+
         const insertMail = new Mail(mailBox).save();
         if (!insertMail) {
           return res.status(500).send({message: "싸장님 서버 이상해"});

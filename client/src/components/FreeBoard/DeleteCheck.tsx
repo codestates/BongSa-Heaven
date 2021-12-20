@@ -80,7 +80,6 @@ export default function DeleteCheck(props: any) {
         },
       })
       .then(res => {
-        console.log(res.data.message);
         Delete(props.delete);
       })
       .catch(err => console.log(err));

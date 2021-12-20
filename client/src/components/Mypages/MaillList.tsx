@@ -91,7 +91,6 @@ export default function MaillList({
     if (!checked) {
       handleCheckList(id);
       dispatch(addList(id));
-      console.log(id);
     } else {
       console.log("delete id");
       handleUnCheckList(id);
@@ -105,7 +104,6 @@ export default function MaillList({
     if (!checked) {
       handleCheckList(id);
       dispatch(addList(id));
-      console.log(id);
     } else {
       console.log("delete id");
       handleUnCheckList(id);

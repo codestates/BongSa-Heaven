@@ -285,7 +285,6 @@ export default function OauthUserReg() {
 
     setUserInfo({...userInfo, [key]: e.target.value});
 
-    console.log(userInfo);
     if (key === "man") {
       setUserInfo({...userInfo, sex: "남자"});
       setSex("남자");
@@ -356,12 +355,10 @@ export default function OauthUserReg() {
     const min = 2;
 
     if (nickname.length < min || nickname.length > max) {
-      console.log("1이하, 9이상");
       setNickCheckErrorMessage("닉네임은 2~8 자 입력해주세요");
       return false;
     } else {
       setNickCheckErrorMessage("");
-      console.log("2이상 8이하");
 
       return true;
       //2->1 로갈때 가 문제
@@ -393,14 +390,12 @@ export default function OauthUserReg() {
           },
         )
         .then(res => {
-          console.log("통과");
           if (userInfo.nickname !== res.data.data) {
             setNickCheckErrorMessage("사용 가능한 닉네임 입니다.");
             setIsNick(true);
           }
         })
         .catch(() => {
-          console.log("일치하는값 들어옴");
           setNickCheckErrorMessage("중복된 닉네임 입니다.");
           setIsNick(false);
         });
@@ -415,11 +410,9 @@ export default function OauthUserReg() {
       newPass.passwordCheck,
     );
 
-    console.log(validNickname, validPassword, validCheckPassword, isNick);
     //유저정보 변경은 어떻게 이루어지는가?
     //닉네임만 바꾸는 경우  userinfo를 onchange로 변화시키면 값읃 얻을수 있다.
 
-    console.log(userInfo);
     //비밀번호랑 닉네임 같이 바꾸는 경우
     //비밀번호만 바꾸는경우
     //닉네임만 바꾸는 경우
@@ -429,7 +422,6 @@ export default function OauthUserReg() {
 
     //닉유효성검사 + 중복체크 통과
     if (validNickname && isNick) {
-      console.log("닉네임 변경");
       axios
         .patch(
           `${process.env.REACT_APP_API_URI}/user/edit`,
@@ -452,7 +444,6 @@ export default function OauthUserReg() {
           },
         )
         .then(res => {
-          console.log(res.data.data);
           history.push("/UserMyPage");
         })
         .catch(err => {
@@ -482,9 +473,6 @@ export default function OauthUserReg() {
       })
 
       .then(res => {
-        console.log(res.data.data.email);
-        console.log(res.data.data);
-
         setUserInfo({
           email: res.data.data.email,
           nickname: "",

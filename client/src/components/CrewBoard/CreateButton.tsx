@@ -133,7 +133,7 @@ export default function CreateButton(props: any) {
           })
           .catch(err => console.log(err));
       })
-      .catch(err => console.log(err, "Error!"));
+      .catch(err => console.log(err));
   };
 
   return (

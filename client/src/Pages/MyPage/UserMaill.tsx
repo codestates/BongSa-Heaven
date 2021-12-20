@@ -227,7 +227,7 @@ export default function UserMaill() {
           setReload(!reload);
         })
         .catch(res => {
-          console.log("err", res);
+          console.log(res);
         });
     });
   };

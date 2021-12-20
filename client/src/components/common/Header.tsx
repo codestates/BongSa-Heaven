@@ -139,10 +139,8 @@ export default function Header() {
   const isRecruiter = false;
 
   const isSignIn = useSelector((state: any) => state.issignin.isSign);
-  console.log(isSignIn, "im king");
 
   const GoMyPage = () => {
-    console.log("hi");
     isRecruiter
       ? history.push("/RecruiterMyPage")
       : history.push("/UserMyPage");
