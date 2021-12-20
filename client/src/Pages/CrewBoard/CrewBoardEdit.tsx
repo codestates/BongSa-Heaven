@@ -176,6 +176,12 @@ export default function CrewBoardEdit({
     hello = currentCBcontent.data.shorts_description;
     description = currentCBcontent.data.description;
   }
+  let temporaryData: any = localStorage.getItem("currentCBcontent");
+  if (currentCBcontent.data === undefined && temporaryData !== undefined) {
+    title = JSON.parse(temporaryData).data.title;
+    hello = JSON.parse(temporaryData).data.shorts_description;
+    description = JSON.parse(temporaryData).data.description;
+  }
   const [isLoading, CheckLoading] = useState(false);
   const [fileImage, setFileImage] = useState("");
   const [previewFileImage, setpreviewFileImage] = useState("");
@@ -203,7 +209,10 @@ export default function CrewBoardEdit({
       alert("제목이나 내용이 아무것도 없으면, 수정되지 않습니다.");
       return;
     }
-    if (fileImage === "") {
+    if (currentCBcontent.data === undefined && temporaryData !== undefined) {
+      setFileImage(JSON.parse(temporaryData).data.images[0]);
+      setpreviousFileImage(String(JSON.parse(temporaryData).data.images[0]));
+    } else if (fileImage === "") {
       alert("대표 이미지 파일이 없으면, 수정되지 않습니다.");
       return;
     }
@@ -249,6 +258,35 @@ export default function CrewBoardEdit({
       setTimeout(() => {
         GoToCrewBoardContent(currentCBcontent.data._id);
       }, 500);
+    } else if (
+      currentCBcontent.data === undefined &&
+      temporaryData !== undefined
+    ) {
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URI}/board/cbedit`,
+          {
+            crewboard_id: JSON.parse(temporaryData).data._id,
+            title: editedTitle,
+            shorts_description: editedHello,
+            description: editedDescription,
+            images: JSON.parse(temporaryData).data.images[0],
+          },
+          {
+            headers: {
+              authorization: `Bearer ` + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then(res => {})
+        .catch(err => console.log(err, "error"));
+
+      loadingHandler();
+
+      setTimeout(() => {
+        GoToCrewBoardContent(JSON.parse(temporaryData).data._id);
+      }, 500);
     } else {
       axios
         .patch(
@@ -281,20 +319,18 @@ export default function CrewBoardEdit({
   useEffect(() => {
     if (
       currentCBcontent.data !== undefined &&
-      currentCBcontent.data.images !== null &&
-      currentCBcontent.data.images[0] !== null
+      currentCBcontent.data.images !== null
     ) {
       setFileImage(currentCBcontent.data.images[0]);
       setpreviewFileImage(currentCBcontent.data.images[0]);
       setpreviousFileImage(currentCBcontent.data.images[0]);
     }
   }, []);
-  let temporaryData: any = localStorage.getItem("currentCBcontent");
-  if (currentCBcontent.data === undefined && temporaryData !== undefined) {
-    title = JSON.parse(temporaryData).data.title;
-    hello = JSON.parse(temporaryData).data.shorts_description;
-    description = JSON.parse(temporaryData).data.description;
-  }
+  useEffect(() => {
+    if (currentCBcontent.data === undefined && temporaryData !== undefined) {
+      GoToCrewBoardContent(JSON.parse(temporaryData).data._id);
+    }
+  });
   return (
     <>
       {currentCBcontent.data === undefined && temporaryData === undefined ? (

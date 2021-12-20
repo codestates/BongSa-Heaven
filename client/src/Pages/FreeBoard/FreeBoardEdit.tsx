@@ -145,7 +145,11 @@ export default function FreeBoardEdit({
     title = currentFBcontent.data.title;
     description = currentFBcontent.data.description;
   }
-
+  let temporaryData: any = localStorage.getItem("currentFBcontent");
+  if (currentFBcontent.data === undefined && temporaryData !== undefined) {
+    title = JSON.parse(temporaryData).data.title;
+    description = JSON.parse(temporaryData).data.description;
+  }
   const [isLoading, CheckLoading] = useState(false);
   const [fileImage, setFileImage] = useState("");
   const [previewFileImage, setpreviewFileImage] = useState("");
@@ -168,6 +172,10 @@ export default function FreeBoardEdit({
     if (editedTitle === "" || editedDescription === "") {
       alert("제목이나 내용이 아무것도 없으면, 수정되지 않습니다.");
       return;
+    }
+    if (currentFBcontent.data === undefined && temporaryData !== undefined) {
+      setFileImage(JSON.parse(temporaryData).data.images[0]);
+      setpreviousFileImage(JSON.parse(temporaryData).data.images[0]);
     }
     if (fileImage !== previousFileImage) {
       const formData = new FormData();
@@ -210,6 +218,34 @@ export default function FreeBoardEdit({
       setTimeout(() => {
         GoToFreeBoardContent(currentFBcontent.data._id);
       }, 500);
+    } else if (
+      currentFBcontent.data === undefined &&
+      temporaryData !== undefined
+    ) {
+      axios
+        .patch(
+          `${process.env.REACT_APP_API_URI}/board/fbedit`,
+          {
+            freeboard_id: JSON.parse(temporaryData).data._id,
+            title: editedTitle,
+            description: editedDescription,
+            images: JSON.parse(temporaryData).data.images[0],
+          },
+          {
+            headers: {
+              authorization: `Bearer ` + localStorage.getItem("accessToken"),
+              "Content-Type": "application/json",
+            },
+          },
+        )
+        .then(res => {})
+        .catch(err => console.log(err, "error!"));
+
+      loadingHandler();
+
+      setTimeout(() => {
+        GoToFreeBoardContent(JSON.parse(temporaryData).data._id);
+      }, 500);
     } else {
       axios
         .patch(
@@ -241,19 +277,19 @@ export default function FreeBoardEdit({
   useEffect(() => {
     if (
       currentFBcontent.data !== undefined &&
-      currentFBcontent.data.images !== null &&
-      currentFBcontent.data.images[0] !== null
+      currentFBcontent.data.images !== null
     ) {
       setFileImage(currentFBcontent.data.images[0]);
       setpreviewFileImage(currentFBcontent.data.images[0]);
       setpreviousFileImage(currentFBcontent.data.images[0]);
     }
   }, []);
-  let temporaryData: any = localStorage.getItem("currentFBcontent");
-  if (currentFBcontent.data === undefined && temporaryData !== undefined) {
-    title = JSON.parse(temporaryData).data.title;
-    description = JSON.parse(temporaryData).data.description;
-  }
+
+  useEffect(() => {
+    if (currentFBcontent.data === undefined && temporaryData !== undefined) {
+      GoToFreeBoardContent(JSON.parse(temporaryData).data._id);
+    }
+  });
   return (
     <>
       {currentFBcontent.data === undefined && temporaryData === undefined ? (
@@ -297,10 +333,14 @@ export default function FreeBoardEdit({
                 <></>
               )}
               <ContentsBoxImgBox>
-                <Img
-                  src={String(JSON.parse(temporaryData).data.images[0])}
-                  alt=""
-                />
+                {JSON.parse(temporaryData).data.images !== null ? (
+                  <Img
+                    src={String(JSON.parse(temporaryData).data.images[0])}
+                    alt=""
+                  />
+                ) : (
+                  <></>
+                )}
               </ContentsBoxImgBox>
             </ContentsBox>
             <EditButton

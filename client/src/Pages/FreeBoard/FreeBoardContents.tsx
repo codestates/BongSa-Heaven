@@ -81,6 +81,9 @@ export default function FreeBoardContents({
   }, []);
   let temporaryData: any = localStorage.getItem("currentFBcontent");
   useEffect(() => {
+    if (currentFBcontent.data === undefined && temporaryData !== undefined) {
+      GoToFreeBoardContent(JSON.parse(temporaryData).data._id);
+    }
     if (temporaryData !== undefined) {
       loadingHandler();
     }
