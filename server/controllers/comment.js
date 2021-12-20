@@ -46,77 +46,77 @@ module.exports = {
     if (!userData) {
       return res.send({message: "싸장님~ 댓글 수정 권한 없어!"});
     }
-    try{
-    if (userData) {
-      const fbcontent = await Freeboard.findOneAndUpdate(
-        {
-          _id: req.body.freeboard_id,
-          freecomments: {
-            $elemMatch: {
-              _id: req.body.freecomment_id,
-              user_id: userData.user_id,
+    try {
+      if (userData) {
+        const fbcontent = await Freeboard.findOneAndUpdate(
+          {
+            _id: req.body.freeboard_id,
+            freecomments: {
+              $elemMatch: {
+                _id: req.body.freecomment_id,
+                user_id: userData.user_id,
+              },
             },
           },
-        },
-        {
-          $set: {"freecomments.$.comment": req.body.comment},
-        },
-      ).exec();
-      if (fbcontent) {
-        return res
-          .status(200)
-          .send({data: fbcontent, message: "싸장님 댓글 수정 완료"});
-      } else {
-        return res
-          .status(400)
-          .send({data: fbcontent, message: "싸장님~ 댓글이 없어"});
+          {
+            $set: {"freecomments.$.comment": req.body.comment},
+          },
+        ).exec();
+        if (fbcontent) {
+          return res
+            .status(200)
+            .send({data: fbcontent, message: "싸장님 댓글 수정 완료"});
+        } else {
+          return res
+            .status(400)
+            .send({data: fbcontent, message: "싸장님~ 댓글이 없어"});
+        }
       }
+    } catch (err) {
+      return res.send("err");
     }
-  }catch(err){
-    console.log(err)
-  }
   },
 
   fbcommentdeleteControl: async (req, res) => {
     // 1. 토큰 본인인증 // freeboard_id, freecomment_id
     // 2. 게시글의 번호 찾고 freecomments 유저 아이디랑 비교
     // 3. 내용 삭제
-    try{
-    const userData = await isAuthorized(req, res);
-    if (!userData) {
-      return res.status(401).send({message: "싸장님~ 댓글 수정 권한 없어!"});
-    }
-    if (userData) {
-      const fbcontent = await Freeboard.findOneAndUpdate(
-        {
-          _id: req.body.freeboard_id,
-          freecomments: {
-            $elemMatch: {
-              _id: req.body.freecomment_id,
-              user_id: userData.user_id,
+    try {
+      const userData = await isAuthorized(req, res);
+      if (!userData) {
+        return res.status(401).send({message: "싸장님~ 댓글 수정 권한 없어!"});
+      }
+      if (userData) {
+        const fbcontent = await Freeboard.findOneAndUpdate(
+          {
+            _id: req.body.freeboard_id,
+            freecomments: {
+              $elemMatch: {
+                _id: req.body.freecomment_id,
+                user_id: userData.user_id,
+              },
             },
           },
-        },
-        {
-          $pull: {
-            freecomments: {_id: req.body.freecomment_id},
+          {
+            $pull: {
+              freecomments: {_id: req.body.freecomment_id},
+            },
           },
-        },
-      ).exec();
-      console.log("===fbcontent===", fbcontent);
-      if (fbcontent) {
-        return res
-          .status(200)
-          .send({data: fbcontent, message: "싸장님~ 댓글 삭제 완료!"});
-      } else {
-        return res
-          .status(400)
-          .send({data: fbcontent, message: "싸장님~ 댓글 삭제 실패야!!"});
+        ).exec();
+        console.log("===fbcontent===", fbcontent);
+        if (fbcontent) {
+          return res
+            .status(200)
+            .send({data: fbcontent, message: "싸장님~ 댓글 삭제 완료!"});
+        } else {
+          return res
+            .status(400)
+            .send({data: fbcontent, message: "싸장님~ 댓글 삭제 실패야!!"});
+        }
       }
+    } catch (err) {
+      return res.send("err");
     }
-  }catch(err){
-    console.log(err)
-  }
   },
 
   // crew board comment
@@ -157,82 +157,83 @@ module.exports = {
     // 2. 게시글의 번호 찾고 crewcomments 유저 아이디랑 비교
     // 3. 내용 업데이트
 
- 
-    const userData = await isAuthorized(req, res);
-    if (!userData) {
-      return res.send({message: "싸장님~ 댓글 수정 권한 없어!"});
-    }
-    try{
-    if (userData) {
-      const cbcontent = await Crewboard.findOneAndUpdate(
-        {
-          _id: req.body.crewboard_id,
-          crewcomments: {
-            $elemMatch: {
-              _id: req.body.crewcomment_id,
-              user_id: userData.user_id,
+    try {
+      const userData = await isAuthorized(req, res);
+      if (!userData) {
+        return res.send({message: "싸장님~ 댓글 수정 권한 없어!"});
+      }
+
+      if (userData) {
+        const cbcontent = await Crewboard.findOneAndUpdate(
+          {
+            _id: req.body.crewboard_id,
+            crewcomments: {
+              $elemMatch: {
+                _id: req.body.crewcomment_id,
+                user_id: userData.user_id,
+              },
             },
           },
-        },
-        {
-          $set: {"crewcomments.$.comment": req.body.comment},
-        },
-      ).exec();
-      if (cbcontent) {
-        return res
-          .status(200)
-          .send({data: cbcontent, message: "싸장님 댓글 수정 완료"});
-      } else {
-        return res
-          .status(400)
-          .send({data: cbcontent, message: "싸장님~ 댓글이 없어"});
+          {
+            $set: {"crewcomments.$.comment": req.body.comment},
+          },
+        ).exec();
+        if (cbcontent) {
+          return res
+            .status(200)
+            .send({data: cbcontent, message: "싸장님 댓글 수정 완료"});
+        } else {
+          return res
+            .status(400)
+            .send({data: cbcontent, message: "싸장님~ 댓글이 없어"});
+        }
       }
+    } catch (err) {
+      return res.send("err");
     }
-  }catch(err){
-    console.log(err)
-  }
   },
 
   cbcommentdeleteControl: async (req, res) => {
     // 1. 토큰 본인인증
     // 2. 게시글의 번호 찾고 crewcomments 유저 아이디랑 비교
     // 3. 내용 삭제
-    const userData = await isAuthorized(req, res);
-    if (!userData) {
-      return res.status(401).send({message: "싸장님~ 댓글 수정 권한 없어!"});
-    }
-    try{
-    if (userData) {
-      const cbcontent = await Crewboard.findOneAndUpdate(
-        {
-          _id: req.body.crewboard_id,
-          crewcomments: {
-            $elemMatch: {
-              _id: req.body.crewcomment_id,
-              user_id: userData.user_id,
+    try {
+      const userData = await isAuthorized(req, res);
+      if (!userData) {
+        return res.status(401).send({message: "싸장님~ 댓글 수정 권한 없어!"});
+      }
+
+      if (userData) {
+        const cbcontent = await Crewboard.findOneAndUpdate(
+          {
+            _id: req.body.crewboard_id,
+            crewcomments: {
+              $elemMatch: {
+                _id: req.body.crewcomment_id,
+                user_id: userData.user_id,
+              },
             },
           },
-        },
-        {
-          $pull: {
-            crewcomments: {_id: req.body.crewcomment_id},
+          {
+            $pull: {
+              crewcomments: {_id: req.body.crewcomment_id},
+            },
           },
-        },
-      ).exec();
-      console.log("===cbcontent===", cbcontent);
-      if (cbcontent) {
-        return res
-          .status(200)
-          .send({data: cbcontent, message: "싸장님~ 댓글 삭제 완료!"});
-      } else {
-        return res
-          .status(400)
-          .send({data: cbcontent, message: "싸장님~ 댓글 삭제 실패야!!"});
+        ).exec();
+        console.log("===cbcontent===", cbcontent);
+        if (cbcontent) {
+          return res
+            .status(200)
+            .send({data: cbcontent, message: "싸장님~ 댓글 삭제 완료!"});
+        } else {
+          return res
+            .status(400)
+            .send({data: cbcontent, message: "싸장님~ 댓글 삭제 실패야!!"});
+        }
       }
+    } catch (err) {
+      return res.send("err");
     }
-  }catch(err){
-    console.log(err)
-  }
   },
 
   // freeboard child comment control
