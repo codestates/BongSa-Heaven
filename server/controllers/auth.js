@@ -136,7 +136,7 @@ module.exports = {
           // const refreshTokenExpiry = new Date(Date.parse(issueDate) + 10800000); // +14d
           return res
             .cookie("refreshToken", refreshToken, {
-              domain: "server.bongsa-heaven.com",
+              domain: "bongsa-heaven.com",
               path: "/",
               sameSite: "none",
               secure: true,
@@ -170,19 +170,18 @@ module.exports = {
     // 1. 닉네임을 받는다
     // 2. db에서 닉네임을 검색한다
     const query = {nickname: req.body.nickname};
-    try{
-    const existNick = await User.findOne(query);
-    // 3. 있으면 돌려보낸다. 없으면 괜찮다고 메세지!
-    if (existNick) {
-      return res.status(400).send({message: "싸장님 다른 닉네임 부탁해!"});
+    try {
+      const existNick = await User.findOne(query);
+      // 3. 있으면 돌려보낸다. 없으면 괜찮다고 메세지!
+      if (existNick) {
+        return res.status(400).send({message: "싸장님 다른 닉네임 부탁해!"});
+      }
+      if (!existNick) {
+        return res.status(200).send({message: "싸장님 좋은 닉네임!"});
+      }
+    } catch (err) {
+      return res.send(err);
     }
-    if (!existNick) {
-      return res.status(200).send({message: "싸장님 좋은 닉네임!"});
-    }
-
-  }catch(err){
-    return res.send(err)
-  }
   },
 
   mailNickcheckControl: async (req, res) => {
@@ -202,31 +201,30 @@ module.exports = {
   refreshtokenControl: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     const refreshTokenData = checkRefreshToken(refreshToken);
-    try{
-    if (!refreshTokenData) {
-      return res.status(401).send({message: "유효하지 않은 토큰~"});
-    }
-
-    if (refreshTokenData) {
-      const userInfo = await User.findOne({email: refreshTokenData.email});
-      if (!userInfo) {
-        return res.status(500).send({message: "뭔가가 이상하다"});
-      } else {
-        const {email, nickname} = userInfo;
-        const user_id = userInfo._id;
-        const accessToken = generateAccessToken({email, nickname, user_id});
-
-        // const issueDate = new Date();
-        // const accessTokenExpiry = new Date(Date.parse(issueDate) + 1209600000); // +3h
-        // const refreshTokenExpiry = new Date(Date.parse(issueDate) + 10800000); // +14d
-
-        return res.status(200).send({accessToken: accessToken});
+    try {
+      if (!refreshTokenData) {
+        return res.status(401).send({message: "유효하지 않은 토큰~"});
       }
-    }
 
-  }catch(err){
-    return res.send(err)
-  }
+      if (refreshTokenData) {
+        const userInfo = await User.findOne({email: refreshTokenData.email});
+        if (!userInfo) {
+          return res.status(500).send({message: "뭔가가 이상하다"});
+        } else {
+          const {email, nickname} = userInfo;
+          const user_id = userInfo._id;
+          const accessToken = generateAccessToken({email, nickname, user_id});
+
+          // const issueDate = new Date();
+          // const accessTokenExpiry = new Date(Date.parse(issueDate) + 1209600000); // +3h
+          // const refreshTokenExpiry = new Date(Date.parse(issueDate) + 10800000); // +14d
+
+          return res.status(200).send({accessToken: accessToken});
+        }
+      }
+    } catch (err) {
+      return res.send(err);
+    }
   },
 
   resetrftkControl: async (req, res) => {
@@ -301,7 +299,7 @@ module.exports = {
           return res
             .status(200)
             .cookie("refreshToken", refreshToken, {
-              domain: "server.bongsa-heaven.com",
+              domain: "bongsa-heaven.com",
               path: "/",
               sameSite: "none",
               secure: true,
@@ -326,7 +324,7 @@ module.exports = {
 
       return res
         .cookie("refreshToken", refreshToken, {
-          domain: "server.bongsa-heaven.com",
+          domain: "bongsa-heaven.com",
           path: "/",
           sameSite: "none",
           secure: true,
