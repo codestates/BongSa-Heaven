@@ -81,11 +81,13 @@ export default function CrewBoardContents({
   }, []);
   let temporaryData: any = localStorage.getItem("currentCBcontent");
   useEffect(() => {
+    if (currentCBcontent.data === undefined && temporaryData !== undefined) {
+      GoToCrewBoardContent(JSON.parse(temporaryData).data._id);
+    }
     if (temporaryData !== undefined) {
       loadingHandler();
     }
   }, []);
-
   return (
     <>
       {isLoading ? (

@@ -496,10 +496,13 @@ export default function Comment({
 
     alert("댓글이 삭제되었습니다!");
   };
-
+  let temporaryData: any = localStorage.getItem("currentCBcontent");
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       getUserInfo();
+    }
+    if (currentCBcontent.data === undefined && temporaryData !== undefined) {
+      GoToCrewBoardContent(JSON.parse(temporaryData).data._id);
     }
   }, []);
 
