@@ -115,7 +115,7 @@ module.exports = {
         }
       }
     } catch (err) {
-      return res.send("err");
+      return res.send(err);
     }
   },
 

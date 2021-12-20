@@ -135,7 +135,13 @@ module.exports = {
           // const accessTokenExpiry = new Date(Date.parse(issueDate) + 1209600000); // +3h
           // const refreshTokenExpiry = new Date(Date.parse(issueDate) + 10800000); // +14d
           return res
-            .cookie("refreshToken", refreshToken, {httpOnly: true})
+            .cookie("refreshToken", refreshToken, {
+              domain: "server.bongsa-heaven.com",
+              path: "/",
+              sameSite: "none",
+              secure: true,
+              httpOnly: true,
+            })
             .status(200)
             .send({accessToken: accessToken});
         } else {
@@ -164,6 +170,7 @@ module.exports = {
     // 1. 닉네임을 받는다
     // 2. db에서 닉네임을 검색한다
     const query = {nickname: req.body.nickname};
+    try{
     const existNick = await User.findOne(query);
     // 3. 있으면 돌려보낸다. 없으면 괜찮다고 메세지!
     if (existNick) {
@@ -172,6 +179,10 @@ module.exports = {
     if (!existNick) {
       return res.status(200).send({message: "싸장님 좋은 닉네임!"});
     }
+
+  }catch(err){
+    return res.send(err)
+  }
   },
 
   mailNickcheckControl: async (req, res) => {
@@ -191,6 +202,7 @@ module.exports = {
   refreshtokenControl: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     const refreshTokenData = checkRefreshToken(refreshToken);
+    try{
     if (!refreshTokenData) {
       return res.status(401).send({message: "유효하지 않은 토큰~"});
     }
@@ -211,6 +223,10 @@ module.exports = {
         return res.status(200).send({accessToken: accessToken});
       }
     }
+
+  }catch(err){
+    return res.send(err)
+  }
   },
 
   resetrftkControl: async (req, res) => {
@@ -284,7 +300,13 @@ module.exports = {
 
           return res
             .status(200)
-            .cookie("refreshToken", refreshToken, {httpOnly: true})
+            .cookie("refreshToken", refreshToken, {
+              domain: "server.bongsa-heaven.com",
+              path: "/",
+              sameSite: "none",
+              secure: true,
+              httpOnly: true,
+            })
             .send({
               accessToken: accessToken,
               message: "Oauth인증 성공 다음 단계로",
@@ -303,7 +325,13 @@ module.exports = {
       const refreshToken = generateRefreshToken({_id, nickname, email});
 
       return res
-        .cookie("refreshToken", refreshToken, {httpOnly: true})
+        .cookie("refreshToken", refreshToken, {
+          domain: "server.bongsa-heaven.com",
+          path: "/",
+          sameSite: "none",
+          secure: true,
+          httpOnly: true,
+        })
         .status(200)
         .send({acessToken: accessToken, message: "구글 로그인 되었습니다."});
 
@@ -348,7 +376,13 @@ module.exports = {
         const accessToken = generateAccessToken({_id, kakao_id, nickname});
         const refreshToken = generateRefreshToken({_id, kakao_id, nickname});
         return res
-          .cookie("refreshToken", refreshToken, {httpOnly: true})
+          .cookie("refreshToken", refreshToken, {
+            domain: "server.bongsa-heaven.com",
+            path: "/",
+            sameSite: "none",
+            secure: true,
+            httpOnly: true,
+          })
           .status(200)
           .send({accessToken: accessToken, message: "kakao signin성공!"});
       }
@@ -371,7 +405,13 @@ module.exports = {
           const accessToken = generateAccessToken({userKakao, userNick});
           const refreshToken = generateRefreshToken({userKakao, userNick});
           return res
-            .cookie("refreshToken", refreshToken, {httpOnly: true})
+            .cookie("refreshToken", refreshToken, {
+              domain: "server.bongsa-heaven.com",
+              path: "/",
+              sameSite: "none",
+              secure: true,
+              httpOnly: true,
+            })
             .status(200)
             .send({
               accessToken: accessToken,
@@ -408,24 +448,28 @@ module.exports = {
 
     // 3. 회원 가입 유무 에 따른 차이를 둔다. 회원가입을 이미 했다면(2번 하지 못하도록)
     // code를 보내지 않고 이미 인증 or 가입 했다고 나와야함
-    const userInfo = await User.findOne({email: email}).exec();
-    //계정이 존재하는경우, status 가 false => 계정인증이 되어야 로그인 가능하다.
-    //계정이 존재하는데, 회원가입을 한번더 요청하는경우
-    if (userInfo) {
-      if (userInfo.status === false) {
-        //주어진 아이디를 찾아서 authcode를 넣는다. insertOne(authCode)
-        User.updateOne({_id: userInfo._id}, {authcode: authCode}).exec();
-        //1시간이 지나도 회원가입인증 안할시 자동으로 회원정보 파기
-        setTimeout(async () => {
-          if (userInfo.status === false) {
-            userInfo.remove(authCode);
-            return;
-          }
-        }, 60000);
-      } else {
-        //인증이 완료 되었거나
-        return res.status(400).send("인증되었다");
+    try {
+      const userInfo = await User.findOne({email: email}).exec();
+      //계정이 존재하는경우, status 가 false => 계정인증이 되어야 로그인 가능하다.
+      //계정이 존재하는데, 회원가입을 한번더 요청하는경우
+      if (userInfo) {
+        if (userInfo.status === false) {
+          //주어진 아이디를 찾아서 authcode를 넣는다. insertOne(authCode)
+          User.updateOne({_id: userInfo._id}, {authcode: authCode}).exec();
+          //1시간이 지나도 회원가입인증 안할시 자동으로 회원정보 파기
+          setTimeout(async () => {
+            if (userInfo.status === false) {
+              userInfo.remove(authCode);
+              return;
+            }
+          }, 60000);
+        } else {
+          //인증이 완료 되었거나
+          return res.status(400).send("인증되었다");
+        }
       }
+    } catch (err) {
+      return res.send(err);
     }
     //클릭했는데,
 
@@ -478,14 +522,16 @@ module.exports = {
     //회원 가입후 로그인 화면에서 query 코드를 넘겨준다.
     console.log(req.body.authCode);
     //authcode가 일치하면 status가 true
-    User.updateOne({authcode: req.body.authCode}, {$set: {status: true}}).then(
-      data => {
+    User.updateOne({authcode: req.body.authCode}, {$set: {status: true}})
+      .then(data => {
         if (!data) {
           return res.status(400).send("인증 실패");
         }
         return res.status(200).send("이메일 확인 완료");
-      },
-    );
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     // return res.status(400).send("내용없음");
     //링크를 클릭했을시 인증하는 코드
