@@ -172,7 +172,6 @@ export default function Header({
   setUserId,
 }: any) {
   const history = useHistory();
-  console.log(isLogin);
 
   const GoMyPage = () => {
     isUserLogin === "user"
@@ -199,9 +198,9 @@ export default function Header({
   };
 
   const LogOut = () => {
-    axios.get(`${process.env.REACT_APP_API_URI}/auth/resetrftk`).then(res => {
-      console.log(res);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URI}/auth/resetrftk`)
+      .then(res => {});
     localStorage.removeItem("accessToken");
     setIsLogin(false);
     setIsUserLogin("user");

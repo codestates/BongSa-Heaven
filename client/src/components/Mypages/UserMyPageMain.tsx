@@ -72,7 +72,6 @@ export default function UserMyPageMain({userinfo}: any) {
   const [myname, setMyname] = useState("");
 
   const handleMaillBox = () => {
-    console.log("hi");
     history.push("/UserMaill");
   };
 
@@ -85,11 +84,10 @@ export default function UserMyPageMain({userinfo}: any) {
         },
       })
       .then(res => {
-        console.log("res.data.data.nickname", res.data.data.nickname);
         setMyname(res.data.data.nickname);
       })
       .catch(err => {
-        console.log("응 안돼~", err);
+        console.log(err);
       });
   };
 

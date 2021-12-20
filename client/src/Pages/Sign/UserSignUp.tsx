@@ -287,8 +287,6 @@ export default function UserSignUp() {
   //청소년 청년 장년 클릭시 해당 정보를 가져온다.
 
   const handleEmail = (e: any) => {
-    console.log(e.target.value);
-    console.log(process.env.REACT_APP_API_URI, "uri경로");
     setEmail(e.target.value);
   };
   const handlePassword = (e: any) => {

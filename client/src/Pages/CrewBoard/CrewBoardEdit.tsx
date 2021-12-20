@@ -248,10 +248,10 @@ export default function CrewBoardEdit({
               },
             )
             .then(res => {})
-            .catch(err => console.log(err));
+            .catch(err => {});
         })
 
-        .catch(err => console.log(err, "Error!"));
+        .catch(err => console.log(err));
 
       loadingHandler();
 
@@ -280,7 +280,7 @@ export default function CrewBoardEdit({
           },
         )
         .then(res => {})
-        .catch(err => console.log(err, "error"));
+        .catch(err => console.log(err));
 
       loadingHandler();
 
@@ -306,7 +306,7 @@ export default function CrewBoardEdit({
           },
         )
         .then(res => {})
-        .catch(err => console.log(err, "error"));
+        .catch(err => console.log(err));
 
       loadingHandler();
 

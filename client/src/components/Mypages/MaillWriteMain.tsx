@@ -162,12 +162,11 @@ export default function MaillWriteMain(Title: any) {
           },
         )
         .then(res => {
-          console.log("hi");
           setCheckName(true);
         })
         .catch(err => {
           setCheckName(false);
-          console.log("fail");
+          console.log(err);
         });
     }
   };

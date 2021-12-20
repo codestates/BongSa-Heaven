@@ -138,12 +138,10 @@ export default function App() {
           .then(res => {
             const isNick = res.data.data.nickname;
             if (isNick) {
-              console.log("have");
             } else {
-              console.log("not Have");
               history.push("/OauthUserReg");
             }
-            console.log(res.data.data);
+
             setUserId(res.data.data._id);
             if (res.data.data.iscompany) {
               setIsUserLogin("recruiter");
@@ -156,7 +154,7 @@ export default function App() {
             }
           })
           .catch(err => {
-            console.log("err");
+            console.log(err);
             setIsLogin(false);
           });
       } else {
@@ -183,13 +181,12 @@ export default function App() {
           },
         )
         .then(data => {
-          console.log("google");
-          console.log(data);
           history.push("/");
           setIsLogin(true);
           dispatch(issignin());
         })
         .catch(err => {
+          console.log(err);
           setIsLogin(false);
         });
     }
@@ -218,6 +215,7 @@ export default function App() {
           dispatch(issignin());
         })
         .catch(err => {
+          console.log(err);
           setIsLogin(false);
           dispatch(issignin(false));
         });
@@ -234,7 +232,6 @@ export default function App() {
         setUserId={setUserId}
       />
 
-    
       <Route
         exact
         path="/"

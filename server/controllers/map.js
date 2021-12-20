@@ -55,7 +55,7 @@ module.exports = {
       .populate("user_id")
       .exec()
       .then(data => {
-        res.status(200).send(data);
+        return res.status(200).send(data);
       });
   },
 };

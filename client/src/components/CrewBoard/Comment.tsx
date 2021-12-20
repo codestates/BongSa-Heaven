@@ -375,7 +375,7 @@ export default function Comment({
         setMyId(res.data.data._id);
       })
       .catch(err => {
-        console.log("Error!", err);
+        console.log(err);
       });
   };
 

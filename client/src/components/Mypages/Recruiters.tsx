@@ -94,10 +94,6 @@ const RightBox = styled.div`
 
 export default function Recruiters(list: any) {
   const history = useHistory();
-  console.log(list.list.nickname);
-  console.log(list.list.want_region);
-  console.log(list.list.want_vol);
-  console.log(list.list.company);
 
   const GoMaillWrite = () => {
     history.push("/MaillWrite");

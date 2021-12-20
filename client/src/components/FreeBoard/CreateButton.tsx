@@ -129,7 +129,7 @@ export default function CreateButton(props: any) {
           })
           .catch(err => console.log(err));
       })
-      .catch(err => console.log(err, "응안가"));
+      .catch(err => console.log(err));
   };
 
   return (

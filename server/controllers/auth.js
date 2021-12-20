@@ -102,7 +102,6 @@ module.exports = {
     if (salt === null) {
       return res.status(404).send({message: "이메일 및 비밀번호 다시 쳐봐"});
     }
-    console.log("===salt.salt===", salt.salt);
 
     // 2. 유저db 에서 이메일이 있는지 확인한다;
     crypto.pbkdf2(
@@ -136,7 +135,7 @@ module.exports = {
           // const refreshTokenExpiry = new Date(Date.parse(issueDate) + 10800000); // +14d
           return res
             .cookie("refreshToken", refreshToken, {
-              domain: "bongsa-heaven.com",
+              domain: "server.bongsa-heaven.com",
               path: "/",
               sameSite: "none",
               secure: true,
@@ -229,8 +228,14 @@ module.exports = {
 
   resetrftkControl: async (req, res) => {
     const refreshToken = "";
-    res
-      .cookie("refreshToken", refreshToken, {httpOnly: true})
+    return res
+      .cookie("refreshToken", refreshToken, {
+        domain: "server.bongsa-heaven.com",
+        path: "/",
+        sameSite: "none",
+        secure: true,
+        httpOnly: true,
+      })
       .status(200)
       .send();
   },
@@ -246,7 +251,6 @@ module.exports = {
     // }
 
     const code = req.body.code;
-    console.log(code);
 
     const result = await axios.post(
       `https://oauth2.googleapis.com/token?code=${code}&client_id=${process.env.GOOGLE_CLIENT}&client_secret=${process.env.GOOGLE_SECRET}&redirect_uri=${process.env.REDIRECT_URI}&grant_type=authorization_code`,
@@ -271,11 +275,10 @@ module.exports = {
     //회원가입을 할때,
     //
     const {id, email} = userInfo.data;
-    console.log(userInfo.data);
+
     const existUser = await User.findOne({email: email}).exec();
     //회원가입이 되어있지 않다면 회원가입을하고
     if (!existUser) {
-      console.log(email);
       User.insertMany({
         email: email,
         nickname: null,
@@ -299,7 +302,7 @@ module.exports = {
           return res
             .status(200)
             .cookie("refreshToken", refreshToken, {
-              domain: "bongsa-heaven.com",
+              domain: "server.bongsa-heaven.com",
               path: "/",
               sameSite: "none",
               secure: true,
@@ -318,13 +321,13 @@ module.exports = {
 
     try {
       const {email, _id, nickname} = existUser;
-      console.log(email, _id, nickname, "하이 하이 하이뮨이야");
+
       const accessToken = generateAccessToken({_id, nickname, email});
       const refreshToken = generateRefreshToken({_id, nickname, email});
 
       return res
         .cookie("refreshToken", refreshToken, {
-          domain: "bongsa-heaven.com",
+          domain: "server.bongsa-heaven.com",
           path: "/",
           sameSite: "none",
           secure: true,
@@ -343,7 +346,7 @@ module.exports = {
 
   kakaoControl: async (req, res) => {
     const code = req.body.code;
-    console.log(code);
+
     try {
       const result = await axios.post(
         `https://kauth.kakao.com/oauth/token?code=${code}&client_id=${process.env.KAKAO_CLIENT}&client_secret=${process.env.KAKAO_SECRET}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&grant_type=authorization_code`,
@@ -360,14 +363,11 @@ module.exports = {
         },
       });
 
-      console.log(userInfo);
-
       const userNick = userInfo.data.properties.nickname;
       const userKakao = userInfo.data.id;
 
       const query = {kakao_id: userKakao};
       const existUser = await User.findOne(query);
-      console.log(existUser);
 
       if (existUser) {
         const {_id, kakao_id, nickname} = existUser;
@@ -466,59 +466,60 @@ module.exports = {
           return res.status(400).send("인증되었다");
         }
       }
+
+      //클릭했는데,
+
+      //이메일을 통해 인증이 된다면 => status =1로 바꿔준다. 링크를 클릭했을때
+      //auth 가 동일 하다면, status=1
+      let authEmailForm;
+      const clientAddr = process.env.CLIENT_ADDR || "http://localhost:3000";
+      //? ejs 모듈을 이용해 ejs 파일을 불러온다.
+      //? ejs 에 담기는 변수들은 위 코드에서 경우에 따라 설정 된 상태로 올 것이다.
+      ejs.renderFile(
+        __dirname + "/authForm/authMail.ejs", //filename
+        {clientAddr, authCode, action, endPoint, display}, //data
+        (err, data) => {
+          //funcion
+          if (err) console.log(err);
+
+          authEmailForm = data;
+        },
+      );
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        host: "smtp.gmail.com",
+
+        auth: {
+          user: `${process.env.NODEMAILER_USER}`,
+          pass: `${process.env.NODEMAILER_PASS}`,
+        },
+      });
+
+      const mailOptions = {
+        from: `${process.env.NODEMAILER_USER}`,
+        to: userInfo.email,
+        subject: "봉사 천국에 회원가입 해주셔서 감사합니다.",
+        html: authEmailForm,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent success! : " + info.response);
+        }
+        transporter.close();
+        return res.status(200).send("끝");
+      });
     } catch (err) {
       return res.send(err);
     }
-    //클릭했는데,
-
-    //이메일을 통해 인증이 된다면 => status =1로 바꿔준다. 링크를 클릭했을때
-    //auth 가 동일 하다면, status=1
-    let authEmailForm;
-    const clientAddr = process.env.CLIENT_ADDR || "http://localhost:3000";
-    //? ejs 모듈을 이용해 ejs 파일을 불러온다.
-    //? ejs 에 담기는 변수들은 위 코드에서 경우에 따라 설정 된 상태로 올 것이다.
-    ejs.renderFile(
-      __dirname + "/authForm/authMail.ejs", //filename
-      {clientAddr, authCode, action, endPoint, display}, //data
-      (err, data) => {
-        //funcion
-        if (err) console.log(err);
-        console.log("파일불러오기");
-        authEmailForm = data;
-      },
-    );
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-
-      auth: {
-        user: `${process.env.NODEMAILER_USER}`,
-        pass: `${process.env.NODEMAILER_PASS}`,
-      },
-    });
-
-    const mailOptions = {
-      from: `${process.env.NODEMAILER_USER}`,
-      to: userInfo.email,
-      subject: "봉사 천국에 회원가입 해주셔서 감사합니다.",
-      html: authEmailForm,
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent success! : " + info.response);
-      }
-      transporter.close();
-      return res.status(200).send("끝");
-    });
   },
 
   confirmEmailControl: async (req, res) => {
     //가입후 클라이언트에서 주는 코드로 로그인
     //회원 가입후 로그인 화면에서 query 코드를 넘겨준다.
-    console.log(req.body.authCode);
+
     //authcode가 일치하면 status가 true
     User.updateOne({authcode: req.body.authCode}, {$set: {status: true}})
       .then(data => {

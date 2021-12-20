@@ -269,7 +269,6 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
             })
             .then(res => {
               // console.log(res);
-              console.log("res.data.data.iscompany", res.data.data.iscompany);
               if (res.data.data.iscompany !== undefined) {
                 setIsUserLogin("recruiter");
                 setIsLogin(true);
@@ -306,12 +305,10 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
     const url = new URL(window.location.href);
 
     const searchs = url.search;
-    console.log(searchs.split("=")[0]);
 
     if (searchs.split("=")[0] === "?authCode") {
       const code = searchs.split("=")[1];
 
-      console.log(code);
       axios
         .post(
           `${process.env.REACT_APP_API_URI}/auth/confirmemail`,
@@ -324,13 +321,12 @@ export default function SignIn({setIsLogin, setIsUserLogin}: any) {
           },
         )
         .then(data => {
-          console.log("성공");
           history.push("/SignIn");
           setIsLogin(true);
           dispatch(issignin());
         })
         .catch(err => {
-          console.log(err, "erro");
+          console.log(err);
         });
     }
   };

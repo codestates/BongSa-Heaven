@@ -29,12 +29,12 @@ module.exports = {
             };
             doc.freecomments.push(fbcomment);
             doc.save();
-            res.status(200).send({message: "싸장님 댓글 등록 완료!"});
+            return res.status(200).send({message: "싸장님 댓글 등록 완료!"});
           }
         });
       }
     } catch (err) {
-      return res.send("err");
+      return res.send(err);
     }
   },
 
@@ -73,7 +73,7 @@ module.exports = {
         }
       }
     } catch (err) {
-      return res.send("err");
+      return res.send(err);
     }
   },
 
@@ -103,7 +103,7 @@ module.exports = {
             },
           },
         ).exec();
-        console.log("===fbcontent===", fbcontent);
+
         if (fbcontent) {
           return res
             .status(200)
@@ -143,7 +143,7 @@ module.exports = {
             };
             doc.crewcomments.push(cbcomment);
             doc.save();
-            res.status(200).send({message: "싸장님 댓글 등록 완료!"});
+            return res.status(200).send({message: "싸장님 댓글 등록 완료!"});
           }
         });
       }
