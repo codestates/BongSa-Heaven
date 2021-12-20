@@ -17,4 +17,4 @@ export KAKAO_SECRET=$(aws ssm get-parameters --region ap-northeast-2 --names KAK
 export KAKAO_CLIENT=$(aws ssm get-parameters --region ap-northeast-2 --names KAKAO_CLIENT --query Parameters[0].Value | sed 's/"//g')
 export HTTPS_PORT=$(aws ssm get-parameters --region ap-northeast-2 --names HTTPS_PORT --query Parameters[0].Value | sed 's/"//g')
 
-authbind --deep -f pm2 start index.js
+authbind --deep pm2 start index.js
